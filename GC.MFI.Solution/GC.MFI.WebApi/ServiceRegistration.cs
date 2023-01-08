@@ -1,0 +1,110 @@
+﻿using GC.MFI.DataAccess;
+using GC.MFI.DataAccess.InfrastructureBase;
+using GC.MFI.DataAccess.Repository.Pos.Implementations;
+using GC.MFI.DataAccess.Repository.Pos.Interfaces;
+using GC.MFI.Models;
+using GC.MFI.Models.DbModels;
+using GC.MFI.Security.Jwt;
+using GC.MFI.Services.Modules.BntPos.Implementations;
+using GC.MFI.Services.Modules.BntPos.Interfaces;
+using GC.MFI.Services.Modules.Email.Implementations;
+using GC.MFI.Services.Modules.Email.Interfaces;
+using GC.MFI.Services.Modules.Security.Implementations;
+using GC.MFI.Services.Modules.Security.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Polly;
+using Polly.Extensions.Http;
+using System.Text;
+
+namespace GC.MFI.WebApi
+{
+    public class ServiceRegistration
+    {
+        public static void RegisterService(IServiceCollection services, IConfiguration Configuration)
+        {
+           
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+             Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("GC.MFI.DataAccess")));
+
+            services.AddDbContext<BntPOSContext>(options => options.UseSqlServer(
+             Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("GC.MFI.DataAccess")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                //Other options go here
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
+            services.AddControllersWithViews();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromHours(2));
+          
+            var settings = new AzureAD();
+            Configuration.Bind("AzureAD", settings);
+            var key = Encoding.ASCII.GetBytes(settings.ClientSecret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            services.AddTransient<IEmailHelper, EmailHelper>();
+            // configure DI for application services
+    
+            services.AddMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".bizzntekerp.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IDatabaseFactory, DatabaseFactory>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IJwtTokenHelper, JwtTokenHelper>();            
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
+
+        }
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(response => response.IsSuccessStatusCode == false)
+                .WaitAndRetryAsync(2, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
+    }
+    
+}
