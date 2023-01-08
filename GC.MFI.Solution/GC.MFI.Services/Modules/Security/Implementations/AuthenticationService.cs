@@ -16,7 +16,6 @@ namespace GC.MFI.Services.Modules.Security.Implementations
         {
             var identity = new IdentityUser();
             identity = UserManager.Users.Where(u => u.UserName == username).FirstOrDefault();
-            var user = UserManager.FindByNameAsync(username);
             var isValidPassword = false;
             if (identity == null)
                 identity = null;
