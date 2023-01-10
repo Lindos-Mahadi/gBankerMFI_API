@@ -56,8 +56,7 @@ namespace GC.MFI.Security.Jwt
             {
                 Subject = new ClaimsIdentity(new Claim[] {
                 new Claim("fullName", $"{userModel.UserName}"),
-                new Claim("email", userModel.Email) ,
-                new Claim("phone", userModel.PhoneNumber),
+                new Claim("email", userModel.Email),
                 new Claim("userName", userModel.UserName),
                 new Claim("id", userModel.Id),
                // new Claim("rolesJson", roles),
