@@ -24,7 +24,7 @@ namespace GC.MFI.WebApi.Controllers
             try
             {
                 var results =  service.GetAll();
-                return results.OrderByDescending(l => l.CreateDate);
+                return results;
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace GC.MFI.WebApi.Controllers
             try
             {
                 var results = service.GetAllActiveRecords();
-                return results.OrderByDescending(l => l.UpdateDate);
+                return results;
             }
             catch (Exception ex)
             {

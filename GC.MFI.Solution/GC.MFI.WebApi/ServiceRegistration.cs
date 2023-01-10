@@ -1,5 +1,7 @@
 ﻿using GC.MFI.DataAccess;
 using GC.MFI.DataAccess.InfrastructureBase;
+using GC.MFI.DataAccess.Repository.Implementations;
+using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.DataAccess.Repository.Pos.Implementations;
 using GC.MFI.DataAccess.Repository.Pos.Interfaces;
 using GC.MFI.Models;
@@ -92,6 +94,10 @@ namespace GC.MFI.WebApi
 
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
+
+            // Portal Member Dependancy
+            services.AddScoped<IPortalMemberRepository, PortalMemberRepository>();
+            services.AddScoped<IPortalMemberService, PortalMemberService>();
 
             services.Configure<FormOptions>(o =>
             {
