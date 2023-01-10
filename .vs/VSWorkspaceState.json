@@ -1,15 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\GC.MFI.Solution",
-    "\\GC.MFI.Solution\\GC.MFI.DataAccess",
-    "\\GC.MFI.Solution\\GC.MFI.DataAccess\\Repository",
-    "\\GC.MFI.Solution\\GC.MFI.DataAccess\\Repository\\Implementations",
-    "\\GC.MFI.Solution\\GC.MFI.DataAccess\\Repository\\Implementations\\Security",
-    "\\GC.MFI.Solution\\GC.MFI.DataAccess\\Repository\\Interfaces",
-    "\\GC.MFI.Solution\\GC.MFI.DataAccess\\Repository\\Interfaces\\Security",
-    "\\GC.MFI.Solution\\GC.MFI.WebApi"
+    ""
   ],
-  "SelectedNode": "\\GC.MFI.Solution\\GC.MFI.WebApi\\appsettings.json",
   "PreviewInSolutionExplorer": false
 }
