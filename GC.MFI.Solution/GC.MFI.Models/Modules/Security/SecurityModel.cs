@@ -36,16 +36,7 @@ namespace GC.MFI.Models
         public string oldPassword { get; set; }
         public string newPassword { get; set; }
     }
-    public class SignUpModel
-    {
-        public int Id { get; set; }
-        public string FullName { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public bool IsComplete { get; set; }
-        public string Email { get; set; }
-        // public bool IsActive { get; set; } = true;
-    }
+  
     
     public class AuthenticationResponseModel
     {
