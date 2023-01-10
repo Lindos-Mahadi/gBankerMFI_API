@@ -15,10 +15,12 @@ namespace GC.MFI.Models.Mapper
         {
             
             CreateMap<Product, ProductViewModel>();
-           
             CreateMap<Order, OrderViewModel>();
             CreateMap<OrderDetail, OderDetailsViewModel>();
-            
+
+
+            // Portal Member ViewModel
+            CreateMap<PortalMember, PortalMemberViewModel>();
         }
     }
 }

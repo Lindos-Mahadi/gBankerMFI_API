@@ -37,7 +37,15 @@ namespace GC.MFI.Services.Modules.Security.Implementations
         {
             if (model != null)
             {
-                var j = new ApplicationUser() { UserName = model.UserName, EmployeeID = 1, FirstName = "ABCD", RoleId = 2, Email = model.Email, DateCreated = DateTime.Now, Activated = false,  };
+                var j = new ApplicationUser() { 
+                    UserName = model.UserName,
+                    EmployeeID = 1,
+                    FirstName = "ABCD",
+                    RoleId = 2,
+                    Email = model.Email, 
+                    DateCreated = DateTime.Now, 
+                    Activated = false,
+                };
                 //var user = new ApplicationUser
                 //{
                 //    UserName = model.UserName,

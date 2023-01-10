@@ -18,7 +18,11 @@ namespace GC.MFI.Controllers
         private IAuthenticationService authenticationService { get; }
 
         private readonly ILogger<SecurityController> _logger;
-        public SecurityController(IJwtTokenHelper _authenticationHelper, ILogger<SecurityController> logger, IAuthenticationService authenticationService)
+        public SecurityController(
+            IJwtTokenHelper _authenticationHelper, 
+            ILogger<SecurityController> logger, 
+            IAuthenticationService authenticationService
+            )
         {            
             this.authenticationHelper = _authenticationHelper;
             this.authenticationService = authenticationService;

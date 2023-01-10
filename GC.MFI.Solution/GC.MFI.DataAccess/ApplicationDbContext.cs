@@ -18,5 +18,6 @@ namespace GC.MFI.DataAccess
         {
             base.OnModelCreating(builder);
         }
+
     }
 }
