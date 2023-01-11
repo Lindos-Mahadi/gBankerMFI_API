@@ -20,6 +20,7 @@ namespace GC.MFI.Models.Modules.Distributions.Security
         public bool Activated { get; set; }
         public int RoleId { get; set; }
         public Int16? EmployeeID { get; set; }
+        public long? PortalMemberID { get; set; }
         //public string DisplayName
         //{
         //    get { return FirstName + " " + LastName; }
