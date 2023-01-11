@@ -12,6 +12,9 @@ namespace GC.MFI.Models.DbModels
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public string FirstName { get; set; }
+
+
         //public string PhoneNumber { get; set; }
         //[Required]
         //public string FirstName { get; set; }

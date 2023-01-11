@@ -17,6 +17,7 @@ namespace GC.MFI.DataAccess
 
         // Portal Member
         public DbSet<PortalMember> PortalMember { get; set; }
+        public DbSet<Office> Office { get; set; }
 
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }

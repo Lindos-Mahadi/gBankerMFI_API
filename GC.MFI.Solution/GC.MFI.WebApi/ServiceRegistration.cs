@@ -12,6 +12,8 @@ using GC.MFI.Services.Modules.BntPos.Implementations;
 using GC.MFI.Services.Modules.BntPos.Interfaces;
 using GC.MFI.Services.Modules.Email.Implementations;
 using GC.MFI.Services.Modules.Email.Interfaces;
+using GC.MFI.Services.Modules.GcMfi.Implementations;
+using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Services.Modules.Security.Implementations;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -98,6 +100,10 @@ namespace GC.MFI.WebApi
             // Portal Member Dependancy
             services.AddScoped<IPortalMemberRepository, PortalMemberRepository>();
             services.AddScoped<IPortalMemberService, PortalMemberService>();
+
+
+            services.AddScoped<IOfficeRepository, OfficeRepository>();
+            services.AddScoped<IOfficeService, OfficeService>();
 
             services.Configure<FormOptions>(o =>
             {
