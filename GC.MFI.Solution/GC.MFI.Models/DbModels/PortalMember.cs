@@ -9,7 +9,7 @@ namespace GC.MFI.Models.DbModels
 {
     public partial class PortalMember : DbModelBase, IDbModelBase
     {
-         public string MemberCode { get; set; }
+        public string MemberCode { get; set; }
          public int OfficeID { get; set; }
          public int CenterID { get; set; }
          public Int16 GroupID { get; set; }
