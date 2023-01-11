@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GC.MFI.DataAccess;
 using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
@@ -19,12 +20,14 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             this._repository = repository;
         }
 
-        public async Task<IEnumerable<Office>> GetAll()
+        public async Task<IEnumerable<Office>> GetAll(string search)
         {
             var officeList = await _repository.GetAll();
-            return officeList;
+            officeList.OrderByDescending(l => l.CreateDate);
+            if(search != null)
+                officeList = officeList.Where(t=> t.OfficeName.ToUpper()!.Contains(search.ToUpper()) || t.OfficeCode.ToUpper()!.Contains(search.ToUpper()));
+            return officeList.Skip(1).Take(10);
         }
-
     }
 
     

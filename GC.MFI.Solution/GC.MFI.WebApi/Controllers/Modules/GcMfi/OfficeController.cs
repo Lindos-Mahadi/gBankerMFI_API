@@ -19,9 +19,9 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpGet]
         [Route("getall")]
-        public async Task<IEnumerable<Office>> GetAll()
+        public async Task<IEnumerable<Office>> GetAll(string? search)
         {
-            var officeList = await _service.GetAll();
+            var officeList = await _service.GetAll(search);
             return officeList;
         }
     }

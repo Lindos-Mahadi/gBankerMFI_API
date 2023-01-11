@@ -6,6 +6,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IOfficeService
     {
-        Task<IEnumerable<Office>> GetAll();
+        Task<IEnumerable<Office>> GetAll(string search);
     }
 }
