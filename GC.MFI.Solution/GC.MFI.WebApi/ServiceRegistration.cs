@@ -1,9 +1,12 @@
 ﻿using GC.MFI.DataAccess;
 using GC.MFI.DataAccess.InfrastructureBase;
+using GC.MFI.DataAccess.Repository.Implementations;
+using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.DataAccess.Repository.Pos.Implementations;
 using GC.MFI.DataAccess.Repository.Pos.Interfaces;
 using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Security.Jwt;
 using GC.MFI.Services.Modules.BntPos.Implementations;
 using GC.MFI.Services.Modules.BntPos.Interfaces;
@@ -33,13 +36,15 @@ namespace GC.MFI.WebApi
             services.AddDbContext<BntPOSContext>(options => options.UseSqlServer(
              Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("GC.MFI.DataAccess")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
                 //Other options go here
             }).AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>(TokenOptions.DefaultProvider);
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
             services.AddControllersWithViews();
+
+       
 
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
                 opt.TokenLifespan = TimeSpan.FromHours(2));
@@ -89,6 +94,10 @@ namespace GC.MFI.WebApi
 
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderService, OrderService>();
+
+            // Portal Member Dependancy
+            services.AddScoped<IPortalMemberRepository, PortalMemberRepository>();
+            services.AddScoped<IPortalMemberService, PortalMemberService>();
 
             services.Configure<FormOptions>(o =>
             {

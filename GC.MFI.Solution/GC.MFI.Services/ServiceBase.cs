@@ -56,7 +56,7 @@ namespace GC.MFI.Services
             var mappedResult = _mapper.Map<IEnumerable<TViewModel>>(results);
             return mappedResult;
         }
-        public virtual TViewModel GetById(Guid id)
+        public virtual TViewModel GetById(long id)
         {
             var dbModel = repository.GetById(id);
             var viewModel = _mapper.Map<TViewModel>(dbModel);

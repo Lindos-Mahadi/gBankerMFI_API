@@ -5,7 +5,7 @@ namespace XenterSolution.Models.ViewModels
 {
     public class ViewModelBase:IViewModelBase
     {       
-        public Guid Id { get; set; } = Guid.Empty;      
+        public long Id { get; set; }     
         public string CreateUser { get; set; } = string.Empty;
         public DateTime? CreateDate { get; set; }
         public string UpdateUser { get; set; } = string.Empty;

@@ -14,7 +14,7 @@ namespace GC.MFI.Services
         IEnumerable<TViewModel> GetAll();
         IEnumerable<TViewModel> GetAllActiveRecords();
         IEnumerable<TViewModel> GetAll<TKey>(Func<TDbModel, TKey> orderby);
-        TViewModel GetById(Guid id);
+        TViewModel GetById(long id);
         TViewModel Create(TViewModel objectToCreate);
         TViewModel CreateWithoutSave(TViewModel objectToCreate);
         void Update(TViewModel objectToUpdate);

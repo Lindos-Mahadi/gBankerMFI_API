@@ -24,7 +24,7 @@ namespace GC.MFI.WebApi.Controllers
             try
             {
                 var results =  service.GetAll();
-                return results.OrderByDescending(l => l.CreateDate);
+                return results;
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace GC.MFI.WebApi.Controllers
             try
             {
                 var results = service.GetAllActiveRecords();
-                return results.OrderByDescending(l => l.UpdateDate);
+                return results;
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace GC.MFI.WebApi.Controllers
         }
         [HttpGet]
         [Route("getbyid")]
-        public virtual  TViewModel GetById(Guid id)
+        public virtual  TViewModel GetById(long id)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace GC.MFI.WebApi.Controllers
 
         [HttpPost]
         [Route("delete")]
-        public virtual ActionResult Delete(Guid id)
+        public virtual ActionResult Delete(long id)
         {
             try
             {

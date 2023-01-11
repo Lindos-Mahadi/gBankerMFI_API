@@ -14,8 +14,10 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
        
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-       
-        
+
+        // Portal Member
+        public DbSet<PortalMember> PortalMember { get; set; }
+
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }

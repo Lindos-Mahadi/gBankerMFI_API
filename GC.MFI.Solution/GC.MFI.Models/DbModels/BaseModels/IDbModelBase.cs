@@ -4,7 +4,7 @@ namespace GC.MFI.Models.DbModels
 {
     public interface IDbModelBase  
     {
-        Guid Id { get; set; }
+        long Id { get; set; }
         string CreateUser { get; set; }
         DateTime? CreateDate { get; set; }
         string UpdateUser { get; set; }
