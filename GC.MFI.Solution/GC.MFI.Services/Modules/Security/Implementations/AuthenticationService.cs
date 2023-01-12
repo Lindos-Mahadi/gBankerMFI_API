@@ -1,4 +1,5 @@
-﻿using GC.MFI.Models;
+﻿using GC.MFI.DataAccess.Repository.Interfaces;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Models.Modules.Security;
@@ -13,10 +14,12 @@ namespace GC.MFI.Services.Modules.Security.Implementations
     public class AuthenticationService : IAuthenticationService
     {
         private UserManager<ApplicationUser> UserManager;
+        private IPortalMemberRepository _repository;
 
-        public AuthenticationService(UserManager<ApplicationUser> _userManager)
+        public AuthenticationService(UserManager<ApplicationUser> _userManager, IPortalMemberRepository repository)
         {
             this.UserManager = _userManager;
+            this._repository = repository;
         }
         public ApplicationUser Authenticate(string username, string password)
         {
@@ -37,6 +40,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
         {
             if (model != null)
             {
+                var PortalMemberId = await _repository.CreatePortalMember(model);
                 var j = new ApplicationUser() { 
                     UserName = model.UserName,
                     EmployeeID = 1,
@@ -45,6 +49,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     Email = model.Email, 
                     DateCreated = DateTime.Now, 
                     Activated = false,
+                    PortalMemberID = PortalMemberId
                 };
                 //var user = new ApplicationUser
                 //{
