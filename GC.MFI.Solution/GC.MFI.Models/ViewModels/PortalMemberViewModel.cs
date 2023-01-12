@@ -26,7 +26,8 @@ namespace GC.MFI.Models.ViewModels
         public string Address { get; set; }
         public string Photo { get; set; }
         public string Phone { get; set; }
-        public bool? HasRequestedApproval { get; set; }
+        public bool? ApprovalStatus { get; set; }
         public int MemberAge { get; set; }
+        public string EducationQualification { get; set; }
     }
 }
