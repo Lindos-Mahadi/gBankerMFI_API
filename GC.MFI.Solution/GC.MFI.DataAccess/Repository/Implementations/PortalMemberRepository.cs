@@ -37,7 +37,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Address = signUp.Address,
                 Photo = signUp.NidPic,
                 Phone = signUp.PhoneNumber,
-                HasRequestedApproval = false,
+                ApprovalStatus = false,
                 MemberAge = signUp.MemberAge
             };
             DataContext.Add(portalMember);
