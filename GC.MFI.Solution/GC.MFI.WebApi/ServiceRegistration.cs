@@ -100,6 +100,7 @@ namespace GC.MFI.WebApi
             // Portal Member Dependancy
             services.AddScoped<IPortalMemberRepository, PortalMemberRepository>();
             services.AddScoped<IPortalMemberService, PortalMemberService>();
+            services.AddScoped<IMemberService, MemberService>();
 
 
             services.AddScoped<IOfficeRepository, OfficeRepository>();

@@ -19,6 +19,12 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             _context = context;
         }
 
-        
+        public  IEnumerable<Member> GetAll()
+        {
+            var getOffice = _context.Member.AsEnumerable();
+            return getOffice;
+        }
+
+
     }
 }
