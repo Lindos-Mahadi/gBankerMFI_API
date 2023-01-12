@@ -1,5 +1,6 @@
 ﻿using GC.MFI.Models.DbModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace GC.MFI.DataAccess
@@ -18,6 +19,7 @@ namespace GC.MFI.DataAccess
         // Portal Member
         public DbSet<PortalMember> PortalMember { get; set; }
         public DbSet<Office> Office { get; set; }
+        public DbSet<Member> Member { get; set; }
 
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
@@ -194,6 +196,7 @@ namespace GC.MFI.DataAccess
            
             OnModelCreatingPartial(modelBuilder);
         }
+
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

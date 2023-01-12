@@ -14,6 +14,9 @@ namespace GC.MFI.Models.Mapper
 
             // Portal Member ViewModel
             CreateMap< PortalMemberViewModel, PortalMember>();
+
+            // Member ViewModel
+            CreateMap<MemberViewModel, Member>();
         }
     }
 }
