@@ -9,43 +9,35 @@ namespace GC.MFI.Models.DbModels
 {
     public class SignUpModel
     {
+        [Required]
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
 
+        public string LastName { get; set; }
+        [Required]
+        public string Occupation { get; set; }
+        public string PhoneNumber { get; set; }
 
-        //public string PhoneNumber { get; set; }
-        //[Required]
-        //public string FirstName { get; set; }
-        //[Required]
-        //public string LastName { get; set; }
-        //[Required]
-        //public string Occupation { get; set; }
-        //[Required]
-        //public string Address { get; set; }
-        //public string NidPic { get; set; }
-        //[Required]
-        //public string MemberCode { get; set; }
-        //[Required]
-        //public int OfficeID { get; set; }
-        //[Required]
-        //public int GroupID { get; set; }
-        //[Required]
-        //public int CenterID { get; set; }
-        //[Required]
-        //public DateTime JoinDate { get; set; }
-        //[Required]
-        //public string Gender { get; set; }
+        [Required]
+        public string Address { get; set; }
+        public string NidPic { get; set; }
+        public string MemberCode { get; set; }
+        [Required]
+        public int OfficeID { get; set; }
+        public DateTime JoinDate { get; set; }
+        public Int16 GroupID { get; set; }
+        public int CenterID { get; set; }
+        [Required]
+        public string Gender { get; set; }
         //[Required]
         //public int MemberCategoryID { get; set; }
-        //[Required]
-        //public string MemberStatus { get; set; }
-        //[Required]
-        //public int OrgID { get; set; }
-        //[Required]
-        //public string CreateUser { get; set; }
-        //[Required]
-        //public DateTime CreateDate { get; set; }
+        public string MemberStatus { get; set; }
+        [Required]
+        public int OrgID { get; set; }
+
+        [Required]
+        public int MemberAge { get; set; }
     }
 }
