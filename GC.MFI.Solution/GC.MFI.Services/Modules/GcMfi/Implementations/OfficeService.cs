@@ -22,11 +22,8 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 
         public async Task<IEnumerable<Office>> GetAll(string search)
         {
-            var officeList = await _repository.GetAll();
-            officeList.OrderByDescending(l => l.CreateDate);
-            if(search != null)
-                officeList = officeList.Where(t=> t.OfficeName.ToUpper()!.Contains(search.ToUpper()) || t.OfficeCode.ToUpper()!.Contains(search.ToUpper()));
-            return officeList.Skip(1).Take(10);
+            var officeList = await _repository.GetAll(search);
+            return officeList;
         }
     }
 

@@ -18,10 +18,13 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             this._context = context;
         }
 
-        public async Task<IEnumerable<Office>> GetAll()
+        public async Task<IEnumerable<Office>> GetAll(string search)
         {
-            var getOffice = _context.Office.AsEnumerable();
-            return getOffice;
+            if (!String.IsNullOrEmpty(search))
+            {
+               return  _context.Office.Where(t=> t.OfficeCode.Contains(search) || t.OfficeName.ToUpper().Contains(search.ToUpper())).Take(0).Skip(10);
+            }
+            return _context.Office.Skip(0).Take(10);
         }
     }
 }

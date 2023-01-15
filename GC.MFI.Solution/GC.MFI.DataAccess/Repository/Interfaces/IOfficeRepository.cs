@@ -7,6 +7,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IOfficeRepository 
     {
-        Task<IEnumerable<Office>> GetAll();
+        Task<IEnumerable<Office>> GetAll(string search);
     }
 }
