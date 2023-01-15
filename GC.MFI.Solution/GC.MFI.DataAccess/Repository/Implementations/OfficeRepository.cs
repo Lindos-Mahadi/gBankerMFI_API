@@ -22,7 +22,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
             if (!String.IsNullOrEmpty(search))
             {
-               return  _context.Office.Where(t=> t.OfficeCode.Contains(search) || t.OfficeName.ToUpper().Contains(search.ToUpper())).Take(0).Skip(10);
+               var officeList =  _context.Office.Where(t=> t.OfficeCode!.Contains(search) || t.OfficeName.Trim().Replace(" ", "").ToUpper()!.Contains(search.Trim().Replace(" ", "").ToUpper())).Take(0).Skip(10);
+               return officeList;
             }
             return _context.Office.Skip(0).Take(10);
         }
