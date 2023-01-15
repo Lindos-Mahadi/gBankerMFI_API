@@ -12,8 +12,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 {
     public class OfficeRepository :  IOfficeRepository
     {
-        private readonly BntPOSContext _context;
-        public OfficeRepository( BntPOSContext context) 
+        private readonly GBankerDbContext _context;
+        public OfficeRepository( GBankerDbContext context) 
         {
             this._context = context;
         }

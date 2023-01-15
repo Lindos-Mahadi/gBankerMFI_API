@@ -12,55 +12,46 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
     public class MemberService : IMemberService
     {
-        private readonly BntPOSContext _context;
-
-        public MemberService(BntPOSContext context)
+        private readonly IMemberRepository _repository;
+        public MemberService(IMemberRepository repository)
         {
-            _context = context;
+            this._repository = repository;
         }
 
-        public Member Create(Member objectToCreate)
+        public Member Create(Member mModel)
         {
-            _context.Add(objectToCreate);
-            Save();
-            return objectToCreate;
+            _repository.Save();
+            return _repository.Create(mModel);
         }
 
         public void Delete(long id)
         {
-            var d = _context.Member.Find(id);
-            _context.Remove(d);
+            _repository.Delete(id);
         }
 
-        public IEnumerable<Member> GetAll()
+        public async Task<IEnumerable<Member>> GetAll()
         {
-            var getMember = _context.Member.AsEnumerable();
-            return getMember;
+            var memberList = await _repository.GetAll();
+            //memberList.OrderByDescending(l => l.CreateDate);
+            //if (search != null)
+            //    memberList = memberList.Where(t => t.FirstName.ToUpper()!.Contains(search.ToUpper()) || t.LastName.ToUpper()!.Contains(search.ToUpper()));
+            return memberList;
         }
 
         public Member GetById(long id)
         {
-            return _context.Member.Find(id);
-        }
-
-        public bool Inactivate(long id, DateTime? inactiveDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsContinued(long id)
-        {
-            throw new NotImplementedException();
+            
+            return _repository.GetById(id);
         }
 
         public void Save()
         {
-            _context.SaveChanges();
+            _repository.Save();
         }
 
-        public void Update(Member objectToUpdate)
+        public void Update(Member mModel)
         {
-            _context.Update(objectToUpdate);
+            _repository.Update(mModel);
         }
     }
 }

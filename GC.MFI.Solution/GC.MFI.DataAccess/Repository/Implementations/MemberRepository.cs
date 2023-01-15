@@ -12,19 +12,44 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 {
     public class MemberRepository : IMemberRepository
     {
-        private readonly BntPOSContext _context;
-
-        public MemberRepository(BntPOSContext context)
+        private readonly GBankerDbContext _context;
+        public MemberRepository(GBankerDbContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
-        public  IEnumerable<Member> GetAll()
+        public Member Create(Member mModel)
         {
-            var getOffice = _context.Member.AsEnumerable();
-            return getOffice;
+            _context.Add(mModel);
+            _context.SaveChanges();
+            return mModel;
         }
 
+        public void Delete(long id)
+        {
+            _context.Remove(id);
+        }
 
+        public async Task<IEnumerable<Member>> GetAll()
+        {
+            var getMember = _context.Member.Skip(0).Take(10);
+            return getMember;
+        }
+
+        public Member GetById(long id)
+        {
+            return _context.Member.Find(id);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(Member mModel)
+        {
+            _context.Attach(mModel);
+            _context.Entry(mModel).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
     }
 }

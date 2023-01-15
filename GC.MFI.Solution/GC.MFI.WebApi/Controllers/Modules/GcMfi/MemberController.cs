@@ -13,39 +13,21 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     public class MemberController : ControllerBase
     {
         private readonly ILogger<MemberController> _logger;
-        private readonly IMemberService service;
-
+        private readonly IMemberService _service;
         public MemberController(ILogger<MemberController> logger, IMemberService service)
         {
             _logger = logger;
-            this.service = service;
+            _service = service;
         }
 
-        // GET: api/<MemberController>
-        #region Common Actions
         [HttpGet]
         [Route("getall")]
-        public virtual IEnumerable<Member> GetAll()
+        public async Task<IEnumerable<Member>> GetAll()
         {
             try
             {
-                var results = service.GetAll();
-                return results;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        // GET api/<MemberController>/5
-        [HttpGet]
-        [Route("getbyid")]
-        public virtual Member GetById(long id)
-        {
-            try
-            {
-                var record = service.GetById(id);
-                return record;
+                var memberList = await _service.GetAll();
+                return memberList;
             }
             catch (Exception ex)
             {
@@ -53,20 +35,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
         }
 
-        // POST api/<MemberController>
         [HttpPost]
         [Route("create")]
         public virtual Member Create(Member objectToSave)
         {
             try
             {
-                objectToSave.CreateUser = "Administrator";
-                objectToSave.CreateDate = DateTime.UtcNow;
-                //objectToSave.UpdateUser = "";
-                //objectToSave.UpdateDate = DateTime.UtcNow;
-                //objectToSave.Status = "A";
-
-                var result = service.Create(objectToSave);
+                var result = _service.Create(objectToSave);
                 return result;
             }
             catch (Exception ex)
@@ -74,17 +49,28 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw ex;
             }
         }
-
+        [HttpGet]
+        [Route("getbyid")]
+        public virtual  Member GetById(long id)
+        {
+            try
+            {
+                var record =  _service.GetById(id);
+                return record;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpPatch]
         [Route("edit")]
         public virtual Member Edit(Member objectToSave)
         {
             try
             {
-                //objectToSave.UpdateUser = "Administrator";
-                //objectToSave.UpdateDate = DateTime.UtcNow;
 
-                service.Update(objectToSave);
+                _service.Update(objectToSave);
                 return objectToSave;
             }
             catch (Exception ex)
@@ -92,21 +78,19 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw ex;
             }
         }
-
         [HttpPost]
         [Route("delete")]
         public virtual ActionResult Delete(long id)
         {
             try
             {
-                service.Delete(id);
+                _service.Delete(id);
                 return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
         }
-        #endregion
     }
 }

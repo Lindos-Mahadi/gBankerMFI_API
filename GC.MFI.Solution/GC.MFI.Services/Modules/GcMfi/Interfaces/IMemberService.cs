@@ -9,14 +9,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IMemberService
     {
-        IEnumerable<Member> GetAll();
-        //Task<IEnumerable<Member>> GetAll();
+        Task<IEnumerable<Member>> GetAll();
         Member GetById(long id);
-        Member Create(Member objectToCreate);
-        void Update(Member objectToUpdate);
+        Member Create(Member mModel);
+        void Update(Member mModel);
         void Delete(long id);
-        bool Inactivate(long id, DateTime? inactiveDate);
-        bool IsContinued(long id);
         void Save();
     }
 }

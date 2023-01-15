@@ -14,7 +14,7 @@ namespace GC.MFI.DataAccess.InfrastructureBase
     public abstract class RepositoryBase<TDbModel> : IRepository<TDbModel>
         where TDbModel :class, IDbModelBase         
     {
-        private BntPOSContext _dataContext;
+        private GBankerDbContext _dataContext;
         private readonly Microsoft.EntityFrameworkCore.DbSet<TDbModel> _dbset;
         private IDbContextTransaction dbTransaction = null;
         protected RepositoryBase(IDatabaseFactory  databaseFactory)
@@ -31,7 +31,7 @@ namespace GC.MFI.DataAccess.InfrastructureBase
             return cnt;            
         }
      
-        protected BntPOSContext DataContext
+        protected GBankerDbContext DataContext
         {
             get { return _dataContext ?? (_dataContext = DatabaseFactory.Get()); }
 

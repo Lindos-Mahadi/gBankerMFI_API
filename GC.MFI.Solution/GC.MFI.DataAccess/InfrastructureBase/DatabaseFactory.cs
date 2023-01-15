@@ -5,10 +5,10 @@ namespace GC.MFI.DataAccess.InfrastructureBase
 {
     public class DatabaseFactory: Disposable,IDatabaseFactory
     {
-       private BntPOSContext dataContext;
+       private GBankerDbContext dataContext;
       //  private BntPOSContext posContext;
 
-        public DatabaseFactory(BntPOSContext dataContext)
+        public DatabaseFactory(GBankerDbContext dataContext)
         {
             this.dataContext = dataContext;
             //this.posContext = posContext;
@@ -19,7 +19,7 @@ namespace GC.MFI.DataAccess.InfrastructureBase
         //    return dataContext;
         //}
 
-        public BntPOSContext Get()
+        public GBankerDbContext Get()
         {
             return dataContext;
         }

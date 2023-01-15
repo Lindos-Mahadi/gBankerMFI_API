@@ -35,7 +35,7 @@ namespace GC.MFI.WebApi
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
              Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("GC.MFI.DataAccess")));
 
-            services.AddDbContext<BntPOSContext>(options => options.UseSqlServer(
+            services.AddDbContext<GBankerDbContext>(options => options.UseSqlServer(
              Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("GC.MFI.DataAccess")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -100,12 +100,13 @@ namespace GC.MFI.WebApi
             // Portal Member Dependancy
             services.AddScoped<IPortalMemberRepository, PortalMemberRepository>();
             services.AddScoped<IPortalMemberService, PortalMemberService>();
-            services.AddScoped<IMemberRepository, MemberRepository>();
-            services.AddScoped<IMemberService, MemberService>();
-
 
             services.AddScoped<IOfficeRepository, OfficeRepository>();
             services.AddScoped<IOfficeService, OfficeService>();
+
+            // Member Dependancy
+            services.AddScoped<IMemberRepository, MemberRepository>();
+            services.AddScoped<IMemberService, MemberService>();
 
             services.Configure<FormOptions>(o =>
             {

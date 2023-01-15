@@ -6,14 +6,14 @@ namespace GC.MFI.DataAccess.InfrastructureBase
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IDatabaseFactory databaseFactory;
-        private BntPOSContext dataContext;
+        private GBankerDbContext dataContext;
 
         public UnitOfWork(IDatabaseFactory databaseFactory)
         {
             this.databaseFactory = databaseFactory;
         }
 
-        protected BntPOSContext DataContext
+        protected GBankerDbContext DataContext
         {
             get { return dataContext ?? (dataContext = databaseFactory.Get()); }
         }
