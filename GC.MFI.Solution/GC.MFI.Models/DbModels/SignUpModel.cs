@@ -26,7 +26,7 @@ namespace GC.MFI.Models.DbModels
         public string MemberCode { get; set; }
         [Required]
         public int OfficeID { get; set; }
-        public DateTime JoinDate { get; set; }
+        public DateTime? JoinDate { get; set; }
         public Int16 GroupID { get; set; }
         public int CenterID { get; set; }
         [Required]
@@ -36,8 +36,13 @@ namespace GC.MFI.Models.DbModels
         public string MemberStatus { get; set; }
         [Required]
         public int OrgID { get; set; }
+        public DateTime DOB { get; set; }
 
-        [Required]
-        public int MemberAge { get; set; }
+        public string District { get; set; }
+        public string Division { get; set; }
+        public string Upazilla { get; set; }
+        public string PostCode { get; set; }
+        public string EducationQualification { get; set; }
+
     }
 }

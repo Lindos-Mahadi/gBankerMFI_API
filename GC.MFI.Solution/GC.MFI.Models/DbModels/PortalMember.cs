@@ -13,7 +13,7 @@ namespace GC.MFI.Models.DbModels
          public int OfficeID { get; set; }
          public int CenterID { get; set; }
          public Int16 GroupID { get; set; }
-         public DateTime JoinDate { get; set; }
+         public DateTime? JoinDate { get; set; }
          public string Gender { get; set; }
          public Byte MemberCategoryID { get; set; }
          public string MemberStatus{ get; set; }
@@ -23,10 +23,15 @@ namespace GC.MFI.Models.DbModels
          public string Email{ get; set; }
          public string Occupation { get; set; }
          public string Address { get; set; }
-         public string Photo { get; set; }
-         public string Phone { get; set; }
+        public string Photo { get; set; }
+        public string Phone { get; set; }
         public bool? ApprovalStatus { get; set; }
         public int MemberAge { get; set; }
         public string EducationQualification { get; set; }
+        public string District { get; set; }
+        public string Division { get; set; }
+        public string Upazilla { get; set; }
+        public DateTime DOB { get; set; }
+        public string PostCode { get; set; }
     }
 }

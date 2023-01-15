@@ -29,5 +29,10 @@ namespace GC.MFI.Models.ViewModels
         public bool? ApprovalStatus { get; set; }
         public int MemberAge { get; set; }
         public string EducationQualification { get; set; }
+        public string District { get; set; }
+        public string Division { get; set; }
+        public string Upazilla { get; set; }
+        public DateTime DOB { get; set; }
+        public string PostCode { get; set; }
     }
 }

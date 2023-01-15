@@ -18,6 +18,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public async Task<long> CreatePortalMember(SignUpModel signUp)
         {
+
+            var year = signUp.DOB.AddYears(-DateTime.Now.Year).Year;
             BeginTransaction();
             var portalMember = new PortalMember()
             {
@@ -25,7 +27,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 OfficeID = signUp.OfficeID,
                 CenterID = signUp.CenterID,
                 GroupID = signUp.GroupID,
-                JoinDate = signUp.JoinDate,
+                JoinDate = DateTime.Now,
                 Gender = signUp.Gender,
                 MemberCategoryID = 1,
                 MemberStatus = "AC",
@@ -37,8 +39,19 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Address = signUp.Address,
                 Photo = signUp.NidPic,
                 Phone = signUp.PhoneNumber,
+               EducationQualification = signUp.EducationQualification,
                 ApprovalStatus = false,
-                MemberAge = signUp.MemberAge
+                DOB= signUp.DOB,
+                MemberAge = year,
+                District = signUp.District,
+                Division= signUp.Division,
+                Upazilla = signUp.Upazilla,
+                PostCode = signUp.PostCode,
+                CreateDate= DateTime.Now,
+                UpdateDate= DateTime.Now,
+                Status = "A"
+
+
             };
             DataContext.Add(portalMember);
             CommitTransaction();
