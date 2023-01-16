@@ -48,10 +48,12 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     UserName = model.UserName,
                     EmployeeID = 1,
                     FirstName = model.FirstName,
+                    LastName = model.LastName,
                     RoleId = 2,
                     Email = model.Email, 
                     DateCreated = DateTime.Now, 
                     Activated = false,
+                    PhoneNumber = model.PhoneNumber,
                     PortalMemberID = PortalMember.Id
                 };
 
