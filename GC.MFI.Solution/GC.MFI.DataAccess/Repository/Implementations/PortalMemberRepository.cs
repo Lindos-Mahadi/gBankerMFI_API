@@ -19,7 +19,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public async Task<PortalMember> CreatePortalMember(SignUpModel signUp)
         {
 
-            var year = signUp.DOB.AddYears(-DateTime.Now.Year).Year;
+            int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+            int dob = int.Parse(signUp.DOB.ToString("yyyyMMdd"));
+            int age = (now - dob) / 10000;
             BeginTransaction();
             var portalMember = new PortalMember()
             {
@@ -42,7 +44,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                EducationQualification = signUp.EducationQualification,
                 ApprovalStatus = false,
                 DOB= signUp.DOB,
-                MemberAge = year,
+                MemberAge = age,
                 District = signUp.District,
                 Division= signUp.Division,
                 Upazilla = signUp.Upazilla,
