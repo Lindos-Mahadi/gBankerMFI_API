@@ -107,6 +107,10 @@ namespace GC.MFI.WebApi
             // Member Dependancy
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IMemberService, MemberService>();
+            
+            // Upozilla Dependancy
+            services.AddScoped<IUpozillaRepository, UpozillaRepository>();
+            services.AddScoped<IUpozillaService, UpozillaService>();
 
             services.Configure<FormOptions>(o =>
             {
