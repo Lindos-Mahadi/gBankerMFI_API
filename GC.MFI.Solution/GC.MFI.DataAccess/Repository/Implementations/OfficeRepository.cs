@@ -13,7 +13,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
     public class OfficeRepository :  IOfficeRepository
     {
         private readonly GBankerDbContext _context;
-        public OfficeRepository( GBankerDbContext context) 
+        public OfficeRepository(GBankerDbContext context) 
         {
             this._context = context;
         }
@@ -22,8 +22,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
             if (!String.IsNullOrEmpty(search))
             {
-               var officeList =  _context.Office.Where(t=> t.OfficeCode!.Contains(search) || t.OfficeName.Trim().Replace(" ", "").ToUpper()!.Contains(search.Trim().Replace(" ", "").ToUpper())).Take(0).Skip(10);
-               return officeList;
+               var officeList =  _context.Office.Where(t=> t.OfficeCode!.Contains(search) || t.OfficeName.Trim().Replace(" ", "").ToUpper()!.Contains(search.Trim().Replace(" ", "").ToUpper()));
+               return officeList.Skip(0).Take(10);
             }
             return _context.Office.Skip(0).Take(10);
         }
