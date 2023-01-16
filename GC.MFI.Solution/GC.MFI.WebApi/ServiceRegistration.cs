@@ -115,6 +115,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IUpozillaRepository, UpozillaRepository>();
             services.AddScoped<IUpozillaService, UpozillaService>();
 
+            // District Dependancy
+            services.AddScoped<IDistrictRepository, DistrictRepository>();
+            services.AddScoped<IDistrictService, DistrictService>();
+
             services.Configure<FormOptions>(o =>
             {
                 o.ValueLengthLimit = int.MaxValue;
