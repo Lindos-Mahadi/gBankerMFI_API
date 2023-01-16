@@ -38,9 +38,12 @@ namespace GC.MFI.Services.Modules.Security.Implementations
 
         public async Task<SignUpResponse> Create(SignUpModel model)
         {
-            if (model != null)
+
+            var identity = new ApplicationUser();
+            identity = UserManager.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+            if (model != null && identity == null)
             {
-                var PortalMemberId = await _repository.CreatePortalMember(model);
+                var PortalMember = await _repository.CreatePortalMember(model);
                 var user = new ApplicationUser() { 
                     UserName = model.UserName,
                     EmployeeID = 1,
@@ -49,7 +52,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     Email = model.Email, 
                     DateCreated = DateTime.Now, 
                     Activated = false,
-                    PortalMemberID = PortalMemberId
+                    PortalMemberID = PortalMember.Id
                 };
 
                 var result = await UserManager.CreateAsync( user, model.Password);
@@ -64,7 +67,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             }else
             {
 
-                throw new Exception("Please enter Valid Model.");
+                return new SignUpResponse { isSuccess = false , message= $"{identity.UserName} this user already created, please try another"};
             }
 
         }

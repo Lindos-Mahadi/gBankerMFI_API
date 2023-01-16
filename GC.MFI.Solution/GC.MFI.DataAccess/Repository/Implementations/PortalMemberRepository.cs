@@ -16,7 +16,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
         }
 
-        public async Task<long> CreatePortalMember(SignUpModel signUp)
+        public async Task<PortalMember> CreatePortalMember(SignUpModel signUp)
         {
 
             var year = signUp.DOB.AddYears(-DateTime.Now.Year).Year;
@@ -55,7 +55,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             };
             DataContext.Add(portalMember);
             CommitTransaction();
-            return portalMember.Id;
+            return portalMember;
 
         }
     }

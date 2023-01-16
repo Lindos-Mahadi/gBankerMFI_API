@@ -6,6 +6,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IPortalMemberRepository : IRepository<PortalMember>
     {
-        Task<long> CreatePortalMember(SignUpModel signUp);
+        Task<PortalMember> CreatePortalMember(SignUpModel signUp);
     }
 }
