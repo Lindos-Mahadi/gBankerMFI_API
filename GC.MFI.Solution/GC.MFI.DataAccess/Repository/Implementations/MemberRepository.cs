@@ -30,10 +30,14 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             _context.Remove(id);
         }
 
-        public async Task<IEnumerable<Member>> GetAll()
+        public async Task<IEnumerable<Member>> GetAll(string search)
         {
-            var getMember = _context.Member.Skip(0).Take(10);
-            return getMember;
+            if(!string.IsNullOrEmpty(search))
+            {
+                var memberList = _context.Member.Where(t => t.MemberCode!.Contains(search));
+                return memberList.Skip(0).Take(10);
+            }
+            return _context.Member.Skip(0).Take(10);
         }
 
         public Member GetById(long id)

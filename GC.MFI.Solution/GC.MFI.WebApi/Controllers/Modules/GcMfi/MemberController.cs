@@ -22,11 +22,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpGet]
         [Route("getall")]
-        public async Task<IEnumerable<Member>> GetAll()
+        public async Task<IEnumerable<Member>> GetAll(string? search)
         {
             try
             {
-                var memberList = await _service.GetAll();
+                var memberList = await _service.GetAll(search);
                 return memberList;
             }
             catch (Exception ex)

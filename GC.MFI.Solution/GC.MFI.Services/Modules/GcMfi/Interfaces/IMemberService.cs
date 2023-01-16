@@ -9,7 +9,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IMemberService
     {
-        Task<IEnumerable<Member>> GetAll();
+        Task<IEnumerable<Member>> GetAll(string search);
         Member GetById(long id);
         Member Create(Member mModel);
         void Update(Member mModel);

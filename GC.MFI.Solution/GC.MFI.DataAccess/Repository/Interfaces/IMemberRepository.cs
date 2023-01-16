@@ -13,7 +13,7 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IMemberRepository 
     {
-        Task<IEnumerable<Member>> GetAll();
+        Task<IEnumerable<Member>> GetAll(string search);
         //IEnumerable<Member> GetAll();
         Member GetById(long id);
         Member Create(Member mModel);

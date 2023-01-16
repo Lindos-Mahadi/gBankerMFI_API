@@ -29,9 +29,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             _repository.Delete(id);
         }
 
-        public async Task<IEnumerable<Member>> GetAll()
+        public async Task<IEnumerable<Member>> GetAll(string search)
         {
-            var memberList = await _repository.GetAll();
+            var memberList = await _repository.GetAll(search);
             //memberList.OrderByDescending(l => l.CreateDate);
             //if (search != null)
             //    memberList = memberList.Where(t => t.FirstName.ToUpper()!.Contains(search.ToUpper()) || t.LastName.ToUpper()!.Contains(search.ToUpper()));
