@@ -17,7 +17,7 @@ namespace GC.MFI.Models.DbModels
         [Required]
         public string CountryShortCode { get; set; }
         [Required]
-        public bool? isoCode3 { get; set; }
+        public string isoCode3 { get; set; }
         [Required]
         public bool Status { get; set; }
 

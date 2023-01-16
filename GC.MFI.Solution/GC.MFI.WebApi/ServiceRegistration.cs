@@ -107,6 +107,9 @@ namespace GC.MFI.WebApi
             // Member Dependancy
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IMemberService, MemberService>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICountryService, CountryService>();
+
             
             // Upozilla Dependancy
             services.AddScoped<IUpozillaRepository, UpozillaRepository>();

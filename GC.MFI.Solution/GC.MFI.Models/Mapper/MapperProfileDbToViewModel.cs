@@ -24,6 +24,7 @@ namespace GC.MFI.Models.Mapper
 
             // Member ViewModel
             CreateMap<Member, MemberViewModel>();
+            CreateMap<Country, CountryViewModel>();
         }
     }
 }
