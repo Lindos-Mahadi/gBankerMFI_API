@@ -10,5 +10,6 @@ namespace GC.MFI.Services.Modules.Security.Interfaces
     {
         ApplicationUser Authenticate(string username, string password);
         Task<SignUpResponse> Create(SignUpModel model);
+        Task<bool> CheckUserName(string username);
     }
 }

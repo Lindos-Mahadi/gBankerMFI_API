@@ -67,6 +67,27 @@ namespace GC.MFI.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        [Route("checkusername")]
+        public async Task<bool> UserNameCheck(string username)
+        {
+            try {
+                if(ModelState.IsValid)
+                {
+                    var result = await authenticationService.CheckUserName(username);
+                    return result;
+                }else
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.Log(LogLevel.Error, ex.Message);
+                throw;
+
+            }
+        }
 
     }
 }

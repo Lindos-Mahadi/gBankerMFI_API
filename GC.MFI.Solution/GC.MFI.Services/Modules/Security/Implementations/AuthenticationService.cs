@@ -41,39 +41,18 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             if (model != null)
             {
                 var PortalMemberId = await _repository.CreatePortalMember(model);
-                var j = new ApplicationUser() { 
+                var user = new ApplicationUser() { 
                     UserName = model.UserName,
                     EmployeeID = 1,
-                    FirstName = "ABCD",
+                    FirstName = model.FirstName,
                     RoleId = 2,
                     Email = model.Email, 
                     DateCreated = DateTime.Now, 
                     Activated = false,
                     PortalMemberID = PortalMemberId
                 };
-                //var user = new ApplicationUser
-                //{
-                //    UserName = model.UserName,
-                //    Email = model.Email,
-                //    PhoneNumber = model.PhoneNumber,
-                //    FirstName = model.FirstName,
-                //    LastName = model.LastName,
-                //    Occupation = model.Occupation,
-                //    Address = model.Address,
-                //    NidPic = model.NidPic,
-                //    MemberCode = model.MemberCode,
-                //    OfficeID = model.OfficeID,
-                //    GroupID = model.GroupID,
-                //    CenterID = model.CenterID,
-                //    JoinDate = model.JoinDate,
-                //    Gender = model.Gender,
-                //    MemberStatus = "A",
-                //    MemberCategoryID = model.MemberCategoryID,
-                //    OrgID = model.OrgID,
-                //    CreateUser = model.CreateUser,
-                //    CreateDate = DateTime.Now
-                //};
-                var result = await UserManager.CreateAsync( j, model.Password);
+
+                var result = await UserManager.CreateAsync( user, model.Password);
                 if(result.Succeeded)
                 {
                     return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
@@ -88,6 +67,14 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 throw new Exception("Please enter Valid Model.");
             }
 
+        }
+        public async Task<bool> CheckUserName(string username)
+        {
+            var identity = new ApplicationUser();
+            identity = UserManager.Users.Where(u => u.UserName == username).FirstOrDefault();
+            if (identity == null)
+                return true;
+            return false;
         }
     }
 }
