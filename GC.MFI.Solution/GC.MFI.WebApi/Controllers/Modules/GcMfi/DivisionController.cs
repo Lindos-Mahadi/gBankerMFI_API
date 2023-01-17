@@ -27,7 +27,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
         [HttpGet]
         [Route("getall")]
-        public async Task<List<Division>> GetDivisionList()
+        public async Task<List<Division>> GetDivisionList(string? search)
         {
             try
             {
@@ -41,6 +41,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                                     new Division() { DivisionCode = "7", DivisionName = "7 Rangpur" },
                                     new Division() { DivisionCode = "8", DivisionName = "8 Mymensingh" }
                                     };
+                if(!String.IsNullOrEmpty(search))
+                {
+                    var list = divisionList.Where(t=> t.DivisionName.ToUpper()!.Contains(search.ToUpper()));
+                    return list.ToList();
+                }
                 return divisionList;
             }
             catch (Exception ex)
