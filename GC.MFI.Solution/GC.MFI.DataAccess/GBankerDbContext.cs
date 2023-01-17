@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GC.MFI.DataAccess
 {
@@ -27,6 +28,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<Country> Country { get; set; }
        
         public virtual DbSet<Upozilla> Upozillas { get; set; }
+        public virtual DbSet<Division> Division { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -206,5 +208,12 @@ namespace GC.MFI.DataAccess
 
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        // STORE PROCEDURE
+        //public static List<Division>? FindDivisionFromSql(GBankerDbContext context, string searchFor)
+        //{
+        //    return context?.Division?.FromSqlRaw($"Proc_GetLocationList {searchFor}").ToList();
+        //}
+
     }
 }
