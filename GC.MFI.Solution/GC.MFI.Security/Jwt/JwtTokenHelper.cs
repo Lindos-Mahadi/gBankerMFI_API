@@ -8,6 +8,7 @@ using System.Text;
 using GC.MFI.Security.Models;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using System.Threading.Tasks;
+using GC.MFI.Models;
 
 namespace GC.MFI.Security.Jwt
 {
@@ -26,7 +27,7 @@ namespace GC.MFI.Security.Jwt
             throw new NotImplementedException();
         }
 
-        public  Tokens Authenticate(AuthenticationModel user)
+        public  Tokens Authenticate(AuthenticationModel user, AzureAD CRMConnection)
         {
             var userModel =  _authenticationService.Authenticate(user.UserId, user.Password);
             if (userModel == null)

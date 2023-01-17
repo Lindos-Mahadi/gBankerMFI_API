@@ -123,8 +123,12 @@ namespace GC.MFI.WebApi
             services.AddScoped<IDistrictRepository, DistrictRepository>();
             services.AddScoped<IDistrictService, DistrictService>();
 
+
             // NID Dependancy
             services.AddScoped<INIDService, NIDService>();
+
+            services.AddScoped<IDivisionRepository, DivisionRepository>();
+            services.AddScoped<IDivisionService, DivisionService>();
 
             // Union Dependancy
             services.AddScoped<IUnionRepository, UnionRepository>();

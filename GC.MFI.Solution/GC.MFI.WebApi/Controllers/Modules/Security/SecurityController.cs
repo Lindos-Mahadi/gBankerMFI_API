@@ -7,6 +7,7 @@ using GC.MFI.Security.Models;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 
 namespace GC.MFI.Controllers
 {
@@ -16,16 +17,18 @@ namespace GC.MFI.Controllers
     {
         private IJwtTokenHelper authenticationHelper { get; }
         private IAuthenticationService authenticationService { get; }
+        private IConfiguration Configuration { get; }
+        private AzureAD AdSettings;
 
         private readonly ILogger<SecurityController> _logger;
-        public SecurityController(
-            IJwtTokenHelper _authenticationHelper, 
-            ILogger<SecurityController> logger, 
-            IAuthenticationService authenticationService
-            )
-        {            
+        public SecurityController( IJwtTokenHelper _authenticationHelper, IConfiguration configuration, ILogger<SecurityController> logger, IAuthenticationService authenticationService)
+        {
+            this.Configuration = configuration;
             this.authenticationHelper = _authenticationHelper;
             this.authenticationService = authenticationService;
+            var settings = new AzureAD();
+            Configuration.Bind("AzureAD", settings);
+            AdSettings = settings;
             this._logger = logger;
         }
 
@@ -37,7 +40,7 @@ namespace GC.MFI.Controllers
             {
                 if (securityModel == null)
                     throw new Exception("Please enter userid and password to authenticate.");
-                return   authenticationHelper.Authenticate(securityModel);
+                return   authenticationHelper.Authenticate(securityModel, AdSettings);
             }
             catch (Exception ex)
             {

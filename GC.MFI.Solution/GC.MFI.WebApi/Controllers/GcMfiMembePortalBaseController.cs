@@ -1,11 +1,12 @@
 ﻿using GC.MFI.Models.DbModels;
 using GC.MFI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XenterSolution.Models.ViewModels;
 
 namespace GC.MFI.WebApi.Controllers
 {
-    //[Authorize]
+   // [Authorize]
     [ApiController]
     public class GcMfiMembePortalBaseController<TViewModel, TDbModel> : ControllerBase
         where TViewModel : IViewModelBase
