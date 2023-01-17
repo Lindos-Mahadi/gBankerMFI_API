@@ -123,6 +123,7 @@ namespace GC.MFI.WebApi
             // District Dependancy
             services.AddScoped<IDistrictRepository, DistrictRepository>();
             services.AddScoped<IDistrictService, DistrictService>();
+            services.AddScoped<INIDService, NIDService>();
 
             services.Configure<FormOptions>(o =>
             {
