@@ -51,8 +51,6 @@ namespace GC.MFI.WebApi
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
             services.AddControllersWithViews();
 
-       
-
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
                 opt.TokenLifespan = TimeSpan.FromHours(2));
           

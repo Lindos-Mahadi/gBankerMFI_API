@@ -69,7 +69,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             }else
             {
 
-                return new SignUpResponse { isSuccess = false , message= $"{identity.UserName} this user already created, please try another"};
+                return new SignUpResponse { isSuccess = false , message= $"{identity.UserName} already exist"};
             }
 
         }
