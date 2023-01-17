@@ -2,7 +2,7 @@
 using GC.MFI.Services.Modules.GcMfi.Implementations;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Services.Modules.Security.Interfaces;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
@@ -16,6 +16,15 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             this._logger = logger;
             this._service = service;
+        }
+
+        [HttpGet]
+        [Route("getdistrictbydivisionid")]
+        public async Task<IEnumerable<District>> GetDistrictByDivisionId(int divisionId)
+        {
+            var getDistrict =  _service.GetMany(t => t.DivisionID == divisionId).AsEnumerable();
+            return getDistrict;
+
         }
     }
 }
