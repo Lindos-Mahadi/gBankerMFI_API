@@ -31,8 +31,8 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             _context = context;
         }
         [HttpGet]
-        [Route("getall")]
-        public async Task<List<Division>> GetDivisionList(string? countryId)
+        [Route("getdivisionlistbycountry")]
+        public async Task<List<Division>> GetDivisionListByCountry(string? countryId)
         {
             try
             {
