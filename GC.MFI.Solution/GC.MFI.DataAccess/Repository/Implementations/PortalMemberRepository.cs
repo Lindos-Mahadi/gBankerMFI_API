@@ -36,6 +36,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 OrgID = signUp.OrgID,
                 FirstName = signUp.FirstName,
                 LastName = signUp.LastName,
+                FatherName = signUp.FatherName,
+                MotherName = signUp.MotherName,
                 Email = signUp.Email,
                 Occupation = signUp.Occupation,
                 Address = signUp.Address,
