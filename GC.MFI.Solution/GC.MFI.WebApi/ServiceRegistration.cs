@@ -110,10 +110,11 @@ namespace GC.MFI.WebApi
             // Member Dependancy
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IMemberService, MemberService>();
+
+            // Country Dependancy
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICountryService, CountryService>();
 
-            
             // Upozilla Dependancy
             services.AddScoped<IUpozillaRepository, UpozillaRepository>();
             services.AddScoped<IUpozillaService, UpozillaService>();
@@ -121,7 +122,13 @@ namespace GC.MFI.WebApi
             // District Dependancy
             services.AddScoped<IDistrictRepository, DistrictRepository>();
             services.AddScoped<IDistrictService, DistrictService>();
+
+            // NID Dependancy
             services.AddScoped<INIDService, NIDService>();
+
+            // Union Dependancy
+            services.AddScoped<IUnionRepository, UnionRepository>();
+            services.AddScoped<IUnionService, UnionService>();
 
             services.Configure<FormOptions>(o =>
             {
