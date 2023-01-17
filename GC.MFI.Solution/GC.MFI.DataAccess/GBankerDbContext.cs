@@ -208,6 +208,7 @@ namespace GC.MFI.DataAccess
                 .Property(e => e.CreateUser)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Division>().HasNoKey();
 
             OnModelCreatingPartial(modelBuilder);
         }
