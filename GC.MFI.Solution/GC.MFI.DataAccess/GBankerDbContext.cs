@@ -28,6 +28,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<Country> Country { get; set; }
        
         public virtual DbSet<Upozilla> Upozillas { get; set; }
+        public virtual DbSet<District> District { get; set; }
         public virtual DbSet<Division> Division { get; set; }
 
 
@@ -202,6 +203,11 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<Upozilla>()
                 .Property(e => e.CreateUser)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<District>()
+                .Property(e => e.CreateUser)
+                .IsUnicode(false);
+
 
             OnModelCreatingPartial(modelBuilder);
         }

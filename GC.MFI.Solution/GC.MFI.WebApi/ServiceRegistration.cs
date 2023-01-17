@@ -42,11 +42,14 @@ namespace GC.MFI.WebApi
             {
                 options.SignIn.RequireConfirmedAccount = true;
                 //Other options go here
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
             services.AddControllersWithViews();
-
-       
 
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
                 opt.TokenLifespan = TimeSpan.FromHours(2));
@@ -114,6 +117,11 @@ namespace GC.MFI.WebApi
             // Upozilla Dependancy
             services.AddScoped<IUpozillaRepository, UpozillaRepository>();
             services.AddScoped<IUpozillaService, UpozillaService>();
+
+            // District Dependancy
+            services.AddScoped<IDistrictRepository, DistrictRepository>();
+            services.AddScoped<IDistrictService, DistrictService>();
+            services.AddScoped<INIDService, NIDService>();
 
             services.Configure<FormOptions>(o =>
             {
