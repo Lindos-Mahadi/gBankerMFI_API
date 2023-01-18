@@ -134,6 +134,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IUnionRepository, UnionRepository>();
             services.AddScoped<IUnionService, UnionService>();
 
+            // NIDLogging Dependancy
+            services.AddScoped<INIDLoggingRepository, NIDLoggingRepository>();
+            services.AddScoped<INIDLoggingService, NIDLoggingService>();
+
             services.Configure<FormOptions>(o =>
             {
                 o.ValueLengthLimit = int.MaxValue;
