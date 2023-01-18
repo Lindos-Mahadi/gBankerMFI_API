@@ -8,6 +8,7 @@ using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Security.Jwt;
+using GC.MFI.Security.Models;
 using GC.MFI.Services.Modules.BntPos.Implementations;
 using GC.MFI.Services.Modules.BntPos.Interfaces;
 using GC.MFI.Services.Modules.Email.Implementations;
@@ -54,9 +55,9 @@ namespace GC.MFI.WebApi
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
                 opt.TokenLifespan = TimeSpan.FromHours(2));
           
-            var settings = new AzureAD();
-            Configuration.Bind("AzureAD", settings);
-            var key = Encoding.ASCII.GetBytes(settings.ClientSecret);
+            var settings = new JWT();
+            Configuration.Bind("JWT", settings);
+            var key = Encoding.UTF8.GetBytes(settings.SecretKey);
 
             services.AddAuthentication(x =>
             {

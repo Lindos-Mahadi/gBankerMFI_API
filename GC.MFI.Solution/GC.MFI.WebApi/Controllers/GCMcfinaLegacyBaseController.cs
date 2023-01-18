@@ -2,11 +2,13 @@
 using GC.MFI.Models.DbModels.BaseModels;
 using GC.MFI.Services;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XenterSolution.Models.ViewModels;
 
 namespace GC.MFI.WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     public class GCMcfinaLegacyBaseController<TDbModel> : ControllerBase
         where TDbModel : class, ILegacyDbModelBase
