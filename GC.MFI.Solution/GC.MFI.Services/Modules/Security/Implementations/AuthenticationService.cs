@@ -60,6 +60,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 var result = await UserManager.CreateAsync( user, model.Password);
                 if(result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user, "Admin");
                     return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
                 }else
                 {
