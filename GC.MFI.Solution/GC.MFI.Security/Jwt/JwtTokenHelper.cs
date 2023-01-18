@@ -36,7 +36,7 @@ namespace GC.MFI.Security.Jwt
             }
             // Else we generate JSON Web Token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(connection.ClientSecret);
+            var tokenKey = Encoding.UTF8.GetBytes(jwt.SecretKey);
             var roles = JsonConvert.SerializeObject("Admin");
             var permissions = new List<UserPermissionSet>();
             //if (userModel.Roles != null)

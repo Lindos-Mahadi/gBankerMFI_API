@@ -5,6 +5,7 @@ using GC.MFI.Models.Modules.Security;
 using GC.MFI.Security.Jwt;
 using GC.MFI.Security.Models;
 using GC.MFI.Services.Modules.Security.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
@@ -31,7 +32,7 @@ namespace GC.MFI.Controllers
             AdSettings = settings;
             this._logger = logger;
         }
-
+        
         [HttpPost]
         [Route("Authenticate")]
         public Tokens Authenticate(AuthenticationModel securityModel)
@@ -48,7 +49,7 @@ namespace GC.MFI.Controllers
                 throw;
             }
         }
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("signup")]
         public async Task<SignUpResponse> SignUp(SignUpModel model)
@@ -70,6 +71,7 @@ namespace GC.MFI.Controllers
                 throw;
             }
         }
+        [AllowAnonymous]
         [HttpGet]
         [Route("checkusername")]
         public async Task<bool> UserNameCheck(string username)
