@@ -27,7 +27,7 @@ namespace GC.MFI.Security.Jwt
             throw new NotImplementedException();
         }
 
-        public  Tokens Authenticate(AuthenticationModel user, AzureAD CRMConnection)
+        public  Tokens Authenticate(AuthenticationModel user, AzureAD connection)
         {
             var userModel =  _authenticationService.Authenticate(user.UserId, user.Password);
             if (userModel == null)
@@ -36,7 +36,7 @@ namespace GC.MFI.Security.Jwt
             }
             // Else we generate JSON Web Token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(jwt.Key);
+            var tokenKey = Encoding.UTF8.GetBytes(connection.ClientSecret);
             var roles = JsonConvert.SerializeObject("Admin");
             var permissions = new List<UserPermissionSet>();
             //if (userModel.Roles != null)
