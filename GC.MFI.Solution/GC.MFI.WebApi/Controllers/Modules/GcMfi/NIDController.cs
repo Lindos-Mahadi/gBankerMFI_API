@@ -24,35 +24,35 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             try
             {
-                //return await nIDService.GetNIDInfo(req);
-                return new NIDVerificationResponse
-                {
-                    data = new Data
-                    {
-                        nid = new Nid
-                        {
-                            fullNameEN = "MD asd asd",
-                            fathersNameEN = "Md asd",
-                            mothersNameEN = "Mrs asdas",
-                            spouseNameEN = "",
-                            presentAddressEN = "asdasd",
-                            permenantAddressEN = "asdasd",
-                            fullNameBN = "মোঃ আসিফুল আরেফিন",
-                            fathersNameBN = "মোঃ আব্দুল হক",
-                            mothersNameBN = "",
-                            spouseNameBN = "",
-                            presentAddressBN = "",
-                            permanentAddressBN = "",
-                            gender = "male",
-                            profession = "service",
-                            //dateOfBirth = "1995-01-06T00:00:00",
-                            nationalIdNumber = "",
-                            oldNationalIdNumber = "",
-                            photoUrl = ""
-                        }
-                    },
-                    errors = new List<Error>()
-                };
+                return await nIDService.GetNIDInfo(req);
+                //return new NIDVerificationResponse
+                //{
+                //    data = new Data
+                //    {
+                //        nid = new Nid
+                //        {
+                //            fullNameEN = "MD asd asd",
+                //            fathersNameEN = "Md asd",
+                //            mothersNameEN = "Mrs asdas",
+                //            spouseNameEN = "",
+                //            presentAddressEN = "asdasd",
+                //            permenantAddressEN = "asdasd",
+                //            fullNameBN = "মোঃ আসিফুল আরেফিন",
+                //            fathersNameBN = "মোঃ আব্দুল হক",
+                //            mothersNameBN = "",
+                //            spouseNameBN = "",
+                //            presentAddressBN = "",
+                //            permanentAddressBN = "",
+                //            gender = "male",
+                //            profession = "service",
+                //            //dateOfBirth = "1995-01-06T00:00:00",
+                //            nationalIdNumber = "",
+                //            oldNationalIdNumber = "",
+                //            photoUrl = ""
+                //        }
+                //    },
+                //    errors = new List<Error>()
+                //};
             }
             catch(Exception ex)
             {
