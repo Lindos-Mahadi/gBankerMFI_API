@@ -27,7 +27,7 @@ namespace GC.MFI.Security.Jwt
             throw new NotImplementedException();
         }
 
-        public  Tokens Authenticate(AuthenticationModel user, AzureAD connection)
+        public  Tokens Authenticate(AuthenticationModel user)
         {
             var userModel =  _authenticationService.Authenticate(user.UserId, user.Password);
             if (userModel == null)
