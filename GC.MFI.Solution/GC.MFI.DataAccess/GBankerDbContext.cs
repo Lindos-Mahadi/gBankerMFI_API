@@ -30,6 +30,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<Upozilla> Upozillas { get; set; }
         public virtual DbSet<District> District { get; set; }
         public virtual DbSet<Division> Division { get; set; }
+        public virtual DbSet<Union> Union { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
