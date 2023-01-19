@@ -151,6 +151,11 @@ namespace GC.MFI.WebApi
             services.AddScoped<IMemberPassBookRegisterRepository, MemberPassBookRegisterRepository>();
             services.AddScoped<IMemberPassBookRegisterService, MemberPassBookRegisterService>();
 
+            // Investor Dependancy
+            services.AddScoped<IInvestorRepository, InvestorRepository>();
+            services.AddScoped<IInvestorService, InvestorService>();
+
+
             services.Configure<FormOptions>(o =>
             {
                 o.ValueLengthLimit = int.MaxValue;

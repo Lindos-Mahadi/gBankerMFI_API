@@ -41,6 +41,8 @@ namespace GC.MFI.DataAccess
 
         public virtual DbSet<MemberPassBookRegister> MemberPassBookRegister { get; set; }
 
+        public virtual DbSet<Investor> Investor { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
