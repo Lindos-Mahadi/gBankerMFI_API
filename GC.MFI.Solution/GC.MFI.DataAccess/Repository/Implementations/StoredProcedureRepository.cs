@@ -56,5 +56,24 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 throw;
             }
         }
+
+        public async Task<List<MainProduct>> GetMainProductList(string PaymentFrequecy, int officeId)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@PaymentFrq", PaymentFrequecy));
+                parameter.Add(new SqlParameter("@OfficeID", officeId));
+
+                var result = await Task.Run(() => _context.MainProduct
+                .FromSqlRaw(@"exec getMainProductListAccordingToOffice @PaymentFrq, @OfficeID", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

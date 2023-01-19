@@ -11,5 +11,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     {
         Task<List<Division>> GetDivisionByCountry(string countryId);
         Task<List<Center>> GetCenterListByOffice(int officeId);
+        Task<List<MainProduct>> GetMainProductList(string PaymentFrequecy, int officeId);
     }
 }

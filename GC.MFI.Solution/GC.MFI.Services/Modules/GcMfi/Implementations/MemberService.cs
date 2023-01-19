@@ -31,5 +31,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var updateMember = await _repository.UpdateMember(member);
             return updateMember;
         }
+        public async Task<Member> GetMemberByPortalId(long portalMemberId)
+        {
+            var memeber = await _repository.GetMemberByPortalId(portalMemberId);
+            return memeber;
+        }
     }
 }
