@@ -147,6 +147,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IPurposeRepository, PurposeRepository>();
             services.AddScoped<IPurposeService, PurposeService>();
 
+            // NIDLogging Dependancy
+            services.AddScoped<IMemberPassBookRegisterRepository, MemberPassBookRegisterRepository>();
+            services.AddScoped<IMemberPassBookRegisterService, MemberPassBookRegisterService>();
+
             services.Configure<FormOptions>(o =>
             {
                 o.ValueLengthLimit = int.MaxValue;
