@@ -1,5 +1,6 @@
 ﻿
 using GC.MFI.Models.DbModels;
+using GC.MFI.Services.Modules.GcMfi.Implementations;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
@@ -12,15 +13,18 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     {
         private readonly ILogger<LoanProposalController> _logger;
         private readonly IStoredProcedureService _storedProcedureService;
-        private readonly IPurposeService purposeService;
+        private readonly IPurposeService _purposeService;
+
 
         public LoanProposalController(
             ILogger<LoanProposalController> logger,
-            IStoredProcedureService storedProcedureService, IPurposeService purposeService)
+            IStoredProcedureService storedProcedureService,
+            IPurposeService purposeService
+            )
         {
             _logger= logger;
             _storedProcedureService = storedProcedureService; 
-            this.purposeService= purposeService;
+            _purposeService= purposeService;
         }
         
         [HttpGet]
@@ -64,6 +68,33 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpGet]
+        [Route("GetSubMainProductList")]
+        public async Task<List<SubMainProduct>> GetSubMainProductList(string MainProductCode, string freq)
+        {
+            try
+            {
+                return await _storedProcedureService.GetSubMainProdutList(MainProductCode, freq);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        [HttpGet]
+        [Route("GetProductList")]
+        public async Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId)
+        {
+            try
+            {
+                return await _storedProcedureService.GetProductList(MainProductCode, freq, officeId);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
         [Route("GetMainProductList")]
         public async Task<List<MainProduct>> GetMainProductList(string FreqId, int OfficeId)
         {
@@ -81,7 +112,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         [Route("GetAllPurposeByName")]
         public async Task<IEnumerable<Purpose>> GetAllPurposeByName(string? search)
         {
-            var purposeList = await purposeService.GetAllPurpose(search);
+            var purposeList = await _purposeService.GetAllPurpose(search);
             return purposeList;
         }
     }
