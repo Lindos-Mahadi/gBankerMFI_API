@@ -30,6 +30,12 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             return DataContext.Member.Skip(0).Take(10);
         }
 
+        public async Task<Member> GetMemberByPortalId(long portalMemberId)
+        {
+            var member = DataContext.Member.Where(t => t.PortalMemberId == portalMemberId).FirstOrDefault();
+            return member;
+        }
+
         public async Task<Member> UpdateMember(Member member)
         {
             var upM =  DataContext.Member.Find(member.MemberID);

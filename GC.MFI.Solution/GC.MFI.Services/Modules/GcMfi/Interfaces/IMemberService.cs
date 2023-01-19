@@ -11,5 +11,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     {
         Task<IEnumerable<Member>> GetAllMember(string search);
         Task<Member> UpdateMember(Member member);
+
+        Task<Member> GetMemberByPortalId(long portalMemberId);
     }
 }
