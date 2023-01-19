@@ -28,7 +28,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             _logger = logger;
         }
         [HttpGet]
-        [Route("getCenterlistbycountry")]
+        [Route("getCenterlistbyOffice")]
         public async Task<List<Center>> GetCenterByOffice(int officeId)
         {
             try
