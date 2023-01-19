@@ -139,6 +139,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<INIDLoggingRepository, NIDLoggingRepository>();
             services.AddScoped<INIDLoggingService, NIDLoggingService>();
 
+            // Portal Loan Summary Dependancy
+            services.AddScoped<IPortalLoanSummaryRepository, PortalLoanSummaryRepository>();
+            services.AddScoped<IPortalLoanSummaryService, PortalLoanSummaryService>();
+
             // NIDLogging Dependancy
             services.AddScoped<IMemberPassBookRegisterRepository, MemberPassBookRegisterRepository>();
             services.AddScoped<IMemberPassBookRegisterService, MemberPassBookRegisterService>();

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using GC.MFI.Models.DbModels.BaseModels;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GC.MFI.Models.DbModels
 {
     [Table("PortalLoanSummary")]
-    public partial class PortalLoanSummary
+    public partial class PortalLoanSummary : LegacyDbModelBase, ILegacyDbModelBase
     {
         [Key]
         public long LoanSummaryID { get; set; }

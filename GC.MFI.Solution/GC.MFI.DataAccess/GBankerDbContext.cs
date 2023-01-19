@@ -34,6 +34,8 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<NIDLogging> NIDLogging { get; set; }
         public virtual DbSet<Center> Center { get; set; }
         public virtual DbSet<MainProduct> MainProduct { get; set; }
+        public virtual DbSet<SubMainProduct> SubMainProduct { get; set; }
+        public virtual DbSet<ProductList> ProductList { get; set; }
 
         public virtual DbSet<MemberPassBookRegister> MemberPassBookRegister { get; set; }
 
@@ -216,6 +218,8 @@ namespace GC.MFI.DataAccess
 
             modelBuilder.Entity<Division>().HasNoKey();
             modelBuilder.Entity<MainProduct>().HasNoKey();
+            modelBuilder.Entity<SubMainProduct>().HasNoKey();
+            modelBuilder.Entity<ProductList>().HasNoKey();
           // modelBuilder.Entity<NIDLogging>().0();
 
             OnModelCreatingPartial(modelBuilder);
