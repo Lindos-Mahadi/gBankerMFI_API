@@ -11,7 +11,7 @@ namespace GC.MFI.Security
 {
     public interface IAuthenticationProvider
     {
-        Tokens Authenticate(AuthenticationModel user);
+        Task<Tokens> Authenticate(AuthenticationModel user);
         Tokens GenerateRefreshToken(string userName);
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
     }
