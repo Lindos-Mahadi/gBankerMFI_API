@@ -12,6 +12,7 @@ using GC.MFI.Models;
 using GC.MFI.Models.Modules.Distributions.Security;
 using Microsoft.AspNetCore.Identity;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using System.Data;
 
 namespace GC.MFI.Security.Jwt
 {
@@ -54,22 +55,34 @@ namespace GC.MFI.Security.Jwt
             claims.Add(new Claim("email", userModel.Email));
             claims.Add(new Claim("userName", userModel.UserName));
             claims.Add(new Claim("id", userModel.Id));
-            claims.Add(new Claim("Activated", userModel.Activated.ToString()));
             if(userModel.PortalMemberID != null)
             {
                 long id = (long)userModel.PortalMemberID;
                 var Member = await memberService.GetMemberByPortalId(id) ;
                 if(Member != null)
-                    claims.Add(new Claim("MemberId", Member.MemberID.ToString()));
-            }    
-            if (roles != null)
-            {
-                foreach (var role in roles)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
-                }
+                    claims.Add(new Claim("MemberId", Member.MemberID.ToString()));
+                    claims.Add(new Claim("Member Status", Member.MemberStatus.ToString()));
+                    int status = Int32.Parse(Member.MemberStatus);
+                    if (status > 0)
+                    {
+                        if (roles != null)
+                        {
+                            foreach (var role in roles)
+                            {
+                                claims.Add(new Claim(ClaimTypes.Role, role));
+                            }
 
-            };
+                        };
+                    }else
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, "UnActive"));
+                    }
+                }
+              
+                
+            }    
+           
 
             //if (userModel.Roles != null)
             //{
