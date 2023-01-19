@@ -28,7 +28,7 @@ namespace GC.MFI.Controllers
         
         [HttpPost]
         [Route("Authenticate")]
-        public Tokens Authenticate(AuthenticationModel securityModel)
+        public  Task<Tokens> Authenticate(AuthenticationModel securityModel)
         {
             try
             {
