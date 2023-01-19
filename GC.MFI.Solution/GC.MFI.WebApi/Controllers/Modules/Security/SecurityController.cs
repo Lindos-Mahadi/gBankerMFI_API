@@ -5,6 +5,7 @@ using GC.MFI.Models.Modules.Security;
 using GC.MFI.Security.Jwt;
 using GC.MFI.Security.Models;
 using GC.MFI.Services.Modules.Security.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
@@ -17,30 +18,23 @@ namespace GC.MFI.Controllers
     {
         private IJwtTokenHelper authenticationHelper { get; }
         private IAuthenticationService authenticationService { get; }
-        private IConfiguration Configuration { get; }
-        private AzureAD AdSettings;
-
         private readonly ILogger<SecurityController> _logger;
-        public SecurityController( IJwtTokenHelper _authenticationHelper, IConfiguration configuration, ILogger<SecurityController> logger, IAuthenticationService authenticationService)
+        public SecurityController( IJwtTokenHelper _authenticationHelper, ILogger<SecurityController> logger, IAuthenticationService authenticationService)
         {
-            this.Configuration = configuration;
             this.authenticationHelper = _authenticationHelper;
             this.authenticationService = authenticationService;
-            var settings = new AzureAD();
-            Configuration.Bind("AzureAD", settings);
-            AdSettings = settings;
             this._logger = logger;
         }
-
+        
         [HttpPost]
         [Route("Authenticate")]
-        public Tokens Authenticate(AuthenticationModel securityModel)
+        public  Task<Tokens> Authenticate(AuthenticationModel securityModel)
         {
             try
             {
                 if (securityModel == null)
                     throw new Exception("Please enter userid and password to authenticate.");
-                return   authenticationHelper.Authenticate(securityModel, AdSettings);
+                return   authenticationHelper.Authenticate(securityModel);
             }
             catch (Exception ex)
             {
@@ -48,7 +42,7 @@ namespace GC.MFI.Controllers
                 throw;
             }
         }
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("signup")]
         public async Task<SignUpResponse> SignUp(SignUpModel model)
@@ -70,6 +64,7 @@ namespace GC.MFI.Controllers
                 throw;
             }
         }
+        [AllowAnonymous]
         [HttpGet]
         [Route("checkusername")]
         public async Task<bool> UserNameCheck(string username)

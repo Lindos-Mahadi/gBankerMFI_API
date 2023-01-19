@@ -1,4 +1,6 @@
-﻿using GC.MFI.DataAccess;
+﻿using AutoMapper;
+using GC.MFI.DataAccess;
+using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
@@ -10,48 +12,24 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
-    public class MemberService : IMemberService
+    public class MemberService : LegacyServiceBase<Member>, IMemberService
     {
         private readonly IMemberRepository _repository;
-        public MemberService(IMemberRepository repository)
+        public MemberService(IMemberRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
-            this._repository = repository;
+            _repository = repository;
         }
 
-        public Member Create(Member mModel)
+        public async Task<IEnumerable<Member>> GetAllMember(string search)
         {
-            _repository.Save();
-            return _repository.Create(mModel);
-        }
-
-        public void Delete(long id)
-        {
-            _repository.Delete(id);
-        }
-
-        public async Task<IEnumerable<Member>> GetAll(string search)
-        {
-            var memberList = await _repository.GetAll(search);
-            //memberList.OrderByDescending(l => l.CreateDate);
-            //if (search != null)
-            //    memberList = memberList.Where(t => t.FirstName.ToUpper()!.Contains(search.ToUpper()) || t.LastName.ToUpper()!.Contains(search.ToUpper()));
+            var memberList = await _repository.GetAllMember(search);
             return memberList;
         }
 
-        public Member GetById(long id)
+        public async Task<Member> UpdateMember(Member member)
         {
-            
-            return _repository.GetById(id);
-        }
-
-        public void Save()
-        {
-            _repository.Save();
-        }
-
-        public void Update(Member mModel)
-        {
-            _repository.Update(mModel);
+            var updateMember = await _repository.UpdateMember(member);
+            return updateMember;
         }
     }
 }

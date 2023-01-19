@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GC.MFI.Models.DbModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,7 @@ using System.Xml.Linq;
 namespace GC.MFI.Models.DbModels
 {
     [Table("Member")]
-    public partial class Member 
+    public partial class Member : LegacyDbModelBase, ILegacyDbModelBase
     {
         //public Member()
         //{

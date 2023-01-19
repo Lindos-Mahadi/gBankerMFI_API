@@ -13,24 +13,24 @@ namespace GC.MFI.Services.Modules.Security.Implementations
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private UserManager<ApplicationUser> UserManager;
+        private UserManager<ApplicationUser> _userManager;
         private IPortalMemberRepository _repository;
 
-        public AuthenticationService(UserManager<ApplicationUser> _userManager, IPortalMemberRepository repository)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, IPortalMemberRepository repository)
         {
-            this.UserManager = _userManager;
+            this._userManager = userManager;
             this._repository = repository;
         }
         public ApplicationUser Authenticate(string username, string password)
         {
             var identity = new ApplicationUser();
-            identity = UserManager.Users.Where(u => u.UserName == username).FirstOrDefault();
+            identity = _userManager.Users.Where(u => u.UserName == username).FirstOrDefault();
           
             var isValidPassword = false;
             if (identity == null)
                 identity = null;
             if (identity != null)
-                isValidPassword = UserManager.CheckPasswordAsync(identity, password).GetAwaiter().GetResult();
+                isValidPassword = _userManager.CheckPasswordAsync(identity, password).GetAwaiter().GetResult();
             if (!isValidPassword)
                 identity = null;
             return identity;
@@ -40,7 +40,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
         {
 
             var identity = new ApplicationUser();
-            identity = UserManager.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+            identity = _userManager.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
             if (model != null && identity == null)
             {
                 var PortalMember = await _repository.CreatePortalMember(model);
@@ -49,7 +49,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     EmployeeID = 1,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    RoleId = 2,
+                    RoleId = 14,
                     Email = model.Email, 
                     DateCreated = DateTime.Now, 
                     Activated = false,
@@ -57,9 +57,10 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     PortalMemberID = PortalMember.Id
                 };
 
-                var result = await UserManager.CreateAsync( user, model.Password);
+                var result = await _userManager.CreateAsync( user, model.Password);
                 if(result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "PortalMember");
                     return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
                 }else
                 {
@@ -76,7 +77,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
         public async Task<bool> CheckUserName(string username)
         {
             var identity = new ApplicationUser();
-            identity = UserManager.Users.Where(u => u.UserName == username).FirstOrDefault();
+            identity = _userManager.Users.Where(u => u.UserName == username).FirstOrDefault();
             if (identity == null)
                 return true;
             return false;

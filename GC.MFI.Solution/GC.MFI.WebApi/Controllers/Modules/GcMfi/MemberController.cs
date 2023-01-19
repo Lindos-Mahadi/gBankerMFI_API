@@ -10,86 +10,45 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
     [Route("api/gcmfi/member")]
     [ApiController]
-    public class MemberController : ControllerBase
+    public class MemberController : GCMcfinaLegacyBaseController<Member>
     {
         private readonly ILogger<MemberController> _logger;
         private readonly IMemberService _service;
-        public MemberController(ILogger<MemberController> logger, IMemberService service)
+        public MemberController(ILogger<MemberController> logger, IMemberService service) : base(service)
         {
             _logger = logger;
             _service = service;
         }
 
         [HttpGet]
-        [Route("getall")]
-        public async Task<IEnumerable<Member>> GetAll(string? search)
+        [Route("GetMemberByFirstName")]
+        public async Task<IEnumerable<Member>> GetMemberByFirstName(string? search)
         {
             try
             {
-                var memberList = await _service.GetAll(search);
+                var memberList = await _service.GetAllMember(search);
                 return memberList;
             }
             catch (Exception ex)
             {
-                throw ex;
+                LogError(ex, null);
+                throw;
             }
         }
 
-        [HttpPost]
-        [Route("create")]
-        public virtual Member Create(Member objectToSave)
-        {
-            try
-            {
-                var result = _service.Create(objectToSave);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        [HttpGet]
-        [Route("getbyid")]
-        public virtual  Member GetById(long id)
-        {
-            try
-            {
-                var record =  _service.GetById(id);
-                return record;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         [HttpPatch]
-        [Route("edit")]
-        public virtual Member Edit(Member objectToSave)
+        [Route("UpdateMember")]
+        public async Task<Member> UpdateMember(Member member)
         {
             try
             {
-
-                _service.Update(objectToSave);
-                return objectToSave;
+                var updateMember = await _service.UpdateMember(member);
+                return updateMember;
             }
             catch (Exception ex)
             {
-                throw ex;
-            }
-        }
-        [HttpPost]
-        [Route("delete")]
-        public virtual ActionResult Delete(long id)
-        {
-            try
-            {
-                _service.Delete(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                LogError(ex, null);
+                throw;
             }
         }
     }

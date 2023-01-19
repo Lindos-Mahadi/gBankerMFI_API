@@ -30,6 +30,7 @@ builder.Services.Configure<JWT>(
 builder.Services.AddSingleton<IJWT>(serviceProvider =>
         serviceProvider.GetRequiredService<IOptions<JWT>>().Value);
 
+
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
@@ -88,6 +89,7 @@ app.UseSession();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

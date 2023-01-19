@@ -11,14 +11,9 @@ using GC.MFI.DataAccess.InfrastructureBase;
 
 namespace GC.MFI.DataAccess.Repository.Interfaces
 {
-    public interface IMemberRepository 
+    public interface IMemberRepository   : ILegacyRepository<Member>
     {
-        Task<IEnumerable<Member>> GetAll(string search);
-        //IEnumerable<Member> GetAll();
-        Member GetById(long id);
-        Member Create(Member mModel);
-        void Update(Member mModel);
-        void Delete(long id);
-        void Save();
+        Task<IEnumerable<Member>> GetAllMember(string search);
+        Task<Member> UpdateMember(Member member);
     }
 }

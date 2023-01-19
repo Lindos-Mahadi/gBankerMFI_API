@@ -9,6 +9,8 @@ using GC.MFI.Security.Models;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using System.Threading.Tasks;
 using GC.MFI.Models;
+using GC.MFI.Models.Modules.Distributions.Security;
+using Microsoft.AspNetCore.Identity;
 
 namespace GC.MFI.Security.Jwt
 {
@@ -16,18 +18,21 @@ namespace GC.MFI.Security.Jwt
     {
         private readonly IJWT jwt;
         private readonly IAuthenticationService _authenticationService;
+        private UserManager<ApplicationUser> _userManager;
 
-        public JwtTokenHelper(IJWT jwt, IAuthenticationService authenticationService)
+        public JwtTokenHelper(IJWT jwt, IAuthenticationService authenticationService, UserManager<ApplicationUser> userManager)
         {
             this.jwt = jwt;
             this._authenticationService = authenticationService;
+            this._userManager = userManager;
+            
         }
         public Tokens GenerateRefreshToken(string userName)
         {
             throw new NotImplementedException();
         }
 
-        public  Tokens Authenticate(AuthenticationModel user, AzureAD connection)
+        public async  Task<Tokens> Authenticate(AuthenticationModel user)
         {
             var userModel =  _authenticationService.Authenticate(user.UserId, user.Password);
             if (userModel == null)
@@ -36,9 +41,25 @@ namespace GC.MFI.Security.Jwt
             }
             // Else we generate JSON Web Token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(connection.ClientSecret);
-            var roles = JsonConvert.SerializeObject("Admin");
+            var tokenKey = Encoding.UTF8.GetBytes(jwt.SecretKey);
+            //var roles = JsonConvert.SerializeObject("Admin");
             var permissions = new List<UserPermissionSet>();
+            var roles = await _userManager.GetRolesAsync(userModel);
+            var claims = new List<Claim>();
+            //add static claims
+            claims.Add(new Claim("fullName", $"{userModel.UserName}"));
+            claims.Add(new Claim("email", userModel.Email));
+            claims.Add(new Claim("userName", userModel.UserName));
+            claims.Add(new Claim("id", userModel.Id));
+            if (roles != null)
+            {
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+
+            };
+
             //if (userModel.Roles != null)
             //{
             //    foreach (var role in userModel.Roles)
@@ -52,20 +73,26 @@ namespace GC.MFI.Security.Jwt
             //        }
             //    }
             //}
+
             var permissioJson = JsonConvert.SerializeObject(permissions);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[] {
-                new Claim("fullName", $"{userModel.UserName}"),
-                new Claim("email", userModel.Email),
-                new Claim("userName", userModel.UserName),
-                new Claim("id", userModel.Id),
-               // new Claim("rolesJson", roles),
-                new Claim("permissionsJson", permissioJson)
-              }),
-                Expires = DateTime.UtcNow.AddMinutes(480),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+              //  Subject = new ClaimsIdentity(new Claim[] {
+              //  new Claim("fullName", $"{userModel.UserName}"),
+              //  new Claim("email", userModel.Email),
+              //  new Claim("userName", userModel.UserName),
+              //  new Claim("id", userModel.Id),
+              //  new Claim("permissionsJson", permissioJson),
+              //  //new Claim(ClaimTypes.Role, "Admin" ),
+              //  //new Claim(ClaimTypes.Role, "Memeber")
+              //}),
+             Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddMinutes(480),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
+
+            
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };
         }

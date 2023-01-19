@@ -1,8 +1,12 @@
-﻿using GC.MFI.Models.Models;
+﻿using GC.MFI.DataAccess;
+using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Reflection;
+
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
@@ -12,10 +16,12 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     {
         private readonly ILogger<NIDController> logger;
         private readonly INIDService nIDService;
-        public NIDController(ILogger<NIDController> logger, INIDService nIDService)
+        private readonly INIDLoggingService loggingService;
+        public NIDController(ILogger<NIDController> logger, INIDService nIDService, INIDLoggingService loggingService)
         {
             this.logger = logger;
             this.nIDService = nIDService;
+            this.loggingService = loggingService;
         }
 
         [HttpPost]
@@ -58,7 +64,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 //    errors = new List<Error>()
                 //};
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //logger.Log(LogLevel.Error,  ex);
                 throw;

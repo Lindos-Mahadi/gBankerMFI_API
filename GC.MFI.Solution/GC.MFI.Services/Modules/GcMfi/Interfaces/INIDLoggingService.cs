@@ -1,4 +1,5 @@
 ﻿using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface IMemberService : ILegacyServiceBase<Member>
+    public interface INIDLoggingService : ILegacyServiceBase<NIDLogging>
     {
-        Task<IEnumerable<Member>> GetAllMember(string search);
-        Task<Member> UpdateMember(Member member);
     }
 }

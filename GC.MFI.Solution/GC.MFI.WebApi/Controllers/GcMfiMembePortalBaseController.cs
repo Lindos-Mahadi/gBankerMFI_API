@@ -6,7 +6,7 @@ using XenterSolution.Models.ViewModels;
 
 namespace GC.MFI.WebApi.Controllers
 {
-   // [Authorize]
+    [Authorize(Roles = "PortalMember, PortalAdmin")]
     [ApiController]
     public class GcMfiMembePortalBaseController<TViewModel, TDbModel> : ControllerBase
         where TViewModel : IViewModelBase
