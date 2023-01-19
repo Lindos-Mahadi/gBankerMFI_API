@@ -18,6 +18,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             this._service = service;
         }
 
+        [HttpGet]
+        [Route("LoggedInOrganizationID")]
+        public async Task<IEnumerable<MemberPassBookRegister>> GetByOrgId(long orgId)
+        {
+            var list = _service.GetMany(t=> t.IsActive == true && t.OrgID == orgId).OrderBy(t=> t.MemberPassBookNO);
+            return list;
+        }
+
         
     }
 }
