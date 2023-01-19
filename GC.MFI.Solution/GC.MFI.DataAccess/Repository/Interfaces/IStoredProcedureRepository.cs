@@ -12,5 +12,7 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
         Task<List<Division>> GetDivisionByCountry(string countryId);
 
         Task<List<Center>> GetCenterListByOffice(int officeId);
+
+        Task<List<MainProduct>> GetMainProductList(string PaymentFrequecy, int officeId);
     }
 }
