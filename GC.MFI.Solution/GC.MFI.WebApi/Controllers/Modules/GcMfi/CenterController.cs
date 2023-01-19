@@ -18,17 +18,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     public class CenterController : ControllerBase
     {
         private readonly ILogger<CenterController> _logger;
-        private readonly GBankerDbContext _context;
         private readonly IStoredProcedureService _CenterService;
 
         public CenterController(
             IStoredProcedureService CenterService,
-            ILogger<CenterController> logger, 
-            GBankerDbContext context)
+            ILogger<CenterController> logger)
         {
             _CenterService = CenterService;
             _logger = logger;
-            _context = context;
         }
         [HttpGet]
         [Route("getCenterlistbycountry")]
