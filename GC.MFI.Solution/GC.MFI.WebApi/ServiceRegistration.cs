@@ -143,6 +143,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IPortalLoanSummaryRepository, PortalLoanSummaryRepository>();
             services.AddScoped<IPortalLoanSummaryService, PortalLoanSummaryService>();
 
+            // Portal Loan Summary Dependancy
+            services.AddScoped<IPurposeRepository, PurposeRepository>();
+            services.AddScoped<IPurposeService, PurposeService>();
+
             services.Configure<FormOptions>(o =>
             {
                 o.ValueLengthLimit = int.MaxValue;
