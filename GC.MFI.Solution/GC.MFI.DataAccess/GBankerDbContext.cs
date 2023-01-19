@@ -33,6 +33,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<Union> Union { get; set; }
         public virtual DbSet<NIDLogging> NIDLogging { get; set; }
         public virtual DbSet<Center> Center { get; set; }
+        public virtual DbSet<PortalLoanSummary> PortalLoanSummary { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
