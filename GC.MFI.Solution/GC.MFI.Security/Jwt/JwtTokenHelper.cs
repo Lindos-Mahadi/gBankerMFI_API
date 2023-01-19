@@ -61,7 +61,7 @@ namespace GC.MFI.Security.Jwt
                 new Claim("userName", userModel.UserName),
                 new Claim("id", userModel.Id),
                 new Claim("permissionsJson", permissioJson),
-                new Claim(ClaimTypes.Role, "Administrator")
+                new Claim(ClaimTypes.Role, "PortalMember")
               }),
                 Expires = DateTime.UtcNow.AddMinutes(480),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)

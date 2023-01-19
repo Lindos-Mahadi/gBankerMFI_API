@@ -8,7 +8,7 @@ using XenterSolution.Models.ViewModels;
 
 namespace GC.MFI.WebApi.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "PortalMember, PortalAdmin")]
     [ApiController]
     public class GCMcfinaLegacyBaseController<TDbModel> : ControllerBase
         where TDbModel : class, ILegacyDbModelBase
