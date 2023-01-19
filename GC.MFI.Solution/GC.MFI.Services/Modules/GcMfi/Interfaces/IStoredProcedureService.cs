@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GC.MFI.DataAccess.Repository.Interfaces
+namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface IDivisionRepository
+    public interface IStoredProcedureService
     {
         Task<List<Division>> GetDivisionByCountry(string countryId);
+        Task<List<Center>> GetCenterListByOffice(int officeId);
     }
 }

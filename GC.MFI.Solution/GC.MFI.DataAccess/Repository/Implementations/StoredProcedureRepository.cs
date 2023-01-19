@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
-    public class DivisionRepository: IDivisionRepository
+    public class StoredProcedureRepository: IStoredProcedureRepository
     {
         private readonly GBankerDbContext _context;
-        public DivisionRepository(GBankerDbContext context)
+        public StoredProcedureRepository(GBankerDbContext context)
         {
             this._context = context;
         }
@@ -37,6 +37,24 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             {
                 throw;
             }           
+        }
+
+        public async Task<List<Center>> GetCenterListByOffice(int OfficeId)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@OfficeId", OfficeId));
+                
+                var result = await Task.Run(() => _context.Center
+                .FromSqlRaw(@"exec GetOnlyCenter @OfficeId", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

@@ -19,10 +19,10 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     {
         private readonly ILogger<DivisionController> _logger;
         private readonly GBankerDbContext _context;
-        private readonly IDivisionService _divisionService;
+        private readonly IStoredProcedureService _divisionService;
 
         public DivisionController(
-            IDivisionService divisionService,
+            IStoredProcedureService divisionService,
             ILogger<DivisionController> logger, 
             GBankerDbContext context)
         {

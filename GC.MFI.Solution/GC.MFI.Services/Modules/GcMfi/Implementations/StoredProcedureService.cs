@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
-    public class DivisionService: IDivisionService
+    public class StoredProcedureService: IStoredProcedureService
     {
-        private readonly IDivisionRepository divisionRepository;
+        private readonly IStoredProcedureRepository divisionRepository;
 
-        public DivisionService(IDivisionRepository divisionRepository)
+        public StoredProcedureService(IStoredProcedureRepository divisionRepository)
         {
             this.divisionRepository = divisionRepository;
         }
@@ -21,6 +21,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         public async Task<List<Division>> GetDivisionByCountry(string countryId)
         {
             return await divisionRepository.GetDivisionByCountry(countryId);
+        }
+
+        public async Task<List<Center>> GetCenterListByOffice(int officeId)
+        {
+            return await divisionRepository.GetCenterListByOffice(officeId);
         }
     }
 }

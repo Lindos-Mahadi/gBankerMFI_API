@@ -24,6 +24,10 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             try
             {
+                if(!ModelState.IsValid)
+                {
+                    throw new Exception("Insert All Required Fields");
+                }
                 return await nIDService.GetNIDInfo(req);
                 //return new NIDVerificationResponse
                 //{

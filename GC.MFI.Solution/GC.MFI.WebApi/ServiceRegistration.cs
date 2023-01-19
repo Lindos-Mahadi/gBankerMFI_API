@@ -127,8 +127,8 @@ namespace GC.MFI.WebApi
             // NID Dependancy
             services.AddScoped<INIDService, NIDService>();
 
-            services.AddScoped<IDivisionRepository, DivisionRepository>();
-            services.AddScoped<IDivisionService, DivisionService>();
+            services.AddScoped<IStoredProcedureRepository, StoredProcedureRepository>();
+            services.AddScoped<IStoredProcedureService, StoredProcedureService>();
 
             // Union Dependancy
             services.AddScoped<IUnionRepository, UnionRepository>();
