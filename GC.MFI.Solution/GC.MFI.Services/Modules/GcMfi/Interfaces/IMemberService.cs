@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface IMemberService
+    public interface IMemberService : ILegacyServiceBase<Member>
     {
-        Task<IEnumerable<Member>> GetAll(string search);
-        Member GetById(long id);
-        Member Create(Member mModel);
-        void Update(Member mModel);
-        void Delete(long id);
-        void Save();
+        Task<IEnumerable<Member>> GetAllMember(string search);
+        Task<Member> UpdateMember(Member member);
     }
 }
