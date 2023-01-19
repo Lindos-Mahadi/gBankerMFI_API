@@ -49,7 +49,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     EmployeeID = 1,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    RoleId = 2,
+                    RoleId = 14,
                     Email = model.Email, 
                     DateCreated = DateTime.Now, 
                     Activated = false,
@@ -60,7 +60,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 var result = await UserManager.CreateAsync( user, model.Password);
                 if(result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user, "Admin");
+                    await UserManager.AddToRoleAsync(user, "PortalMember");
                     return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
                 }else
                 {
