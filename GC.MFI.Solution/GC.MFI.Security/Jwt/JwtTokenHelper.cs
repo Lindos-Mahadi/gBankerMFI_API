@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using GC.MFI.Models;
 using GC.MFI.Models.Modules.Distributions.Security;
 using Microsoft.AspNetCore.Identity;
+using GC.MFI.Services.Modules.GcMfi.Interfaces;
 
 namespace GC.MFI.Security.Jwt
 {
@@ -19,12 +20,14 @@ namespace GC.MFI.Security.Jwt
         private readonly IJWT jwt;
         private readonly IAuthenticationService _authenticationService;
         private UserManager<ApplicationUser> _userManager;
+        private readonly IMemberService memberService;
 
-        public JwtTokenHelper(IJWT jwt, IAuthenticationService authenticationService, UserManager<ApplicationUser> userManager)
+        public JwtTokenHelper(IJWT jwt, IAuthenticationService authenticationService, IMemberService memberService, UserManager<ApplicationUser> userManager)
         {
             this.jwt = jwt;
             this._authenticationService = authenticationService;
             this._userManager = userManager;
+            this.memberService = memberService;
             
         }
         public Tokens GenerateRefreshToken(string userName)
@@ -51,6 +54,14 @@ namespace GC.MFI.Security.Jwt
             claims.Add(new Claim("email", userModel.Email));
             claims.Add(new Claim("userName", userModel.UserName));
             claims.Add(new Claim("id", userModel.Id));
+            claims.Add(new Claim("Activated", userModel.Activated.ToString()));
+            if(userModel.PortalMemberID != null)
+            {
+                long id = (long)userModel.PortalMemberID;
+                var Member = await memberService.GetMemberByPortalId(id) ;
+                if(Member != null)
+                    claims.Add(new Claim("MemberId", Member.MemberID.ToString()));
+            }    
             if (roles != null)
             {
                 foreach (var role in roles)
