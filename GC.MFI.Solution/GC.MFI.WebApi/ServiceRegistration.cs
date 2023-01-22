@@ -155,6 +155,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IInvestorRepository, InvestorRepository>();
             services.AddScoped<IInvestorService, InvestorService>();
 
+            // PortalSavingSummary Dependancy
+            services.AddScoped<IPortalSavingSummaryRepository, PortalSavingSummaryRepository>();
+            services.AddScoped<IPortalSavingSummaryService, PortalSavingSummaryService>();
+
 
             services.Configure<FormOptions>(o =>
             {
