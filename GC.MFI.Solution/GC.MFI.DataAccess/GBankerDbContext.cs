@@ -35,6 +35,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<Center> Center { get; set; }
         public virtual DbSet<MainProduct> MainProduct { get; set; }
         public virtual DbSet<PortalLoanSummary> PortalLoanSummary { get; set; }
+        public virtual DbSet<PortalSavingSummary> PortalSavingSummary { get; set; }
         public virtual DbSet<Purpose> Purpose { get; set; }
         public virtual DbSet<SubMainProduct> SubMainProduct { get; set; }
         public virtual DbSet<ProductList> ProductList { get; set; }
