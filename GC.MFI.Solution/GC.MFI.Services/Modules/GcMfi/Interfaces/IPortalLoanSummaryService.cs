@@ -9,6 +9,5 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IPortalLoanSummaryService : ILegacyServiceBase<PortalLoanSummary>
     {
-        void Create(PortalLoanSummary entity);
     }
 }
