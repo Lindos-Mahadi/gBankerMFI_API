@@ -159,6 +159,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IPortalSavingSummaryRepository, PortalSavingSummaryRepository>();
             services.AddScoped<IPortalSavingSummaryService, PortalSavingSummaryService>();
 
+            // PortalSavingSummary Dependancy
+            services.AddScoped<IPortalMemberNomineeRepository, PortalMemberNomineeRepository>();
+            services.AddScoped<IPortalMemberNomineeService, PortalMemberNomineeService>();
+
             // Register for model Validation
             services.AddControllers(
                 options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
