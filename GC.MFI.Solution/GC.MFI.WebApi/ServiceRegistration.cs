@@ -159,7 +159,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IPortalSavingSummaryRepository, PortalSavingSummaryRepository>();
             services.AddScoped<IPortalSavingSummaryService, PortalSavingSummaryService>();
 
-
+            // Register for model Validation
+            services.AddControllers(
+                options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+            
             services.Configure<FormOptions>(o =>
             {
                 o.ValueLengthLimit = int.MaxValue;
