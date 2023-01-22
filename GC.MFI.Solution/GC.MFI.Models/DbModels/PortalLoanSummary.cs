@@ -14,16 +14,16 @@ namespace GC.MFI.Models.DbModels
         public int OfficeID { get; set; }
       
         public long? MemberID { get; set; }
-        
-        public short? ProductID { get; set; }
+        [Required]
+        public short ProductID { get; set; }
         
         public int? CenterID { get; set; }
      
         public byte? MemberCategoryID { get; set; }
         //[Required]
         public byte? LoanTerm { get; set; }
-
-        public short? PurposeID { get; set; }
+        [Required]
+        public short PurposeID { get; set; }
 
         [StringLength(100)]
         public string LoanNo { get; set; }
@@ -133,7 +133,7 @@ namespace GC.MFI.Models.DbModels
         public string ChequeNo { get; set; }
 
         public bool? IsApproved { get; set; }
-
+        [Required]
         [StringLength(50)]
         public string CoApplicantName { get; set; }
 
