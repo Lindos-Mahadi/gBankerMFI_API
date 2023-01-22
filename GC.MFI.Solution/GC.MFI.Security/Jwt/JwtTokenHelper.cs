@@ -61,11 +61,11 @@ namespace GC.MFI.Security.Jwt
                 var Member = await memberService.GetMemberByPortalId(id) ;
                 if(Member != null)
                 {
-                    claims.Add(new Claim("MemberId", Member.MemberID.ToString()));
-                    claims.Add(new Claim("CenterId", Member.CenterID.ToString()));
-                    claims.Add(new Claim("OrgId", Member.OrgID.ToString()));
-                    claims.Add(new Claim("OfficeId", Member.OfficeID.ToString()));
-                    claims.Add(new Claim("Member Status", Member.MemberStatus.ToString()));
+                    claims.Add(new Claim("memberId", Member.MemberID.ToString()));
+                    claims.Add(new Claim("centerId", Member.CenterID.ToString()));
+                    claims.Add(new Claim("orgId", Member.OrgID.ToString()));
+                    claims.Add(new Claim("officeId", Member.OfficeID.ToString()));
+                    claims.Add(new Claim("memberStatus", Member.MemberStatus.ToString()));
                     int status = Int32.Parse(Member.MemberStatus);
                     if (status > 0)
                     {
