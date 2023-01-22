@@ -11,9 +11,15 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 {
     public class PortalLoanSummaryRepository : LegacyRepositoryBase<PortalLoanSummary>, IPortalLoanSummaryRepository
     {
-        //private readonly GBankerDbContext _context;
-        public PortalLoanSummaryRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
+        private readonly GBankerDbContext _context;
+        public PortalLoanSummaryRepository(IDatabaseFactory databaseFactory, GBankerDbContext context) : base(databaseFactory)
         {
+            this._context = context;
+        }
+
+        public void Create(PortalLoanSummary entity)
+        {
+            _context.PortalLoanSummary.Add(entity);
         }
     }
 }

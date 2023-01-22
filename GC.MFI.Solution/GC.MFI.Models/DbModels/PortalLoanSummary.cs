@@ -9,78 +9,78 @@ namespace GC.MFI.Models.DbModels
     public partial class PortalLoanSummary : LegacyDbModelBase, ILegacyDbModelBase
     {
         [Key]
-        public long LoanSummaryID { get; set; }
-
+        public long PortalLoanSummaryID { get; set; }
+        [Required]
         public int OfficeID { get; set; }
-
+        [Required]
         public long MemberID { get; set; }
-
+        [Required]
         public short ProductID { get; set; }
-
+        [Required]
         public int CenterID { get; set; }
-
+        [Required]
         public byte MemberCategoryID { get; set; }
-
+        //[Required]
         public byte LoanTerm { get; set; }
 
         public short? PurposeID { get; set; }
 
         [StringLength(100)]
         public string LoanNo { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal PrincipalLoan { get; set; }
-
+        [Required]
         [Column(TypeName = "date")]
         public DateTime ApproveDate { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? DisburseDate { get; set; }
-
+        [Required]
         public int Duration { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal LoanRepaid { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal IntCharge { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal IntPaid { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal LoanInstallment { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal IntInstallment { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal InterestRate { get; set; }
 
         [Column(TypeName = "smalldatetime")]
         public DateTime? InstallmentStartDate { get; set; }
-
+        [Required]
         public int InstallmentNo { get; set; }
-
+        [Required]
         public int DropInstallment { get; set; }
-
+        [Required]
         public int Holidays { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? InstallmentDate { get; set; }
-
+        [Required]
         public byte TransType { get; set; }
-
+        [Required]
         public short ContinuousDrop { get; set; }
-
+        [Required]
         public byte LoanStatus { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal Balance { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal Advance { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal DueRecovery { get; set; }
 
@@ -89,11 +89,11 @@ namespace GC.MFI.Models.DbModels
 
         [Column(TypeName = "date")]
         public DateTime? OverdueDate { get; set; }
-
+        [Required]
         public short EmployeeId { get; set; }
 
         public byte? InvestorID { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal ExcessPay { get; set; }
 
@@ -111,9 +111,9 @@ namespace GC.MFI.Models.DbModels
 
         [Column(TypeName = "numeric")]
         public decimal? WriteOffInterest { get; set; }
-
+        [Required]
         public bool Posted { get; set; }
-
+        [Required]
         public int OrgID { get; set; }
 
         public bool? IsActive { get; set; }
@@ -124,7 +124,7 @@ namespace GC.MFI.Models.DbModels
         [Required]
         [StringLength(35)]
         public string CreateUser { get; set; }
-
+        [Required]
         [Column(TypeName = "smalldatetime")]
         public DateTime CreateDate { get; set; }
 
@@ -204,5 +204,6 @@ namespace GC.MFI.Models.DbModels
 
         [StringLength(50)]
         public string Remarks { get; set; }
+        public bool ApprovalStatus { get; set; } = false;
     }
 }

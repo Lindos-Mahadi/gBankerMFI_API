@@ -10,5 +10,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IPortalLoanSummaryRepository : ILegacyRepository<PortalLoanSummary>
     {
+        void Create(PortalLoanSummary entity);
     }
 }

@@ -20,6 +20,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             _repository = repository;
         }
 
-
+        public void Create(PortalLoanSummary entity)
+        {
+            _repository.Add(entity);
+            Save();
+        }
     }
 }
