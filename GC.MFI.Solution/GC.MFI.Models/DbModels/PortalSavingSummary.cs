@@ -21,36 +21,36 @@ namespace GC.MFI.Models.DbModels
 
         public short ProductID { get; set; }
 
-        public int CenterID { get; set; }
+        public int? CenterID { get; set; }
 
-        public int NoOfAccount { get; set; }
+        public int? NoOfAccount { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime TransactionDate { get; set; }
+        public DateTime? TransactionDate { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal Deposit { get; set; }
+        public decimal? Deposit { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal Withdrawal { get; set; }
+        public decimal? Withdrawal { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal Balance { get; set; }
+        public decimal? Balance { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal InterestRate { get; set; }
+        public decimal? InterestRate { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal SavingInstallment { get; set; }
+        public decimal? SavingInstallment { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal CumInterest { get; set; }
+        public decimal? CumInterest { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal MonthlyInterest { get; set; }
+        public decimal? MonthlyInterest { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal Penalty { get; set; }
+        public decimal? Penalty { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime OpeningDate { get; set; }
@@ -61,31 +61,31 @@ namespace GC.MFI.Models.DbModels
         [Column(TypeName = "date")]
         public DateTime? ClosingDate { get; set; }
 
-        public byte TransType { get; set; }
+        public byte? TransType { get; set; }
 
-        public byte SavingStatus { get; set; }
+        public byte? SavingStatus { get; set; }
 
-        public short EmployeeId { get; set; }
+        public short? EmployeeId { get; set; }
 
-        public byte MemberCategoryID { get; set; }
+        public byte? MemberCategoryID { get; set; }
 
-        public bool Posted { get; set; }
+        public bool? Posted { get; set; }
 
         public bool? IsActive { get; set; }
 
         [Column(TypeName = "smalldatetime")]
         public DateTime? InActiveDate { get; set; }
-        public int Duration { get; set; }
-        public int InstallmentNo { get; set; }
+        public int? Duration { get; set; }
+        public int? InstallmentNo { get; set; }
         [Required]
         [StringLength(35)]
         public string CreateUser { get; set; }
 
         [Column(TypeName = "smalldatetime")]
         public DateTime CreateDate { get; set; }
-        public int OrgID { get; set; }
+        public int? OrgID { get; set; }
 
         public string SavingAccountNo { get; set; }
-        public int Ref_EmployeeID { get; set; }
+        public int? Ref_EmployeeID { get; set; }
     }
 }

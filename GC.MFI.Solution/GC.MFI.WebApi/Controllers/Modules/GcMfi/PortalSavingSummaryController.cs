@@ -1,4 +1,5 @@
 ﻿using GC.MFI.Models.DbModels;
+using GC.MFI.Models.RequestModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,17 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             this._service = service;
         }
 
-        
+
+        [HttpPost]
+        [Route("create")]
+
+        public async Task<PortalSavingSummary> Create(SavingAccountModel request)
+        {
+            var model = await _service.Create(request);
+            return model;
+        }
+
+
+
     }
 }
