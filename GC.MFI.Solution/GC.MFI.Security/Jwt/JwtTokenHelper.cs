@@ -64,6 +64,7 @@ namespace GC.MFI.Security.Jwt
                     claims.Add(new Claim("MemberId", Member.MemberID.ToString()));
                     claims.Add(new Claim("CenterId", Member.CenterID.ToString()));
                     claims.Add(new Claim("OrgId", Member.OrgID.ToString()));
+                    claims.Add(new Claim("OfficeId", Member.OfficeID.ToString()));
                     claims.Add(new Claim("Member Status", Member.MemberStatus.ToString()));
                     int status = Int32.Parse(Member.MemberStatus);
                     if (status > 0)

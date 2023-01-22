@@ -262,6 +262,7 @@ namespace GC.MFI.Models.DbModels
         public DateTime CreateDate { get; set; }
 
         public int CenterID { get; set; }
+        public int OfficeID { get; set; }
         public int OrgID { get; set; }
         [StringLength(255)]
         public string MemberNameBng { get; set; }
