@@ -41,6 +41,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<ProductList> ProductList { get; set; }
 
         public virtual DbSet<MemberPassBookRegister> MemberPassBookRegister { get; set; }
+        public virtual DbSet<PortalMemberNominee> PortalMemberNominee { get; set; }
 
         public virtual DbSet<Investor> Investor { get; set; }
 
