@@ -1,4 +1,6 @@
-﻿using GC.MFI.Models.DbModels;
+﻿using GC.MFI.Models;
+using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.WebApi.Filters;
@@ -45,5 +47,35 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw;
             }
         }
+
+        [HttpGet]
+        [Route("GetAllPortalSummaries")]
+        public async Task<IActionResult> GetAllPortalSummaries([FromQuery] PaginationFilter filter)
+        {
+            var portalSummaryList = _service.GetAllPortalLoanSummary();
+            var loanSummaryCount = portalSummaryList.Count();
+            if (filter.search != null)
+            {
+                //portalSummaryList = portalSummaryList.Where(t => t.CategoryName.ToUpper()!.Contains(filter.search.ToUpper()));
+                //categoryCount = portalSummaryList.Count();
+
+                // UPDATED WILL BE NEXT
+                portalSummaryList = portalSummaryList.Where(t => t.BankName.ToUpper()!.Contains(filter.search.ToUpper()));
+                loanSummaryCount = portalSummaryList.Count();
+            }
+
+            if (filter.per_page > 0)
+            {
+                portalSummaryList = portalSummaryList.Skip((filter.page - 1) * filter.per_page).Take(filter.per_page);
+                var toalPage = Convert.ToInt32(Math.Ceiling(((double)loanSummaryCount / (double)filter.per_page)));
+                return Ok(new PagedResponse<IEnumerable<PortalLoanSummary>>(portalSummaryList, filter.page, filter.per_page, loanSummaryCount, toalPage));
+            }
+            else
+            {
+                var toalPage = Convert.ToInt32(Math.Ceiling(((double)loanSummaryCount / (double)loanSummaryCount)));
+                return Ok(new PagedResponse<IEnumerable<PortalLoanSummary>>(portalSummaryList, filter.page, loanSummaryCount, loanSummaryCount, toalPage));
+            }
+        }
+        
     }
 }

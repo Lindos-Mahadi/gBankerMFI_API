@@ -21,5 +21,22 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
             _context.PortalLoanSummary.Add(entity);
         }
+
+        public IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
+        {
+            return _context.PortalLoanSummary;
+        }
+
+        //public async Task<IEnumerable<Member>> GetAllMember(string search)
+        //{
+        //    if (!String.IsNullOrEmpty(search))
+        //    {
+        //        var memberList = DataContext.Member.Where(t => t.FirstName!.Contains(search) || t.FirstName.Trim()
+        //        .Replace(" ", "").ToUpper()!.Contains(search.Trim().Replace(" ", "").ToUpper()));
+        //        return memberList.Skip(0).Take(10);
+
+        //    }
+        //    return DataContext.Member.Skip(0).Take(10);
+        //}
     }
 }
