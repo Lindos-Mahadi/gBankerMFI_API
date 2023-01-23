@@ -16,18 +16,19 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
         }
 
-        public async Task<PortalSavingSummary> Create(SavingAccountModel request)
+        public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
         {
             BeginTransaction();
             var model = new PortalSavingSummary()
             {
-                OfficeID = request.officeId,
-                MemberID= request.memberId,
-                ProductID = (short)request.productId,
-                SavingInstallment = request.savingsInstallment,
+                OfficeID = request.OfficeID,
+                MemberID= request.MemberID,
+                ProductID = request.ProductID,
+                SavingInstallment = request.SavingInstallment,
                 CreateDate= DateTime.UtcNow,
-                CreateUser= request.createUser,
-                OpeningDate = DateTime.UtcNow
+                CreateUser= request.CreateUser,
+                OpeningDate = DateTime.UtcNow,
+                MemberNomines = request.MemberNomines
             };
             DataContext.Add(model);
             CommitTransaction();

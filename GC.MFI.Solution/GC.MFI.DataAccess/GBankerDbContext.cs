@@ -179,7 +179,10 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<OrderDetail>()
                 .HasOne(O => O.order)
                 .WithMany(M => M.orderDetails);
-                //.HasForeignKey(FK => FK.);
+            //.HasForeignKey(FK => FK.);
+            modelBuilder.Entity<PortalMemberNominee>()
+                .HasOne(O => O.PortalSavingSummary)
+                .WithMany(M => M.MemberNomines);
 
             modelBuilder.Entity<Product>(entity =>
             {

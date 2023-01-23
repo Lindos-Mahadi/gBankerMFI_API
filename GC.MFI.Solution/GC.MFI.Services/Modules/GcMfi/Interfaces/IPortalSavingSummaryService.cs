@@ -10,6 +10,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IPortalSavingSummaryService : ILegacyServiceBase<PortalSavingSummary>
     {
-        Task<PortalSavingSummary> Create(SavingAccountModel request);
+        Task<PortalSavingSummary> Create(PortalSavingSummary request);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using GC.MFI.Models.DbModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,5 +19,7 @@ namespace GC.MFI.Models.RequestModels
         public DateTime createDate { get; set; }
         [Column(TypeName = "date")]
         public DateTime OpeningDate { get; set; }
+
+        public virtual List<PortalMemberNominee> MemberNominees { get; set; } 
     }
 }
