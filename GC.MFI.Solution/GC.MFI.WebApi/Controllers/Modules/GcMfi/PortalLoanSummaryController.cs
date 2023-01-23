@@ -54,15 +54,15 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var portalSummaryList = _service.GetAllPortalLoanSummary();
             var loanSummaryCount = portalSummaryList.Count();
-            if (!String.IsNullOrEmpty(filter.search))
-            {
-                //portalSummaryList = portalSummaryList.Where(t => t.CategoryName.ToUpper()!.Contains(filter.search.ToUpper()));
-                //categoryCount = portalSummaryList.Count();
+            //if (!String.IsNullOrEmpty(filter.search))
+            //{
+            //    //portalSummaryList = portalSummaryList.Where(t => t.CategoryName.ToUpper()!.Contains(filter.search.ToUpper()));
+            //    //categoryCount = portalSummaryList.Count();
 
-                // UPDATED WILL BE NEXT
-                portalSummaryList = portalSummaryList.Where(t => t.BankName.ToUpper()!.Contains(filter.search.ToUpper()));
-                loanSummaryCount = portalSummaryList.Count();
-            }
+            //    // UPDATED WILL BE NEXT
+            //    portalSummaryList = portalSummaryList.Where(t => t.BankName.ToUpper()!.Contains(filter.search.ToUpper()));
+            //    loanSummaryCount = portalSummaryList.Count();
+            //}
 
             if (filter.per_page > 0)
             {
