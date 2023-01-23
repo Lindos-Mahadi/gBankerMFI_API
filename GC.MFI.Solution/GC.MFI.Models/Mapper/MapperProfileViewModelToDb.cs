@@ -19,6 +19,9 @@ namespace GC.MFI.Models.Mapper
             CreateMap<MemberViewModel, Member>();
             CreateMap<CountryViewModel, Country>();
             CreateMap<DivisionViewModel, Country>();
+
+            // PortalLoanSummary ViewModel
+            CreateMap<PortalLoanSummaryViewModel, PortalLoanSummary>();
         }
     }
 }
