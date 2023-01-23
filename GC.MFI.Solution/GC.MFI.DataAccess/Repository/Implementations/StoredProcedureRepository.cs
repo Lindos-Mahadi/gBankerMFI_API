@@ -95,23 +95,39 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
         }
 
-        public async Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int OfficeID)
+        public async Task<List<ProductList>> GetProductList(string freq, int OfficeID)
         {
+            //try
+            //{
+            //    var parameter = new List<SqlParameter>();
+            //    parameter.Add(new SqlParameter("@MainProductCode", MainProductCode));
+            //    parameter.Add(new SqlParameter("@freq", freq));
+            //    parameter.Add(new SqlParameter("@OfficeID", OfficeID));
+
+            //    var result = await Task.Run(() => _context.ProductList
+            //    .FromSqlRaw(@"exec getSubMainProductListTAccordingTOOffice @MainProductCode, @freq, @OfficeID", parameter.ToArray()));
+
+            //    return result.ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
+
             try
             {
                 var parameter = new List<SqlParameter>();
-                parameter.Add(new SqlParameter("@MainProductCode", MainProductCode));
                 parameter.Add(new SqlParameter("@freq", freq));
                 parameter.Add(new SqlParameter("@OfficeID", OfficeID));
 
                 var result = await Task.Run(() => _context.ProductList
-                .FromSqlRaw(@"exec getSubMainProductListTAccordingTOOffice @MainProductCode, @freq, @OfficeID", parameter.ToArray()));
+                .FromSqlRaw(@"exec getProductListSubMainAccordingTOOffice @freq, @OfficeID", parameter.ToArray()));
 
                 return result.ToList();
             }
             catch (Exception ex)
             {
-                throw;
+                throw; 
             }
         }
     }
