@@ -54,7 +54,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var portalSummaryList = _service.GetAllPortalLoanSummary();
             var loanSummaryCount = portalSummaryList.Count();
-            if (filter.search != null)
+            if (!String.IsNullOrEmpty(filter.search))
             {
                 //portalSummaryList = portalSummaryList.Where(t => t.CategoryName.ToUpper()!.Contains(filter.search.ToUpper()));
                 //categoryCount = portalSummaryList.Count();
