@@ -11,6 +11,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IPortalSavingSummaryRepository : ILegacyRepository<PortalSavingSummary>
     {
-        Task<PortalSavingSummary> Create(SavingAccountModel request);
+        Task<PortalSavingSummary> Create(PortalSavingSummary request);
     }
 }

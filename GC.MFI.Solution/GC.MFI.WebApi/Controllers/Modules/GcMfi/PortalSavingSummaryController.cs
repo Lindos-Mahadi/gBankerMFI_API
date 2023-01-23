@@ -23,7 +23,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         [HttpPost]
         [Route("create")]
 
-        public async Task<PortalSavingSummary> Create(SavingAccountModel request)
+        public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
         {
             var model = await _service.Create(request);
             return model;

@@ -87,5 +87,7 @@ namespace GC.MFI.Models.DbModels
 
         public string SavingAccountNo { get; set; }
         public int? Ref_EmployeeID { get; set; }
+
+        public virtual List<PortalMemberNominee> MemberNomines { get; set; }
     }
 }

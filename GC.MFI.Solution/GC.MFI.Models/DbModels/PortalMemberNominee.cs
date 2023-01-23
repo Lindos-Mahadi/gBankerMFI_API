@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace GC.MFI.Models.DbModels
 {
@@ -14,7 +15,6 @@ namespace GC.MFI.Models.DbModels
     {
         [Key]
         public long PortalMemberNomineeId { get; set; }
-        public long MemberId { get; set; }
 
         public string NomineeName { get; set; }
         public string NomineeFather { get; set; }
@@ -30,5 +30,8 @@ namespace GC.MFI.Models.DbModels
 
         [Column(TypeName = "smalldatetime")]
         public DateTime CreateDate { get; set; }
+        public long PortalSavingSummaryId { get; set; }
+        [JsonIgnore]
+        public PortalSavingSummary PortalSavingSummary { get; set; }
     }
 }

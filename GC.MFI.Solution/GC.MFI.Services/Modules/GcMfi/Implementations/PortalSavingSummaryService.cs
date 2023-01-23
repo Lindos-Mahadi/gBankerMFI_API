@@ -20,7 +20,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             this._repository = repository;
         }
 
-        public async Task<PortalSavingSummary> Create(SavingAccountModel request)
+        public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
         {
             var model = await _repository.Create(request);
             return model;
