@@ -29,7 +29,7 @@ namespace GC.MFI.Models.DbModels
         public string CreateUser { get; set; }
 
         [Column(TypeName = "smalldatetime")]
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public long PortalSavingSummaryId { get; set; }
         [JsonIgnore]
         public PortalSavingSummary PortalSavingSummary { get; set; }
