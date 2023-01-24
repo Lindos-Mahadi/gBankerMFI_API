@@ -130,5 +130,18 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 throw; 
             }
         }
+
+        public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId,  string itemType, int officeId)
+        {
+            var parameter = new List<SqlParameter>();
+            parameter.Add(new SqlParameter("@Prodtype", porductType));
+            parameter.Add(new SqlParameter("@OrgID", orgId));
+            parameter.Add(new SqlParameter("@ItemType", itemType));
+            parameter.Add(new SqlParameter("@OfficeID", officeId));
+
+            var result = await Task.Run(()=> _context.ProductList
+            .FromSqlRaw(@"exec Proc_GetProductAccordingtoOffice @Prodtype, @OrgID, @ItemType, @OfficeID", parameter.ToArray()));
+            return result.ToList();
+        }
     }
 }

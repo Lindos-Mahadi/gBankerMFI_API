@@ -46,5 +46,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         {
             return await divisionRepository.GetProductList(freq, officeId);
         }
+
+        public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId)
+        {
+            return await divisionRepository.GetProductListForSavingAccount(porductType, orgId, itemType, officeId);
+        }
     }
 }

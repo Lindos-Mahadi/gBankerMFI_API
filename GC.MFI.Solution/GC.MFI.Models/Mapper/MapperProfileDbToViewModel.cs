@@ -14,7 +14,6 @@ namespace GC.MFI.Models.Mapper
         public MapperProfileDbToViewModel()
         {
             
-            CreateMap<Product, ProductViewModel>();
             CreateMap<Order, OrderViewModel>();
             CreateMap<OrderDetail, OderDetailsViewModel>();
 

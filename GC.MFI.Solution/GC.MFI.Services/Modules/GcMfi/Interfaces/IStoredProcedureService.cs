@@ -15,5 +15,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<SubMainProduct>> GetSubMainProdutList(string MainProductCode, string freq);
         //Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId);
         Task<List<ProductList>> GetProductList(string freq, int officeId);
+
+        Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId);
     }
 }
