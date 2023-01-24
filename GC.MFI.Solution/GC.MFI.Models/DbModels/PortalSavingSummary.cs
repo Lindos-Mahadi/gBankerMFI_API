@@ -13,7 +13,7 @@ namespace GC.MFI.Models.DbModels
     public class PortalSavingSummary : LegacyDbModelBase, ILegacyDbModelBase
     {
         [Key]
-        public long SavingSummaryID { get; set; }
+        public long PortalSavingSummaryID { get; set; }
 
         public int OfficeID { get; set; }
 
