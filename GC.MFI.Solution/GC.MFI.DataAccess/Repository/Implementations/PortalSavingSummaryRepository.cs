@@ -22,13 +22,14 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var model = new PortalSavingSummary()
             {
                 OfficeID = request.OfficeID,
-                MemberID= request.MemberID,
+                MemberID = request.MemberID,
                 ProductID = request.ProductID,
                 SavingInstallment = request.SavingInstallment,
-                CreateDate= DateTime.UtcNow,
-                CreateUser= request.CreateUser,
+                CreateDate = DateTime.UtcNow,
+                CreateUser = request.CreateUser,
                 OpeningDate = DateTime.UtcNow,
-                MemberNomines = request.MemberNomines
+                MemberNomines = request.MemberNomines,
+                ApprovalStutus = false
             };
             DataContext.Add(model);
             CommitTransaction();
