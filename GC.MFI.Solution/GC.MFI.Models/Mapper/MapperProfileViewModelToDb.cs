@@ -7,8 +7,7 @@ namespace GC.MFI.Models.Mapper
     public class MapperProfileViewModelToDb : Profile
     {
         public MapperProfileViewModelToDb()
-        {           
-            CreateMap<ProductViewModel, Product>();           
+        {                 
             CreateMap<OrderViewModel, Order>();
             CreateMap<OderDetailsViewModel, OrderDetail>();
 
@@ -19,6 +18,9 @@ namespace GC.MFI.Models.Mapper
             CreateMap<MemberViewModel, Member>();
             CreateMap<CountryViewModel, Country>();
             CreateMap<DivisionViewModel, Country>();
+
+            // PortalLoanSummary ViewModel
+            CreateMap<PortalLoanSummaryViewModel, PortalLoanSummary>();
         }
     }
 }

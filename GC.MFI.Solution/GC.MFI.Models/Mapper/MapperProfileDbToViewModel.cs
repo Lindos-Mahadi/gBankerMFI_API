@@ -14,7 +14,6 @@ namespace GC.MFI.Models.Mapper
         public MapperProfileDbToViewModel()
         {
             
-            CreateMap<Product, ProductViewModel>();
             CreateMap<Order, OrderViewModel>();
             CreateMap<OrderDetail, OderDetailsViewModel>();
 
@@ -26,6 +25,9 @@ namespace GC.MFI.Models.Mapper
             CreateMap<Member, MemberViewModel>();
             CreateMap<Country, CountryViewModel>();
             CreateMap<Country, DivisionViewModel>();
+
+            // PortalLoanSummary ViewModel
+            CreateMap<PortalLoanSummary, PortalLoanSummaryViewModel > ();
         }
     }
 }

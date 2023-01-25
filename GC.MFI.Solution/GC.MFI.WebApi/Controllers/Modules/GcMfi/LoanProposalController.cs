@@ -81,20 +81,33 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw;
             }
         }
+        //[HttpGet]
+        //[Route("GetProductList")]
+        //public async Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId)
+        //{
+        //    try
+        //    {
+        //        return await _storedProcedureService.GetProductList(MainProductCode, freq, officeId);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
+
         [HttpGet]
         [Route("GetProductList")]
-        public async Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId)
+        public async Task<List<ProductList>> GetProductList(string freq, int officeId)
         {
             try
             {
-                return await _storedProcedureService.GetProductList(MainProductCode, freq, officeId);
+                return await _storedProcedureService.GetProductList(freq, officeId);
             }
             catch (Exception ex)
             {
                 throw;
             }
         }
-
         [HttpGet]
         [Route("GetMainProductList")]
         public async Task<List<MainProduct>> GetMainProductList(string FreqId, int OfficeId)

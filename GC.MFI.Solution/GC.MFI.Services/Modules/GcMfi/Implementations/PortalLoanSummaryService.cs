@@ -20,6 +20,23 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             _repository = repository;
         }
 
+        public void Create(PortalLoanSummary entity)
+        {
+            _repository.Add(entity);
+            Save();
+        }
 
+        public virtual IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
+        {
+            var result = _repository.GetAll();
+            return result;
+        }
+
+        //public virtual IEnumerable<TViewModel> GetAll()
+        //{
+        //    var results = repository.GetAll();
+        //    var mappedResult = _mapper.Map<IEnumerable<TViewModel>>(results);
+        //    return mappedResult;
+        //}
     }
 }

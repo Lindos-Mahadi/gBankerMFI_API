@@ -39,9 +39,18 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return await divisionRepository.GetSubMainProdutList(MainProductCode, freq);
         }
 
-        public async Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId)
+        //public async Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId)
+        //{
+        //    return await divisionRepository.GetProductList(MainProductCode, freq, officeId);
+        //}
+        public async Task<List<ProductList>> GetProductList(string freq, int officeId)
         {
-            return await divisionRepository.GetProductList(MainProductCode, freq, officeId);
+            return await divisionRepository.GetProductList(freq, officeId);
+        }
+
+        public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId)
+        {
+            return await divisionRepository.GetProductListForSavingAccount(porductType, orgId, itemType, officeId);
         }
 
         public async Task<List<RepaymentScheduleReport>> GetRepaymentSchedule(int officeId, int memberId, int productId, int loanTerm)

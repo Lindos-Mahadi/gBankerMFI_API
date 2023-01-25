@@ -25,7 +25,7 @@ namespace GC.MFI.DataAccess
 
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Country> Country { get; set; }
        
         public virtual DbSet<Upozilla> Upozillas { get; set; }
@@ -36,11 +36,15 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<Center> Center { get; set; }
         public virtual DbSet<MainProduct> MainProduct { get; set; }
         public virtual DbSet<PortalLoanSummary> PortalLoanSummary { get; set; }
+        public virtual DbSet<PortalSavingSummary> PortalSavingSummary { get; set; }
         public virtual DbSet<Purpose> Purpose { get; set; }
         public virtual DbSet<SubMainProduct> SubMainProduct { get; set; }
         public virtual DbSet<ProductList> ProductList { get; set; }
 
         public virtual DbSet<MemberPassBookRegister> MemberPassBookRegister { get; set; }
+        public virtual DbSet<PortalMemberNominee> PortalMemberNominee { get; set; }
+
+        public virtual DbSet<Investor> Investor { get; set; }
 
         public virtual DbSet<RepaymentScheduleReport> RepaymentScheduleReport { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -176,40 +180,12 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<OrderDetail>()
                 .HasOne(O => O.order)
                 .WithMany(M => M.orderDetails);
-                //.HasForeignKey(FK => FK.);
+            //.HasForeignKey(FK => FK.);
+            modelBuilder.Entity<PortalMemberNominee>()
+                .HasOne(O => O.PortalSavingSummary)
+                .WithMany(M => M.MemberNomines);
 
-            modelBuilder.Entity<Product>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
-
-                entity.Property(e => e.CreateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.CreateUser).HasMaxLength(50);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-
-                entity.Property(e => e.AvailableQuantity).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.ProductTypeId).HasColumnName("ProductTypeID");
-                entity.Property(e => e.UnitOfMeasureId).HasColumnName("UnitOfMeasureID");
-
-
-                entity.Property(e => e.SiteId).HasColumnName("SiteID");
-
-                entity.Property(e => e.Status)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.UpdateUser).HasMaxLength(50);
-            });
+           
 
             modelBuilder.Entity<Upozilla>()
                 .Property(e => e.CreateUser)

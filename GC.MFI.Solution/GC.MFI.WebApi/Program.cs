@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using GC.MFI.Security.Models;
 using AutoMapper;
 using GC.MFI.Models.Mapper;
+using GC.MFI.WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "CorsPolicy";
@@ -30,6 +31,8 @@ builder.Services.Configure<JWT>(
 builder.Services.AddSingleton<IJWT>(serviceProvider =>
         serviceProvider.GetRequiredService<IOptions<JWT>>().Value);
 
+// Added for model validation
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme

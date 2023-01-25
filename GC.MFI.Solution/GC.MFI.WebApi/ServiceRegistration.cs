@@ -151,6 +151,22 @@ namespace GC.MFI.WebApi
             services.AddScoped<IMemberPassBookRegisterRepository, MemberPassBookRegisterRepository>();
             services.AddScoped<IMemberPassBookRegisterService, MemberPassBookRegisterService>();
 
+            // Investor Dependancy
+            services.AddScoped<IInvestorRepository, InvestorRepository>();
+            services.AddScoped<IInvestorService, InvestorService>();
+
+            // PortalSavingSummary Dependancy
+            services.AddScoped<IPortalSavingSummaryRepository, PortalSavingSummaryRepository>();
+            services.AddScoped<IPortalSavingSummaryService, PortalSavingSummaryService>();
+
+            // PortalSavingSummary Dependancy
+            services.AddScoped<IPortalMemberNomineeRepository, PortalMemberNomineeRepository>();
+            services.AddScoped<IPortalMemberNomineeService, PortalMemberNomineeService>();
+
+            // Register for model Validation
+            services.AddControllers(
+                options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+            
             services.Configure<FormOptions>(o =>
             {
                 o.ValueLengthLimit = int.MaxValue;

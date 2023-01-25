@@ -61,8 +61,11 @@ namespace GC.MFI.Security.Jwt
                 var Member = await memberService.GetMemberByPortalId(id) ;
                 if(Member != null)
                 {
-                    claims.Add(new Claim("MemberId", Member.MemberID.ToString()));
-                    claims.Add(new Claim("Member Status", Member.MemberStatus.ToString()));
+                    claims.Add(new Claim("memberId", Member.MemberID.ToString()));
+                    claims.Add(new Claim("centerId", Member.CenterID.ToString()));
+                    claims.Add(new Claim("orgId", Member.OrgID.ToString()));
+                    claims.Add(new Claim("officeId", Member.OfficeID.ToString()));
+                    claims.Add(new Claim("memberStatus", Member.MemberStatus.ToString()));
                     int status = Int32.Parse(Member.MemberStatus);
                     if (status > 0)
                     {
@@ -78,39 +81,18 @@ namespace GC.MFI.Security.Jwt
                     {
                         claims.Add(new Claim(ClaimTypes.Role, "UnActive"));
                     }
+                }else
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, "UnActive"));
                 }
-              
-                
-            }    
-           
+            }else
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "UnActive"));
+            }
 
-            //if (userModel.Roles != null)
-            //{
-            //    foreach (var role in userModel.Roles)
-            //    {
-            //        var currentRolePermisions = _roleservice.FindById(role.ID);
-            //        var rolepermissions = currentRolePermisions.Permissions;
-            //        if (rolepermissions != null)
-            //        {
-            //            var userPermissions = rolepermissions.Select(s => new UserPermissionSet { RoleId = role.ID, RoleName = role.Name, PermissionSets = s.PermissionSets, PermissionDetail = s.PermissionId.ToEntityAsync().GetAwaiter().GetResult() });
-            //            permissions.AddRange(userPermissions);
-            //        }
-            //    }
-            //}
-
-            var permissioJson = JsonConvert.SerializeObject(permissions);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-              //  Subject = new ClaimsIdentity(new Claim[] {
-              //  new Claim("fullName", $"{userModel.UserName}"),
-              //  new Claim("email", userModel.Email),
-              //  new Claim("userName", userModel.UserName),
-              //  new Claim("id", userModel.Id),
-              //  new Claim("permissionsJson", permissioJson),
-              //  //new Claim(ClaimTypes.Role, "Admin" ),
-              //  //new Claim(ClaimTypes.Role, "Memeber")
-              //}),
              Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddMinutes(480),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
