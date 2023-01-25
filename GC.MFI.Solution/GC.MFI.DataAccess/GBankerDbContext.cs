@@ -1,4 +1,5 @@
 ﻿using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace GC.MFI.DataAccess
 
         public virtual DbSet<Investor> Investor { get; set; }
 
-
+        public virtual DbSet<RepaymentScheduleReport> RepaymentScheduleReport { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -198,6 +199,7 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<MainProduct>().HasNoKey();
             modelBuilder.Entity<SubMainProduct>().HasNoKey();
             modelBuilder.Entity<ProductList>().HasNoKey();
+            modelBuilder.Entity<RepaymentScheduleReport>().HasNoKey();
           // modelBuilder.Entity<NIDLogging>().0();
 
             OnModelCreatingPartial(modelBuilder);

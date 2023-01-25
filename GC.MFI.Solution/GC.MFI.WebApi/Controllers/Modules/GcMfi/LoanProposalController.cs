@@ -1,5 +1,6 @@
 ﻿
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Services.Modules.GcMfi.Implementations;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -116,6 +117,24 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 return await _storedProcedureService.GetMainProductList(FreqId, OfficeId);
             }
             catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("GetLoanRepaymentSchedule")]
+        public async Task<List<RepaymentScheduleReport>> GetLoanRepaymentSchedule(
+            int officeId,
+            int memberId,
+            int productId,
+            int loanTerm)
+        {
+            try
+            {
+                return await _storedProcedureService.GetRepaymentSchedule(officeId, memberId, productId, loanTerm);
+            }
+            catch(Exception ex) 
             {
                 throw;
             }

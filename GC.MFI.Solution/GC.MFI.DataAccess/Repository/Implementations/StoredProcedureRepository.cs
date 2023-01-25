@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GC.MFI.Models.Models;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
@@ -142,6 +143,27 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var result = await Task.Run(()=> _context.ProductList
             .FromSqlRaw(@"exec Proc_GetProductAccordingtoOffice @Prodtype, @OrgID, @ItemType, @OfficeID", parameter.ToArray()));
             return result.ToList();
+        }
+
+        public async Task<List<RepaymentScheduleReport>> GetRepaymentSchedule(int officeID, int memberId, int productId, int loanTerm)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@OfficeId", officeID));
+                parameter.Add(new SqlParameter("@MemberID", memberId));
+                parameter.Add(new SqlParameter("@ProductID", productId));
+                parameter.Add(new SqlParameter("@Loanterm", loanTerm));
+
+                var result = await Task.Run(() => _context.RepaymentScheduleReport
+                .FromSqlRaw(@"exec getRepaymentScheduleReportHistory @OfficeId, @MemberID, @ProductID, @loanTerm", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

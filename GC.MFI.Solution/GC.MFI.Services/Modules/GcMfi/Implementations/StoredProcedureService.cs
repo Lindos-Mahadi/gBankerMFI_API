@@ -1,5 +1,6 @@
 ﻿using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId)
         {
             return await divisionRepository.GetProductListForSavingAccount(porductType, orgId, itemType, officeId);
+        }
+
+        public async Task<List<RepaymentScheduleReport>> GetRepaymentSchedule(int officeId, int memberId, int productId, int loanTerm)
+        {
+            return await divisionRepository.GetRepaymentSchedule(officeId, memberId, productId, loanTerm);
         }
     }
 }
