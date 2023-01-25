@@ -38,11 +38,50 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             CommitTransaction();
             return model;
         }
-        public async Task<PagedResponse<IEnumerable<PortalSavingSummary>>> GetAllPortalSavingSummaryPaged(PaginationFilter<PortalSavingSummary> filter)
+        public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter)
         {
             var TotalElement = DataContext.PortalSavingSummary.Count(t => t.ApprovalStatus == true);
 
-            var savingSummary = DataContext.PortalSavingSummary
+            var savingSummary =(from pps in DataContext.PortalSavingSummary
+                                join pl in DataContext.Product on pps.ProductID equals pl.ProductID
+                                join m in DataContext.Member on pps.MemberID equals m.MemberID
+                                select new SavingSummaryViewModel
+                                {
+                                    PortalSavingSummaryID= pps.PortalSavingSummaryID,
+                                    OfficeID=pps.OfficeID,
+                                    MemberID=pps.MemberID,
+                                    MemberName = m.FirstName,
+                                    ProductID= pl.ProductID,
+                                    ProductName= pl.ProductName,
+                                    CenterID=pps.CenterID,
+                                    NoOfAccount=pps.NoOfAccount,
+                                    TransactionDate = pps.TransactionDate,
+                                    Deposit = pps.Deposit,
+                                    Withdrawal = pps.Withdrawal,
+                                    Balance= pps.Balance,
+                                    InterestRate=pps.InterestRate,
+                                    SavingInstallment=pps.SavingInstallment,
+                                    CumInterest = pps.CumInterest,
+                                    MonthlyInterest = pps.MonthlyInterest,
+                                    Penalty=pps.Penalty,
+                                    OpeningDate=pps.OpeningDate,
+                                    MaturedDate=pps.MaturedDate,
+                                    ClosingDate=pps.ClosingDate,
+                                    TransType=pps.TransType,
+                                    SavingStatus=pps.SavingStatus,
+                                    EmployeeId = pps.EmployeeId,
+                                    MemberCategoryID=pps.MemberCategoryID,
+                                    Posted = pps.Posted,
+                                    IsActive=pps.IsActive,
+                                    InActiveDate=pps.InActiveDate,
+                                    CreateDate=pps.CreateDate,
+                                    CreateUser=pps.CreateUser,
+                                    OrgID=pps.OrgID,
+                                    SavingAccountNo = pps.SavingAccountNo,
+                                    Ref_EmployeeID=pps.Ref_EmployeeID,
+                                    ApprovalStatus = pps.ApprovalStatus,
+                                    MemberNomines =pps.MemberNomines,
+                                })
                                     .Where(filter.search)
                                     .Where(x => x.ApprovalStatus == true)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
@@ -52,7 +91,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 var nominee = DataContext.NomineeXPortalSavingSummary.Where(t => t.PortalSavingSummaryId == savingSummary[i].PortalSavingSummaryID);
             }
 
-            return new PagedResponse<IEnumerable<PortalSavingSummary>>(
+            return new PagedResponse<IEnumerable<SavingSummaryViewModel>>(
                 savingSummary,
                 filter.pageNum,
                 filter.pageSize,

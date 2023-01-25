@@ -57,9 +57,15 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
         [HttpGet]
         [Route("getapprovesavingsummary")]
-        public async Task<PagedResponse<IEnumerable<PortalSavingSummary>>> GetAllPortalSavingSummaryPaged([FromQuery] PagedFilter filter)
+        public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged([FromQuery] PagedFilter filter)
         {
-            var filt = new PaginationFilter<PortalSavingSummary>(filter.pageNum, filter.pageSize);
+            var filt = new PaginationFilter<SavingSummaryViewModel>(filter.pageNum, filter.pageSize);
+            
+            if(!String.IsNullOrEmpty(filter.search))
+            {
+                 filt = new PaginationFilter<SavingSummaryViewModel>(filter.pageNum, filter.pageSize, t => t.ProductName.Trim().Replace(" ", "").ToUpper()!.Contains(filter.search.Trim().Replace(" ", "").ToUpper()));
+            }
+            
             var savingSummary = await _service.GetAllPortalSavingSummaryPaged(filt);
             for (int i = 0; i < savingSummary.Data.Count(); i++)
             {
