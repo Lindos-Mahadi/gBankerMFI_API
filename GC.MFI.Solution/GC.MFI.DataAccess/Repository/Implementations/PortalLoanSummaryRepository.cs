@@ -1,6 +1,9 @@
 ﻿using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,5 +41,29 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         //    }
         //    return DataContext.Member.Skip(0).Take(10);
         //}
+        public async Task<PagedResponse<IEnumerable<PortalLoanSummary>>> GetAllPortalLoanSummaryPaged(PaginationFilter filter)
+        {
+            IEnumerable<PortalLoanSummary> portalList = null;
+            if(!String.IsNullOrEmpty(filter.search))
+            {
+
+            }else
+            {
+                portalList = _context.PortalLoanSummary.Where(t=> t.ApprovalStatus == true);
+            }
+            if(filter.page > 0)
+            {
+                var count = portalList.Count();
+                portalList = portalList.Skip((filter.page - 1) * filter.per_page).Take(filter.per_page);
+                var totalPage = Convert.ToInt32(Math.Ceiling(((double)count / (double)filter.per_page)));
+                return new  PagedResponse<IEnumerable<PortalLoanSummary>>(portalList, filter.page, filter.per_page, count, totalPage);
+            }else
+            {
+                var count = DataContext.PortalLoanSummary.Count();
+                var totalPage = Convert.ToInt32(Math.Ceiling(((double)count / (double)count)));
+                return new PagedResponse<IEnumerable<PortalLoanSummary>>(portalList, filter.page, filter.per_page, count, totalPage);
+
+            }
+        }
     }
 }

@@ -84,6 +84,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var result = _service.GetMany(t=> t.IsActive == true);
             return result;
         }
+
+        [HttpGet]
+        [Route("pagedloansummary")]
+        public async Task<IActionResult> PagedLoanSummary([FromQuery] PaginationFilter filter)
+        {
+            var summary = await _service.GetAllPortalLoanSummaryPaged(filter);
+            return Ok(summary);
+        }
         
     }
 }

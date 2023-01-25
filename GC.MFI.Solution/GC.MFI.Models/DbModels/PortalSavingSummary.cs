@@ -14,11 +14,11 @@ namespace GC.MFI.Models.DbModels
     {
         [Key]
         public long PortalSavingSummaryID { get; set; }
-
+        [Required]
         public int OfficeID { get; set; }
-
+        [Required]
         public long MemberID { get; set; }
-
+        [Required]
         public short ProductID { get; set; }
 
         public int? CenterID { get; set; }
@@ -40,8 +40,9 @@ namespace GC.MFI.Models.DbModels
         [Column(TypeName = "numeric")]
         public decimal? InterestRate { get; set; }
 
+        [Required]
         [Column(TypeName = "numeric")]
-        public decimal? SavingInstallment { get; set; }
+        public decimal SavingInstallment { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal? CumInterest { get; set; }

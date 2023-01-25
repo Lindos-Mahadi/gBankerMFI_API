@@ -2,7 +2,9 @@
 using GC.MFI.DataAccess;
 using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         public virtual IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
         {
             var result = _repository.GetAll();
+            return result;
+        }
+
+        public async Task<PagedResponse<IEnumerable<PortalLoanSummary>>> GetAllPortalLoanSummaryPaged(PaginationFilter filter)
+        {
+            var result = await _repository.GetAllPortalLoanSummaryPaged(filter);
             return result;
         }
 

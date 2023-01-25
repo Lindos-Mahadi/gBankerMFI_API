@@ -2,6 +2,7 @@
 using GC.MFI.Models.RequestModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Services.Modules.Security.Interfaces;
+using GC.MFI.WebApi.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -26,6 +27,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpPost]
         [Route("create")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
         {
             var model = await _service.Create(request);

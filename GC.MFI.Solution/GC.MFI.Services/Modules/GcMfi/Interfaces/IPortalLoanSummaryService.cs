@@ -1,4 +1,6 @@
-﻿using GC.MFI.Models.DbModels;
+﻿using GC.MFI.Models;
+using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +14,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         void Create(PortalLoanSummary entity);
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
         //IEnumerable<PortalLoanSummary> GetAll(Expression<Func<PortalLoanSummary, bool>> where);
+
+        Task<PagedResponse<IEnumerable<PortalLoanSummary>>> GetAllPortalLoanSummaryPaged(PaginationFilter filter);
     }
 }

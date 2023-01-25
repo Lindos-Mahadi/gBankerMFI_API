@@ -1,5 +1,7 @@
 ﻿using GC.MFI.DataAccess.InfrastructureBase;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
     {
         void Create(PortalLoanSummary entity);
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
+        Task<PagedResponse<IEnumerable<PortalLoanSummary>>> GetAllPortalLoanSummaryPaged(PaginationFilter filter);
         //IEnumerable<PortalLoanSummary> GetAll(Expression<Func<PortalLoanSummary, bool>> where);
     }
 }
