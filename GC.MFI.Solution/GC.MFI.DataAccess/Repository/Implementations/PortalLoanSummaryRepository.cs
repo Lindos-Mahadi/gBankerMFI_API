@@ -44,33 +44,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         //}
         public async Task<PagedResponse<IEnumerable<PortalLoanSummary>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummary> filter)
         {
-            IEnumerable<PortalLoanSummary> portalList = null;
 
             var totalElems = _context.PortalLoanSummary.Count(x => x.ApprovalStatus == true);
-            //if (filter.search != null)
-            //{
-            //    portalList = _context.PortalLoanSummary.Where(filter.search);
-            //}
-            //else
-            //{
-            //    portalList = _context.PortalLoanSummary.Where(t => t.ApprovalStatus == true);
-            //}
-            //if (filter.page > 0)
-            //{
-            //    var count = portalList.Count();
-            //    portalList = portalList.Skip((filter.page - 1) * filter.per_page).Take(filter.per_page);
-            //    var totalPage = Convert.ToInt32(Math.Ceiling(((double)count / (double)filter.per_page)));
-            //    return new PagedResponse<IEnumerable<PortalLoanSummary>>(portalList, filter.page, filter.per_page, count, totalPage);
-            //}
-            //else
-            //{
-            //    var count = DataContext.PortalLoanSummary.Count();
-            //    var totalPage = Convert.ToInt32(Math.Ceiling(((double)count / (double)count)));
-            //    return new PagedResponse<IEnumerable<PortalLoanSummary>>(portalList, filter.page, filter.per_page, count, totalPage);
-
-            //}
-            portalList = _context.PortalLoanSummary
+            var portalList = _context.PortalLoanSummary
                                     .Where(filter.search)
+                                    .Where(x => x.ApprovalStatus == true)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                     .Take(filter.pageSize);
 

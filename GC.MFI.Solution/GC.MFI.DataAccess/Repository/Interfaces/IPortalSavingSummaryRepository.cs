@@ -1,6 +1,8 @@
 ﻿using GC.MFI.DataAccess.InfrastructureBase;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.RequestModels;
+using GC.MFI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +14,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
     public interface IPortalSavingSummaryRepository : ILegacyRepository<PortalSavingSummary>
     {
         Task<PortalSavingSummary> Create(PortalSavingSummary request);
+        Task<PagedResponse<IEnumerable<PortalSavingSummary>>> GetAllPortalSavingSummaryPaged(PaginationFilter<PortalSavingSummary> filter);
     }
 }

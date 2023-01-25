@@ -1,5 +1,7 @@
-﻿using GC.MFI.Models.DbModels;
+﻿using GC.MFI.Models;
+using GC.MFI.Models.DbModels;
 using GC.MFI.Models.RequestModels;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using GC.MFI.WebApi.Filters;
@@ -42,7 +44,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             return result;
         }
         [HttpGet]
-        [Route("getsavingsummaryactivelist")]
+        [Route("getallsavingsummary")]
         public async Task<IEnumerable<PortalSavingSummary>> GetSummaryList()
         {
            // var result = _nService.GetMany(t=> t.);
@@ -52,6 +54,18 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 var nominee = _nService.GetMany(t => t.PortalSavingSummaryId == getGet[i].PortalSavingSummaryID);
             }
             return getGet;
+        }
+        [HttpGet]
+        [Route("getapprovesavingsummary")]
+        public async Task<PagedResponse<IEnumerable<PortalSavingSummary>>> GetAllPortalSavingSummaryPaged([FromQuery] PagedFilter filter)
+        {
+            var filt = new PaginationFilter<PortalSavingSummary>(filter.pageNum, filter.pageSize);
+            var savingSummary = await _service.GetAllPortalSavingSummaryPaged(filt);
+            for (int i = 0; i < savingSummary.Data.Count(); i++)
+            {
+                var nominee = _nService.GetMany(t => t.PortalSavingSummaryId == savingSummary.Data.ToList()[i].PortalSavingSummaryID);
+            }
+            return savingSummary;
         }
 
 

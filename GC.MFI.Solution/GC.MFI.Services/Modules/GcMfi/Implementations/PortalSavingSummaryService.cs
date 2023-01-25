@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.RequestModels;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         {
             var model = await _repository.Create(request);
             return model;
+        }
+
+        public async Task<PagedResponse<IEnumerable<PortalSavingSummary>>> GetAllPortalSavingSummaryPaged(PaginationFilter<PortalSavingSummary> filter)
+        {
+            var result = await _repository.GetAllPortalSavingSummaryPaged(filter);
+            return result;
         }
     }
 }
