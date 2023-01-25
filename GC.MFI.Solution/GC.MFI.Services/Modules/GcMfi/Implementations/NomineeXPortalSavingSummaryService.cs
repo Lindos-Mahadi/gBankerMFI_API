@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
-    public class PortalMemberNomineeService : LegacyServiceBase<PortalMemberNominee>, IPortalMemberNomineeService
+    public class NomineeXPortalSavingSummaryService : LegacyServiceBase<NomineeXPortalSavingSummary>, INomineeXPortalSavingSummaryService
     {
-        public PortalMemberNomineeService(IPortalMemberNomineeRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
+        public NomineeXPortalSavingSummaryService(INomineeXPortalSavingSummaryRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
         }
     }

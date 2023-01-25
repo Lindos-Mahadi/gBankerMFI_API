@@ -20,6 +20,6 @@ namespace GC.MFI.Models.RequestModels
         [Column(TypeName = "date")]
         public DateTime OpeningDate { get; set; }
 
-        public virtual List<PortalMemberNominee> MemberNominees { get; set; } 
+        public virtual List<NomineeXPortalSavingSummary> MemberNominees { get; set; } 
     }
 }

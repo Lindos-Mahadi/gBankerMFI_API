@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
-    public class PortalMemberNomineeRepository : LegacyRepositoryBase<PortalMemberNominee>, IPortalMemberNomineeRepository
+    public class NomineeXPortalSavingSummaryRepository : LegacyRepositoryBase<NomineeXPortalSavingSummary>, INomineeXPortalSavingSummaryRepository
     {
-        public PortalMemberNomineeRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
+        public NomineeXPortalSavingSummaryRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
         {
         }
     }

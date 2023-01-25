@@ -159,9 +159,9 @@ namespace GC.MFI.WebApi
             services.AddScoped<IPortalSavingSummaryRepository, PortalSavingSummaryRepository>();
             services.AddScoped<IPortalSavingSummaryService, PortalSavingSummaryService>();
 
-            // PortalSavingSummary Dependancy
-            services.AddScoped<IPortalMemberNomineeRepository, PortalMemberNomineeRepository>();
-            services.AddScoped<IPortalMemberNomineeService, PortalMemberNomineeService>();
+            // NomineeXPortalSavingSummary Dependancy
+            services.AddScoped<INomineeXPortalSavingSummaryRepository, NomineeXPortalSavingSummaryRepository>();
+            services.AddScoped<INomineeXPortalSavingSummaryService, NomineeXPortalSavingSummaryService>();
 
             // Register for model Validation
             services.AddControllers(

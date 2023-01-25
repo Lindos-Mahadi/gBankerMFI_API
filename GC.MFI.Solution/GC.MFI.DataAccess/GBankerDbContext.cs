@@ -42,7 +42,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<ProductList> ProductList { get; set; }
 
         public virtual DbSet<MemberPassBookRegister> MemberPassBookRegister { get; set; }
-        public virtual DbSet<PortalMemberNominee> PortalMemberNominee { get; set; }
+        public virtual DbSet<NomineeXPortalSavingSummary> NomineeXPortalSavingSummary { get; set; }
 
         public virtual DbSet<Investor> Investor { get; set; }
 
@@ -181,7 +181,7 @@ namespace GC.MFI.DataAccess
                 .HasOne(O => O.order)
                 .WithMany(M => M.orderDetails);
             //.HasForeignKey(FK => FK.);
-            modelBuilder.Entity<PortalMemberNominee>()
+            modelBuilder.Entity<NomineeXPortalSavingSummary>()
                 .HasOne(O => O.PortalSavingSummary)
                 .WithMany(M => M.MemberNomines);
 

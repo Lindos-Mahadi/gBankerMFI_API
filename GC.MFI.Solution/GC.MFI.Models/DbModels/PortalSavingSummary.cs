@@ -89,6 +89,6 @@ namespace GC.MFI.Models.DbModels
         public int? Ref_EmployeeID { get; set; }
         public bool? ApprovalStutus { get; set; }
 
-        public virtual List<PortalMemberNominee> MemberNomines { get; set; }
+        public virtual List<NomineeXPortalSavingSummary> MemberNomines { get; set; }
     }
 }

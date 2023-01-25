@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface IPortalMemberNomineeService : ILegacyServiceBase<PortalMemberNominee>
+    public interface INomineeXPortalSavingSummaryService : ILegacyServiceBase<NomineeXPortalSavingSummary>
     {
     }
 }
