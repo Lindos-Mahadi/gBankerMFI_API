@@ -94,7 +94,7 @@ namespace GC.MFI.Security.Jwt
             var tokenDescriptor = new SecurityTokenDescriptor
             {
              Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(480),
+            Expires = DateTime.UtcNow.AddMinutes(60),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
