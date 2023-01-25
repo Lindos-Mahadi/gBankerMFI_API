@@ -28,13 +28,16 @@ namespace GC.MFI.Controllers
         
         [HttpPost]
         [Route("Authenticate")]
-        public  Task<Tokens> Authenticate(AuthenticationModel securityModel)
+        public async Task<IActionResult> Authenticate(AuthenticationModel securityModel)
         {
             try
             {
                 if (securityModel == null)
                     throw new Exception("Please enter userid and password to authenticate.");
-                return   authenticationHelper.Authenticate(securityModel);
+                var token = await authenticationHelper.Authenticate(securityModel);
+                if(token == null)
+                    return Unauthorized();
+                return Ok(token);
             }
             catch (Exception ex)
             {
