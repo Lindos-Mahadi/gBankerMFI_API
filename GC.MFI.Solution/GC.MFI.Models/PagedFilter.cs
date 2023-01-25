@@ -7,24 +7,18 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Models
 {
-    public class PaginationFilter<T> where T:class
+    public class PagedFilter
     {
         public int pageNum { get; set; }
         public int pageSize { get; set; }
-        public Expression<Func<T, bool>> search { get; set; }
-        public PaginationFilter()
+        public string search { get; set; }
+        public PagedFilter()
         {
             this.pageNum = 1;
             this.pageSize = 10;
-            search = (x => true);
+            search = search;
         }
-        public PaginationFilter(int page, int per_page)
-        {
-            this.pageNum = page < 1 ? 1 : page;
-            this.pageSize = per_page > 10 ? 10 : per_page;
-            search = (x => true);
-        }
-        public PaginationFilter(int page, int per_page, Expression<Func<T, bool>> search)
+        public PagedFilter(int page, int per_page, string search)
         {
             this.pageNum = page < 1 ? 1 : page;
             this.pageSize = per_page > 10 ? 10 : per_page;

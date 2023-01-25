@@ -85,14 +85,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             return result;
         }
 
-        //[HttpGet]
-        //[Route("pagedloansummary")]
-        //public async Task<IActionResult> PagedLoanSummary([FromQuery] PaginationFilter<PortalLoanSummary> filter)
-        //{
-        //    //var filt = new PaginationFilter<PortalLoanSummary>(12, 13, (x => x.ProductID == 12))
-        //    var summary = await _service.GetAllPortalLoanSummaryPaged(filter);
-        //    return Ok(summary);
-        //}
+        [HttpGet]
+        [Route("pagedloansummary")]
+        public async Task<PagedResponse<IEnumerable<PortalLoanSummary>>> PagedLoanSummary([FromQuery] PagedFilter filter)
+        {
+            var filt = new PaginationFilter<PortalLoanSummary>(filter.pageNum, filter.pageSize);
+            var summary = await _service.GetAllPortalLoanSummaryPaged(filt);
+            return summary;
+        }
 
     }
 }
