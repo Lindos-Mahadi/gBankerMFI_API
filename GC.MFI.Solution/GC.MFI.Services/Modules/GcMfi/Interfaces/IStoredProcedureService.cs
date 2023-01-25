@@ -1,4 +1,5 @@
 ﻿using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<MainProduct>> GetMainProductList(string PaymentFrequecy, int officeId);
         Task<List<SubMainProduct>> GetSubMainProdutList(string MainProductCode, string freq);
         Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId);
+        Task<List<RepaymentScheduleReport>> GetRepaymentSchedule(int officeID, int memberId, int productId, int loanTerm);
     }
 }
