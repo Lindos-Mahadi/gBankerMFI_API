@@ -44,7 +44,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         public async Task<IEnumerable<PortalSavingSummary>> GetSummaryList()
         {
            // var result = _nService.GetMany(t=> t.);
-            var getGet =  _service.GetMany(t => t.ApprovalStutus == true).ToList();
+            var getGet =  _service.GetMany(t => t.ApprovalStatus == true).ToList();
             for(int i = 0; i< getGet.Count(); i++ )
             {
                 var nominee = _nService.GetMany(t => t.PortalSavingSummaryId == getGet[i].PortalSavingSummaryID);

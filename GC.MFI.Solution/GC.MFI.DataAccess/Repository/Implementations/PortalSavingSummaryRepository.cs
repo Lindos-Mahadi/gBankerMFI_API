@@ -24,12 +24,13 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 OfficeID = request.OfficeID,
                 MemberID = request.MemberID,
                 ProductID = request.ProductID,
+                CenterID = request.CenterID,
                 SavingInstallment = request.SavingInstallment,
                 CreateDate = DateTime.UtcNow,
                 CreateUser = request.CreateUser,
                 OpeningDate = DateTime.UtcNow,
                 MemberNomines = request.MemberNomines,
-                ApprovalStutus = false
+                ApprovalStatus = false
             };
             DataContext.Add(model);
             CommitTransaction();
