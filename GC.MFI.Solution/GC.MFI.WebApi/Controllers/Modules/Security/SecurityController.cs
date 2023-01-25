@@ -32,7 +32,7 @@ namespace GC.MFI.Controllers
         {
             try
             {
-                if (securityModel == null)
+                if (!ModelState.IsValid)
                     throw new Exception("Please enter userid and password to authenticate.");
                 var token = await authenticationHelper.Authenticate(securityModel);
                 if(token == null)

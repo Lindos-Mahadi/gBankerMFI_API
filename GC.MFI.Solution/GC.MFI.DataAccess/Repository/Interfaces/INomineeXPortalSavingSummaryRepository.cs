@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.DataAccess.Repository.Interfaces
 {
-    public interface IPortalMemberNomineeRepository : ILegacyRepository<PortalMemberNominee>
+    public interface INomineeXPortalSavingSummaryRepository : ILegacyRepository<NomineeXPortalSavingSummary>
     {
     }
 }

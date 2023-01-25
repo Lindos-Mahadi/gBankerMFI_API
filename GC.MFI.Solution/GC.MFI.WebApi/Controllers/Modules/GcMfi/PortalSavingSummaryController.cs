@@ -13,12 +13,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         private readonly ILogger<PortalSavingSummaryController> _logger;
         private readonly IPortalSavingSummaryService _service;
         private readonly IStoredProcedureService _sp;
+        private readonly INomineeXPortalSavingSummaryService _nService; 
 
-        public PortalSavingSummaryController(ILogger<PortalSavingSummaryController> logger,IStoredProcedureService sp,  IPortalSavingSummaryService service) : base(service)
+        public PortalSavingSummaryController(ILogger<PortalSavingSummaryController> logger, INomineeXPortalSavingSummaryService _nService,IStoredProcedureService sp,  IPortalSavingSummaryService service) : base(service)
         {
             this._logger = logger;
             this._service = service;
             this._sp = sp;
+            this._nService = _nService;
         }
 
 
@@ -36,6 +38,18 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var result = await _sp.GetProductListForSavingAccount(0, orgId, "S", officeId);
             return result;
+        }
+        [HttpGet]
+        [Route("getsavingsummaryactivelist")]
+        public async Task<IEnumerable<PortalSavingSummary>> GetSummaryList()
+        {
+           // var result = _nService.GetMany(t=> t.);
+            var getGet =  _service.GetMany(t => t.ApprovalStutus == true).ToList();
+            for(int i = 0; i< getGet.Count(); i++ )
+            {
+                var nominee = _nService.GetMany(t => t.PortalSavingSummaryId == getGet[i].PortalSavingSummaryID);
+            }
+            return getGet;
         }
 
 
