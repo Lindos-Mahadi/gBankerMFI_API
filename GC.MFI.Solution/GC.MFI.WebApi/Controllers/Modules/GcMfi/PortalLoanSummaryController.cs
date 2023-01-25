@@ -48,34 +48,34 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
         }
 
-        [HttpGet]
-        [Route("GetAllPortalSummaries")]
-        public async Task<IActionResult> GetAllPortalSummaries([FromQuery] PaginationFilter filter)
-        {
-            var portalSummaryList = _service.GetAllPortalLoanSummary();
-            var loanSummaryCount = portalSummaryList.Count();
-            //if (!String.IsNullOrEmpty(filter.search))
-            //{
-            //    //portalSummaryList = portalSummaryList.Where(t => t.CategoryName.ToUpper()!.Contains(filter.search.ToUpper()));
-            //    //categoryCount = portalSummaryList.Count();
+        //[HttpGet]
+        //[Route("GetAllPortalSummaries")]
+        //public async Task<IActionResult> GetAllPortalSummaries([FromQuery] PaginationFilter<PortalLoanSummary> filter)
+        //{
+        //    var portalSummaryList = _service.GetAllPortalLoanSummary();
+        //    var loanSummaryCount = portalSummaryList.Count();
+        //    //if (!String.IsNullOrEmpty(filter.search))
+        //    //{
+        //    //    //portalSummaryList = portalSummaryList.Where(t => t.CategoryName.ToUpper()!.Contains(filter.search.ToUpper()));
+        //    //    //categoryCount = portalSummaryList.Count();
 
-            //    // UPDATED WILL BE NEXT
-            //    portalSummaryList = portalSummaryList.Where(t => t.BankName.ToUpper()!.Contains(filter.search.ToUpper()));
-            //    loanSummaryCount = portalSummaryList.Count();
-            //}
+        //    //    // UPDATED WILL BE NEXT
+        //    //    portalSummaryList = portalSummaryList.Where(t => t.BankName.ToUpper()!.Contains(filter.search.ToUpper()));
+        //    //    loanSummaryCount = portalSummaryList.Count();
+        //    //}
 
-            if (filter.per_page > 0)
-            {
-                portalSummaryList = portalSummaryList.Skip((filter.page - 1) * filter.per_page).Take(filter.per_page);
-                var toalPage = Convert.ToInt32(Math.Ceiling(((double)loanSummaryCount / (double)filter.per_page)));
-                return Ok(new PagedResponse<IEnumerable<PortalLoanSummary>>(portalSummaryList, filter.page, filter.per_page, loanSummaryCount, toalPage));
-            }
-            else
-            {
-                var toalPage = Convert.ToInt32(Math.Ceiling(((double)loanSummaryCount / (double)loanSummaryCount)));
-                return Ok(new PagedResponse<IEnumerable<PortalLoanSummary>>(portalSummaryList, filter.page, loanSummaryCount, loanSummaryCount, toalPage));
-            }
-        }
+        //    //if (filter.per_page > 0)
+        //    //{
+        //    //    portalSummaryList = portalSummaryList.Skip((filter.page - 1) * filter.per_page).Take(filter.per_page);
+        //    //    var toalPage = Convert.ToInt32(Math.Ceiling(((double)loanSummaryCount / (double)filter.per_page)));
+        //    //    return Ok(new PagedResponse<IEnumerable<PortalLoanSummary>>(portalSummaryList, filter.page, filter.per_page, loanSummaryCount, toalPage));
+        //    //}
+        //    //else
+        //    //{
+        //    //    var toalPage = Convert.ToInt32(Math.Ceiling(((double)loanSummaryCount / (double)loanSummaryCount)));
+        //    //    return Ok(new PagedResponse<IEnumerable<PortalLoanSummary>>(portalSummaryList, filter.page, loanSummaryCount, loanSummaryCount, toalPage));
+        //    //}
+        //}
 
         [HttpGet]
         [Route("getactiveloansummary")]
@@ -85,13 +85,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             return result;
         }
 
-        [HttpGet]
-        [Route("pagedloansummary")]
-        public async Task<IActionResult> PagedLoanSummary([FromQuery] PaginationFilter filter)
-        {
-            var summary = await _service.GetAllPortalLoanSummaryPaged(filter);
-            return Ok(summary);
-        }
-        
+        //[HttpGet]
+        //[Route("pagedloansummary")]
+        //public async Task<IActionResult> PagedLoanSummary([FromQuery] PaginationFilter<PortalLoanSummary> filter)
+        //{
+        //    //var filt = new PaginationFilter<PortalLoanSummary>(12, 13, (x => x.ProductID == 12))
+        //    var summary = await _service.GetAllPortalLoanSummaryPaged(filter);
+        //    return Ok(summary);
+        //}
+
     }
 }
