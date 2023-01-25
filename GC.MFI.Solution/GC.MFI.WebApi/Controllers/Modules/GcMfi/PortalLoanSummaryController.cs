@@ -76,6 +76,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 return Ok(new PagedResponse<IEnumerable<PortalLoanSummary>>(portalSummaryList, filter.page, loanSummaryCount, loanSummaryCount, toalPage));
             }
         }
+
+        [HttpGet]
+        [Route("getactiveloansummary")]
+        public async Task<IEnumerable<PortalLoanSummary>> GetActiveLoanSummary()
+        {
+            var result = _service.GetMany(t=> t.IsActive == true);
+            return result;
+        }
         
     }
 }
