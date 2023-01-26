@@ -14,4 +14,11 @@ namespace GC.MFI.Models.DbModels
         public decimal? MinLimit { get; set; }
         public decimal? MaxLimit { get; set; }
     }
+
+    public class ProductListForSavingSummary
+    {
+        public short ProductID { get; set; }
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+    }
 }

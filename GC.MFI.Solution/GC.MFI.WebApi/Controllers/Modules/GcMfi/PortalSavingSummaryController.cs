@@ -38,7 +38,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpGet]
         [Route("getproductlistforsavingaccount")]
-        public async Task<List<ProductList>> GetList(int orgId,int officeId)
+        public async Task<List<ProductListForSavingSummary>> GetList(int orgId,int officeId)
         {
             var result = await _sp.GetProductListForSavingAccount(0, orgId, "S", officeId);
             return result;
