@@ -21,7 +21,7 @@ namespace GC.MFI.Models.Models
         public long MemberID{ get; set; }
         public string MemberCode{ get; set; }
         public string MemberName{ get; set; }
-        public DateTime DisburseDate{ get; set; }
+        public DateTime? DisburseDate{ get; set; }
         public string RepaymentDate{ get; set; }
         public Decimal PrincipalLoan{ get; set; }
         public Decimal LoanInstallMent{ get; set; }
