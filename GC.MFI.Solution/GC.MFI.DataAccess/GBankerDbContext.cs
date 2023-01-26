@@ -49,6 +49,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<RepaymentScheduleReportAE> RepaymentScheduleReportAE { get; set; }
         public virtual DbSet<RepaymentScheduleReportD> RepaymentScheduleReportD { get; set; }
         public virtual DbSet<DistrictList> DistrictList { get; set; }
+        public virtual DbSet<UpozillaList> UpozillaList { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -204,6 +205,7 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<RepaymentScheduleReportAE>().HasNoKey();
             modelBuilder.Entity<RepaymentScheduleReportD>().HasNoKey();
             modelBuilder.Entity<DistrictList>().HasNoKey();
+            modelBuilder.Entity<UpozillaList>().HasNoKey();
           // modelBuilder.Entity<NIDLogging>().0();
 
             OnModelCreatingPartial(modelBuilder);

@@ -21,5 +21,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<RepaymentScheduleReportAE>> GetRepaymentScheduleAE(int officeID, int memberId, int productId, int loanTerm);
         Task<List<RepaymentScheduleReportD>> GetRepaymentScheduleD(int officeID, int memberId, int productId, int loanTerm);
         Task<List<DistrictList>> GetDistrictByDivision(string divisionId);
+        Task<List<UpozillaList>> GetUpozillaByDistrict(string districtId);
     }
 }

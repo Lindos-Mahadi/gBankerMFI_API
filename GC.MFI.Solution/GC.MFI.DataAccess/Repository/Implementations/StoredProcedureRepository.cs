@@ -60,6 +60,26 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
         }
 
+        public async Task<List<UpozillaList>> GetUpozillaByDistrict(string districtId)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@SearchByCode", districtId));
+                parameter.Add(new SqlParameter("@SearchBy", "dis"));
+                parameter.Add(new SqlParameter("@SearchType", "upo"));
+
+                var result = await Task.Run(() => _context.UpozillaList
+               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<Center>> GetCenterListByOffice(int OfficeId)
         {
             try
