@@ -22,7 +22,7 @@ namespace GC.MFI.Models.DbModels
         public string NAddressName { get; set; }
         public int? NAlocation { get; set; }
 
-        public long PortalSavingSummaryId { get; set; }
+        public long PortalSavingSummaryID { get; set; }
         [JsonIgnore]
         public PortalSavingSummary PortalSavingSummary { get; set; }
     }

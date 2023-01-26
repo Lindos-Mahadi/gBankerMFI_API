@@ -49,7 +49,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var portalList = _context.PortalLoanSummary
                                     .Where(filter.search)
                                     .Where(x => x.ApprovalStatus == true)
-                                    .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
+                                    .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 1)
                                     .Take(filter.pageSize);
 
             return new PagedResponse<IEnumerable<PortalLoanSummary>>(

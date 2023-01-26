@@ -51,7 +51,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var getGet =  _service.GetMany(t => t.ApprovalStatus == true).ToList();
             for(int i = 0; i< getGet.Count(); i++ )
             {
-                var nominee = _nService.GetMany(t => t.PortalSavingSummaryId == getGet[i].PortalSavingSummaryID);
+                var nominee = _nService.GetMany(t => t.PortalSavingSummaryID == getGet[i].PortalSavingSummaryID);
             }
             return getGet;
         }
@@ -69,7 +69,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var savingSummary = await _service.GetAllPortalSavingSummaryPaged(filt);
             for (int i = 0; i < savingSummary.Data.Count(); i++)
             {
-                var nominee = _nService.GetMany(t => t.PortalSavingSummaryId == savingSummary.Data.ToList()[i].PortalSavingSummaryID);
+                var nominee = _nService.GetMany(t => t.PortalSavingSummaryID == savingSummary.Data.ToList()[i].PortalSavingSummaryID);
             }
             return savingSummary;
         }

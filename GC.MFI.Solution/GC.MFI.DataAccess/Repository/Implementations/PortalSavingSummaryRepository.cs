@@ -88,7 +88,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     .Take(filter.pageSize).ToList();
             for(int i=0;i<savingSummary.Count();i++)
             {
-                var nominee = DataContext.NomineeXPortalSavingSummary.Where(t => t.PortalSavingSummaryId == savingSummary[i].PortalSavingSummaryID);
+                var nominee = DataContext.NomineeXPortalSavingSummary.Where(t => t.PortalSavingSummaryID == savingSummary[i].PortalSavingSummaryID);
             }
 
             return new PagedResponse<IEnumerable<SavingSummaryViewModel>>(
