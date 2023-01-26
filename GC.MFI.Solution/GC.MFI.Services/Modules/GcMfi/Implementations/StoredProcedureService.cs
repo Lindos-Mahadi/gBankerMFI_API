@@ -48,6 +48,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return await storedProcedureRepository.GetProductList(freq, officeId);
         }
 
+        public async Task<List<DistrictList>> GetDistrictByDivision(string divisionId)
+        {
+            return await storedProcedureRepository.GetDistrictByDivision(divisionId);
+        }
+
         public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId)
         {
             return await storedProcedureRepository.GetProductListForSavingAccount(porductType, orgId, itemType, officeId);

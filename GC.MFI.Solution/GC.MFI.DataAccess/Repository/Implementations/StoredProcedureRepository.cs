@@ -40,6 +40,26 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
         }
 
+        public async Task<List<DistrictList>> GetDistrictByDivision(string divisionId)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@SearchByCode", divisionId));
+                parameter.Add(new SqlParameter("@SearchBy", "div"));
+                parameter.Add(new SqlParameter("@SearchType", "dis"));
+
+                var result = await Task.Run(() => _context.DistrictList
+               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<Center>> GetCenterListByOffice(int OfficeId)
         {
             try
