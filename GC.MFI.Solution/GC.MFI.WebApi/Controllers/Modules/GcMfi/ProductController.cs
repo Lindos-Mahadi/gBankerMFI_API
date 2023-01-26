@@ -17,5 +17,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             _logger = logger;
             _service = service;
         }
+
+        [HttpGet]
+        [Route("getProducById")]
+        public override Product GetById(long id)
+        {
+            var result = _service.GetByIdShort((short)id);
+            return result;
+        }
     }
 }

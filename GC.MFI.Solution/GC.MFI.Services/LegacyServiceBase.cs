@@ -65,7 +65,12 @@ namespace GC.MFI.Services
             return viewModel;
         }
 
-
+        public virtual TDbModel GetByIdShort(short id)
+        {
+            var dbModel = repository.GetByIdShort(id);
+            var viewModel = _mapper.Map<TDbModel>(dbModel);
+            return viewModel;
+        }
 
         public void Save()
         {

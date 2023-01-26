@@ -123,8 +123,8 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpGet]
-        [Route("GetLoanRepaymentSchedule")]
-        public async Task<List<RepaymentScheduleReport>> GetLoanRepaymentSchedule(
+        [Route("GetLoanRepaymentScheduleAE")]
+        public async Task<List<RepaymentScheduleReportAE>> GetLoanRepaymentSchedule(
             int officeId,
             int memberId,
             int productId,
@@ -132,9 +132,27 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             try
             {
-                return await _storedProcedureService.GetRepaymentSchedule(officeId, memberId, productId, loanTerm);
+                return await _storedProcedureService.GetRepaymentScheduleAE(officeId, memberId, productId, loanTerm);
             }
             catch(Exception ex) 
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("GetLoanRepaymentScheduleD")]
+        public async Task<List<RepaymentScheduleReportD>> GetLoanRepaymentScheduleD(
+           int officeId,
+           int memberId,
+           int productId,
+           int loanTerm)
+        {
+            try
+            {
+                return await _storedProcedureService.GetRepaymentScheduleD(officeId, memberId, productId, loanTerm);
+            }
+            catch (Exception ex)
             {
                 throw;
             }

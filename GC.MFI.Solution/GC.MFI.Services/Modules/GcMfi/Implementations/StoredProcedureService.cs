@@ -12,50 +12,54 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
     public class StoredProcedureService: IStoredProcedureService
     {
-        private readonly IStoredProcedureRepository divisionRepository;
+        private readonly IStoredProcedureRepository storedProcedureRepository;
 
-        public StoredProcedureService(IStoredProcedureRepository divisionRepository)
+        public StoredProcedureService(IStoredProcedureRepository storedProcedureRepository)
         {
-            this.divisionRepository = divisionRepository;
+            this.storedProcedureRepository = storedProcedureRepository;
         }
 
         public async Task<List<Division>> GetDivisionByCountry(string countryId)
         {
-            return await divisionRepository.GetDivisionByCountry(countryId);
+            return await storedProcedureRepository.GetDivisionByCountry(countryId);
         }
 
         public async Task<List<Center>> GetCenterListByOffice(int officeId)
         {
-            return await divisionRepository.GetCenterListByOffice(officeId);
+            return await storedProcedureRepository.GetCenterListByOffice(officeId);
         }
 
         public async Task<List<MainProduct>> GetMainProductList(string PaymentFrequecy, int officeId)
         {
-            return await divisionRepository.GetMainProductList(PaymentFrequecy, officeId);
+            return await storedProcedureRepository.GetMainProductList(PaymentFrequecy, officeId);
         }
 
         public async Task<List<SubMainProduct>> GetSubMainProdutList(string MainProductCode, string freq)
         {
-            return await divisionRepository.GetSubMainProdutList(MainProductCode, freq);
+            return await storedProcedureRepository.GetSubMainProdutList(MainProductCode, freq);
         }
 
         //public async Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId)
         //{
-        //    return await divisionRepository.GetProductList(MainProductCode, freq, officeId);
+        //    return await storedProcedureRepository.GetProductList(MainProductCode, freq, officeId);
         //}
         public async Task<List<ProductList>> GetProductList(string freq, int officeId)
         {
-            return await divisionRepository.GetProductList(freq, officeId);
+            return await storedProcedureRepository.GetProductList(freq, officeId);
         }
 
         public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId)
         {
-            return await divisionRepository.GetProductListForSavingAccount(porductType, orgId, itemType, officeId);
+            return await storedProcedureRepository.GetProductListForSavingAccount(porductType, orgId, itemType, officeId);
         }
 
-        public async Task<List<RepaymentScheduleReport>> GetRepaymentSchedule(int officeId, int memberId, int productId, int loanTerm)
+        public async Task<List<RepaymentScheduleReportAE>> GetRepaymentScheduleAE(int officeId, int memberId, int productId, int loanTerm)
         {
-            return await divisionRepository.GetRepaymentSchedule(officeId, memberId, productId, loanTerm);
+            return await storedProcedureRepository.GetRepaymentScheduleAE(officeId, memberId, productId, loanTerm);
+        }
+        public async Task<List<RepaymentScheduleReportD>> GetRepaymentScheduleD(int officeId, int memberId, int productId, int loanTerm)
+        {
+            return await storedProcedureRepository.GetRepaymentScheduleD(officeId, memberId, productId, loanTerm);
         }
     }
 }

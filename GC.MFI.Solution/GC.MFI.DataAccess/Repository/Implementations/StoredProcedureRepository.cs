@@ -12,7 +12,7 @@ using GC.MFI.Models.Models;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
-    public class StoredProcedureRepository: IStoredProcedureRepository
+    public class StoredProcedureRepository : IStoredProcedureRepository
     {
         private readonly GBankerDbContext _context;
         public StoredProcedureRepository(GBankerDbContext context)
@@ -34,10 +34,10 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
                 return result.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
-            }           
+            }
         }
 
         public async Task<List<Center>> GetCenterListByOffice(int OfficeId)
@@ -46,13 +46,13 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             {
                 var parameter = new List<SqlParameter>();
                 parameter.Add(new SqlParameter("@OfficeId", OfficeId));
-                
+
                 var result = await Task.Run(() => _context.Center
                 .FromSqlRaw(@"exec GetOnlyCenter @OfficeId", parameter.ToArray()));
 
                 return result.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -128,11 +128,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
             catch (Exception ex)
             {
-                throw; 
+                throw;
             }
         }
 
-        public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId,  string itemType, int officeId)
+        public async Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId)
         {
             var parameter = new List<SqlParameter>();
             parameter.Add(new SqlParameter("@Prodtype", porductType));
@@ -140,12 +140,12 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             parameter.Add(new SqlParameter("@ItemType", itemType));
             parameter.Add(new SqlParameter("@OfficeID", officeId));
 
-            var result = await Task.Run(()=> _context.ProductList
+            var result = await Task.Run(() => _context.ProductList
             .FromSqlRaw(@"exec Proc_GetProductAccordingtoOffice @Prodtype, @OrgID, @ItemType, @OfficeID", parameter.ToArray()));
             return result.ToList();
         }
 
-        public async Task<List<RepaymentScheduleReport>> GetRepaymentSchedule(int officeID, int memberId, int productId, int loanTerm)
+        public async Task<List<RepaymentScheduleReportAE>> GetRepaymentScheduleAE(int officeID, int memberId, int productId, int loanTerm)
         {
             try
             {
@@ -155,7 +155,27 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 parameter.Add(new SqlParameter("@ProductID", productId));
                 parameter.Add(new SqlParameter("@Loanterm", loanTerm));
 
-                var result = await Task.Run(() => _context.RepaymentScheduleReport
+                var result = await Task.Run(() => _context.RepaymentScheduleReportAE
+                .FromSqlRaw(@"exec getRepaymentScheduleReportHistory @OfficeId, @MemberID, @ProductID, @loanTerm", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public async Task<List<RepaymentScheduleReportD>> GetRepaymentScheduleD(int officeID, int memberId, int productId, int loanTerm)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@OfficeId", officeID));
+                parameter.Add(new SqlParameter("@MemberID", memberId));
+                parameter.Add(new SqlParameter("@ProductID", productId));
+                parameter.Add(new SqlParameter("@Loanterm", loanTerm));
+
+                var result = await Task.Run(() => _context.RepaymentScheduleReportD
                 .FromSqlRaw(@"exec getRepaymentScheduleReportHistory @OfficeId, @MemberID, @ProductID, @loanTerm", parameter.ToArray()));
 
                 return result.ToList();

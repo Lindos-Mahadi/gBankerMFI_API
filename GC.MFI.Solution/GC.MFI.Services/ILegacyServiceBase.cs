@@ -15,6 +15,7 @@ namespace GC.MFI.Services
         IEnumerable<TDbModel> GetAll();
         IEnumerable<TDbModel> GetAll<TKey>(Func<TDbModel, TKey> orderby);
         TDbModel GetById(long id);
+        TDbModel GetByIdShort(short id);
         TDbModel Create(TDbModel objectToCreate);
         TDbModel CreateWithoutSave(TDbModel objectToCreate);
         void Update(TDbModel objectToUpdate);

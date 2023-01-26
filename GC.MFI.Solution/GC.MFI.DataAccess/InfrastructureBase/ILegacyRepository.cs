@@ -16,6 +16,7 @@ namespace GC.MFI.DataAccess.InfrastructureBase
         void Delete(TDbModel entity);
         void Delete(Expression<Func<TDbModel, bool>> where);
         TDbModel GetById(long id);
+        TDbModel GetByIdShort(short id);
         TDbModel GetById(Guid id);
         TDbModel Get(Expression<Func<TDbModel, bool>> where);
         IEnumerable<TDbModel> GetAll();

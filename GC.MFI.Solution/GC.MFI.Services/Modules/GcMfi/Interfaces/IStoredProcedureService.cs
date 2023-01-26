@@ -18,6 +18,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<ProductList>> GetProductList(string freq, int officeId);
 
         Task<List<ProductList>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId);
-        Task<List<RepaymentScheduleReport>> GetRepaymentSchedule(int officeID, int memberId, int productId, int loanTerm);
+        Task<List<RepaymentScheduleReportAE>> GetRepaymentScheduleAE(int officeID, int memberId, int productId, int loanTerm);
+        Task<List<RepaymentScheduleReportD>> GetRepaymentScheduleD(int officeID, int memberId, int productId, int loanTerm);
     }
 }

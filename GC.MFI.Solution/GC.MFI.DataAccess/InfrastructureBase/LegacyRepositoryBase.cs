@@ -102,6 +102,11 @@ namespace GC.MFI.DataAccess.InfrastructureBase
         return _dbset.Find(id);
     }
 
+    public virtual TDbModel GetByIdShort(short id)
+    {
+        return _dbset.Find(id);
+    }
+
     public virtual TDbModel GetById(Guid id)
     {
         return _dbset.Find(id);

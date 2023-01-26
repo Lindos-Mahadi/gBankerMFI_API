@@ -51,7 +51,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     OfficeID=pps.OfficeID,
                                     MemberID=pps.MemberID,
                                     MemberName = m.FirstName,
-                                    ProductID= pl.ProductID,
+                                    ProductID= (short)pl.ProductID,
                                     ProductName= pl.ProductName,
                                     CenterID=pps.CenterID,
                                     NoOfAccount=pps.NoOfAccount,
