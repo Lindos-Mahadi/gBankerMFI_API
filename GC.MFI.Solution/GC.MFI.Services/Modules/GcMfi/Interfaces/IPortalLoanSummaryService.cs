@@ -15,6 +15,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
         //IEnumerable<PortalLoanSummary> GetAll(Expression<Func<PortalLoanSummary, bool>> where);
 
-        Task<PagedResponse<IEnumerable<PortalLoanSummary>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummary> filter);
+        Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter, long Id);
     }
 }

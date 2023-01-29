@@ -87,10 +87,10 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpGet]
         [Route("pagedloansummary")]
-        public async Task<PagedResponse<IEnumerable<PortalLoanSummary>>> PagedLoanSummary([FromQuery] PagedFilter filter)
+        public async Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> PagedLoanSummary([FromQuery] PagedFilter filter,long Id)
         {
-            var filt = new PaginationFilter<PortalLoanSummary>(filter.pageNum, filter.pageSize);
-            var summary = await _service.GetAllPortalLoanSummaryPaged(filt);
+            var filt = new PaginationFilter<PortalLoanSummaryViewModel>(filter.pageNum, filter.pageSize);
+            var summary = await _service.GetAllPortalLoanSummaryPaged(filt, Id);
             return summary;
         }
 

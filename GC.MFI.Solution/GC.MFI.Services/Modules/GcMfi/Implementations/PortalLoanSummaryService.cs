@@ -34,9 +34,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return result;
         }
 
-        public async Task<PagedResponse<IEnumerable<PortalLoanSummary>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummary> filter)
+        public async Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter, long Id)
         {
-            var result = await _repository.GetAllPortalLoanSummaryPaged(filter);
+            var result = await _repository.GetAllPortalLoanSummaryPaged(filter, Id);
             return result;
         }
 

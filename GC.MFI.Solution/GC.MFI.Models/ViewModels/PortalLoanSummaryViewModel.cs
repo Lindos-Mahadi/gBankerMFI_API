@@ -19,7 +19,7 @@ namespace GC.MFI.Models.ViewModels
         public long? MemberID { get; set; }
         [Required]
         public short ProductID { get; set; }
-
+        public string ProductName { get; set; }
         public int? CenterID { get; set; }
 
         public byte? MemberCategoryID { get; set; }
@@ -27,6 +27,7 @@ namespace GC.MFI.Models.ViewModels
         public byte? LoanTerm { get; set; }
         [Required]
         public short PurposeID { get; set; }
+        public string PurposeName { get; set; }
 
         [StringLength(100)]
         public string LoanNo { get; set; }
