@@ -38,9 +38,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             CommitTransaction();
             return model;
         }
-        public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter)
+        public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id)
         {
-            var TotalElement = DataContext.PortalSavingSummary.Count(t => t.ApprovalStatus == true);
+            var TotalElement = DataContext.PortalSavingSummary.Count(t => t.ApprovalStatus == true && t.MemberID == Id);
 
             var savingSummary =(from pps in DataContext.PortalSavingSummary
                                 join pl in DataContext.Product on pps.ProductID equals pl.ProductID
@@ -83,13 +83,13 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     MemberNomines =pps.MemberNomines,
                                 })
                                     .Where(filter.search)
-                                    .Where(x => x.ApprovalStatus == true)
+                                    .Where(x => x.ApprovalStatus == true && x.MemberID == Id)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                     .Take(filter.pageSize).ToList();
-            for(int i=0;i<savingSummary.Count();i++)
-            {
-                var nominee = DataContext.NomineeXPortalSavingSummary.Where(t => t.PortalSavingSummaryID == savingSummary[i].PortalSavingSummaryID);
-            }
+            //for(int i=0;i<savingSummary.Count();i++)
+            //{
+            //    var nominee = DataContext.NomineeXPortalSavingSummary.Where(t => t.PortalSavingSummaryID == savingSummary[i].PortalSavingSummaryID);
+            //}
 
             return new PagedResponse<IEnumerable<SavingSummaryViewModel>>(
                 savingSummary,

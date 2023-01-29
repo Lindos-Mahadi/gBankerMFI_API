@@ -14,6 +14,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
     public interface IPortalSavingSummaryRepository : ILegacyRepository<PortalSavingSummary>
     {
         Task<PortalSavingSummary> Create(PortalSavingSummary request);
-        Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter);
+        Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id);
     }
 }

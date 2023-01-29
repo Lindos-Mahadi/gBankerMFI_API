@@ -28,9 +28,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return model;
         }
 
-        public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter)
+        public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id)
         {
-            var result = await _repository.GetAllPortalSavingSummaryPaged(filter);
+            var result = await _repository.GetAllPortalSavingSummaryPaged(filter, Id);
             return result;
         }
     }
