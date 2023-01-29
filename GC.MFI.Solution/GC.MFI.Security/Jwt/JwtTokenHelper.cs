@@ -38,7 +38,7 @@ namespace GC.MFI.Security.Jwt
 
         public async  Task<Tokens> Authenticate(AuthenticationModel user)
         {
-            var userModel =  _authenticationService.Authenticate(user.UserId, user.Password);
+            var userModel = await  _authenticationService.Authenticate(user.UserId, user.Password);
             if (userModel == null)
             {
                 return null;

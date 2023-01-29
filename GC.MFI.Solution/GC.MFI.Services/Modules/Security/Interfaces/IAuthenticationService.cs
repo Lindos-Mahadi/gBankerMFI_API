@@ -8,7 +8,7 @@ namespace GC.MFI.Services.Modules.Security.Interfaces
 {
     public interface IAuthenticationService
     {
-        ApplicationUser Authenticate(string username, string password);
+        Task<ApplicationUser> Authenticate(string username, string password);
         Task<SignUpResponse> Create(SignUpModel model);
         Task<bool> CheckUserName(string username);
     }

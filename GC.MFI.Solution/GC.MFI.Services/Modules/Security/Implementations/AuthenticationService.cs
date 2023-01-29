@@ -21,10 +21,10 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             this._userManager = userManager;
             this._repository = repository;
         }
-        public ApplicationUser Authenticate(string username, string password)
+        public async Task<ApplicationUser> Authenticate(string username, string password)
         {
             var identity = new ApplicationUser();
-            identity = _userManager.Users.Where(u => u.UserName == username).FirstOrDefault();
+            identity = await _userManager.FindByNameAsync(username);
           
             var isValidPassword = false;
             if (identity == null)
