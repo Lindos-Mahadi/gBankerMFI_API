@@ -128,7 +128,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   CSFAmount = pls.CSFAmount,
                                   Remarks = pls.Remarks,
                                   ApprovalStatus = pls.ApprovalStatus
-                                  
                               }
                               ).Where(filter.search)
                                .Where(x => x.ApprovalStatus == true && x.MemberID == Id)

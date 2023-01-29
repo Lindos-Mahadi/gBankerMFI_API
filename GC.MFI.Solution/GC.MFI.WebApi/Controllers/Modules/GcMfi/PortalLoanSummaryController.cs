@@ -90,6 +90,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         public async Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> PagedLoanSummary([FromQuery] PagedFilter filter,long Id)
         {
             var filt = new PaginationFilter<PortalLoanSummaryViewModel>(filter.pageNum, filter.pageSize);
+            if (!String.IsNullOrEmpty(filter.search))
+            {
+               filt = new PaginationFilter<PortalLoanSummaryViewModel>(
+                   filter.pageNum,
+                   filter.pageSize,
+                   t=> t.ProductName.Trim().Replace(" ","").ToUpper()!.Contains(filter.search.Trim().Replace(" ", "").ToUpper()));
+            }
+            
             var summary = await _service.GetAllPortalLoanSummaryPaged(filt, Id);
             return summary;
         }
