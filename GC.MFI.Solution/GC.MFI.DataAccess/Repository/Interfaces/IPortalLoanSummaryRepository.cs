@@ -17,6 +17,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
         Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter, long Id);
         //IEnumerable<PortalLoanSummary> GetAll(Expression<Func<PortalLoanSummary, bool>> where);
-        Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long portalLoanSummaryID);
+        Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long memberId);
     }
 }

@@ -14,6 +14,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         void Create(PortalLoanSummary entity);
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
         Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter, long Id);
-        Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long portalLoanSummaryID);
+        Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long memberId);
     }
 }

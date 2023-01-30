@@ -131,9 +131,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             
         }
 
-        public async Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long portalLoanSummaryID)
+        public async Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long memberId)
         {
-            return _context.PortalLoanSummary.Where(t => t.LoanStatus == type && t.PortalLoanSummaryID == portalLoanSummaryID);
+            return _context.PortalLoanSummary.Where(t => t.LoanStatus == type && t.MemberID == memberId);
         }
     }
 }
