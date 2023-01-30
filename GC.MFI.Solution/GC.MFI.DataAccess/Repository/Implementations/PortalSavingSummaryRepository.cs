@@ -81,6 +81,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     Ref_EmployeeID=pps.Ref_EmployeeID,
                                     ApprovalStatus = pps.ApprovalStatus,
                                     MemberNomines =pps.MemberNomines,
+                                    MinLimit = pl.MinLimit,
+                                    MaxLimit = pl.MaxLimit
                                 })
                                     .Where(filter.search)
                                     .Where(x => x.ApprovalStatus == true && x.MemberID == Id)

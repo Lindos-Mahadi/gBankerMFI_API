@@ -90,6 +90,10 @@ namespace GC.MFI.Models.ViewModels
         public int? Ref_EmployeeID { get; set; }
         public bool? ApprovalStatus { get; set; }
 
+        public decimal? MinLimit { get; set; }
+        public decimal? MaxLimit { get; set; }
+
+
         public virtual List<NomineeXPortalSavingSummary> MemberNomines { get; set; }
     }
 }
