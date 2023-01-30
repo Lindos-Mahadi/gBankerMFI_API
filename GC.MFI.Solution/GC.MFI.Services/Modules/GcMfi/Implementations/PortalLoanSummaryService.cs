@@ -40,11 +40,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return result;
         }
 
-        //public virtual IEnumerable<TViewModel> GetAll()
-        //{
-        //    var results = repository.GetAll();
-        //    var mappedResult = _mapper.Map<IEnumerable<TViewModel>>(results);
-        //    return mappedResult;
-        //}
+        public Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long portalLoanSummaryID)
+        {
+            var getLoanStatus = _repository.getByLoanStatus(type, portalLoanSummaryID);
+            return getLoanStatus;
+        }
     }
 }

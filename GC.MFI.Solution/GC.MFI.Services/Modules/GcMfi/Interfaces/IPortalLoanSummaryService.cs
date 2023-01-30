@@ -13,8 +13,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     {
         void Create(PortalLoanSummary entity);
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
-        //IEnumerable<PortalLoanSummary> GetAll(Expression<Func<PortalLoanSummary, bool>> where);
-
         Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter, long Id);
+        Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long portalLoanSummaryID);
     }
 }

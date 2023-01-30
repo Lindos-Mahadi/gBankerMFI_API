@@ -30,18 +30,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
             return _context.PortalLoanSummary;
         }
-
-        //public async Task<IEnumerable<Member>> GetAllMember(string search)
-        //{
-        //    if (!String.IsNullOrEmpty(search))
-        //    {
-        //        var memberList = DataContext.Member.Where(t => t.FirstName!.Contains(search) || t.FirstName.Trim()
-        //        .Replace(" ", "").ToUpper()!.Contains(search.Trim().Replace(" ", "").ToUpper()));
-        //        return memberList.Skip(0).Take(10);
-
-        //    }
-        //    return DataContext.Member.Skip(0).Take(10);
-        //}
         public async Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter,long Id)
         {
 
@@ -141,6 +129,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 totalElems,
                 totalElems / filter.pageSize);
             
+        }
+
+        public async Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long portalLoanSummaryID)
+        {
+            return _context.PortalLoanSummary.Where(t => t.LoanStatus == type && t.PortalLoanSummaryID == portalLoanSummaryID);
         }
     }
 }
