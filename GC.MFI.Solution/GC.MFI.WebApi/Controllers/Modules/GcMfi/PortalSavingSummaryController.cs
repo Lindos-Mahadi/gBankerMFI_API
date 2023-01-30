@@ -74,6 +74,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             return savingSummary;
         }
 
+        [HttpGet]
+        [Route("getSavingSummaryStatus")]
+        public async Task<IEnumerable<PortalSavingSummary>> getSavingSummaryStatus(byte type , long memberId)
+        {
+            var result = await _service.getBySavingStatus(type , memberId);
+            return result;
+        }
 
     }
 }

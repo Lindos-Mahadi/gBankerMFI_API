@@ -14,5 +14,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     {
         Task<PortalSavingSummary> Create(PortalSavingSummary request);
         Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter , long Id);
+
+        Task<IEnumerable<PortalSavingSummary>> getBySavingStatus(byte type, long memberId);
     }
 }

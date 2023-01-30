@@ -100,5 +100,12 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 TotalElement,
                 TotalElement / filter.pageSize);
         }
+
+        public async Task<IEnumerable<PortalSavingSummary>> getBySavingStatus(byte type, long memberId)
+        {
+            var getStatus = DataContext.PortalSavingSummary.Where(t => t.SavingStatus == type && t.MemberID == memberId);
+            return getStatus;
+
+        }
     }
 }
