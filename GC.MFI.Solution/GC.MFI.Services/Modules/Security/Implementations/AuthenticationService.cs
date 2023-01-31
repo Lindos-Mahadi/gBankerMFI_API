@@ -46,24 +46,23 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             if (model != null && identity == null)
             {
                 var PortalMember = await _repository.CreatePortalMember(model);
-                //string[] image = model.NidPic.Split(new Char[] { ':', ';', ',' });
-                //string imageType = image[1];
-                //string imageUrl = image[3];
-              //  if (imageUrl != null)
-              //  {
+                string[] image = model.NidPic.Split(new Char[] { ':', ';', ',' });
+                string imageType = image[1];
+                string imageUrl = image[3];
+                byte[] imageBytes = Convert.FromBase64String(imageUrl);
+                if (imageType != null)
+                {
                     var fileCreate = new FileUploadTable
                     {
                         EntityName = "Member",
                         EntityId = PortalMember.Id,
                         PropertyName = "MemberNID",
-                        File = model.NidPic,
+                        File = imageBytes,
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
-                        Type = "jpeg",
+                        Type = imageType,
                     };
                     await _repositoryFile.CreateFileUpload(fileCreate);
-              //  }
-               
-                
+               }
                 var user = new ApplicationUser() { 
                     UserName = model.UserName,
                     EmployeeID = 1,

@@ -24,7 +24,7 @@ namespace GC.MFI.Models.DbModels
 
         [Required]
         public string Address { get; set; }
-        public byte[] NidPic { get; set; }
+        public string NidPic { get; set; }
         public string MemberCode { get; set; }
         [Required]
         public int OfficeID { get; set; }
