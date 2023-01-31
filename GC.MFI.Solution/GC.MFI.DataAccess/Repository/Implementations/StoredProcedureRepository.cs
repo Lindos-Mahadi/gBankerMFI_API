@@ -225,5 +225,45 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 throw;
             }
         }
+
+        public async Task<List<VillageList>> GetVillageListByUnion(string SearchByCode)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@SearchByCode", SearchByCode));
+                parameter.Add(new SqlParameter("@SearchBy", "uni"));
+                parameter.Add(new SqlParameter("@SearchType", "vil"));
+
+                var result = await Task.Run(() => _context.VillageList
+               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<UnionList>> GetUnionListByUpozilla(string SearchByCode)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@SearchByCode", SearchByCode));
+                parameter.Add(new SqlParameter("@SearchBy", "upo"));
+                parameter.Add(new SqlParameter("@SearchType", "uni"));
+
+                var result = await Task.Run(() => _context.UnionList
+               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

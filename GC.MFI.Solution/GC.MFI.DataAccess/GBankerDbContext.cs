@@ -52,6 +52,8 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<UpozillaList> UpozillaList { get; set; }
         public virtual DbSet<ProductListForSavingSummary> ProductListForSavingSummary { get; set; }
         public virtual DbSet<FileUploadTable> FileUploadTable { get; set; }
+        public virtual DbSet<VillageList> VillageList { get; set; }
+        public virtual DbSet<UnionList> UnionList { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -208,6 +210,8 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<RepaymentScheduleReportD>().HasNoKey();
             modelBuilder.Entity<DistrictList>().HasNoKey();
             modelBuilder.Entity<UpozillaList>().HasNoKey();
+            modelBuilder.Entity<VillageList>().HasNoKey();
+            modelBuilder.Entity<UnionList>().HasNoKey();
             modelBuilder.Entity<ProductListForSavingSummary>().HasNoKey();
           // modelBuilder.Entity<NIDLogging>().0();
 

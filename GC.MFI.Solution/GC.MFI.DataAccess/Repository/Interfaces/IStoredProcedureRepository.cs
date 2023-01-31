@@ -24,5 +24,7 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
         Task<List<ProductListForSavingSummary>> GetProductListForSavingAccount(int porductType,int orgId, string itemType,int officeId);
         Task<List<DistrictList>> GetDistrictByDivision(string divisionId);
         Task<List<UpozillaList>> GetUpozillaByDistrict(string districtId);
+        Task<List<VillageList>> GetVillageListByUnion(string SearchByCode);
+        Task<List<UnionList>> GetUnionListByUpozilla(string SearchByCode);
     }
 }
