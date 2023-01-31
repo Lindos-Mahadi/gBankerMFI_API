@@ -181,7 +181,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             parameter.Add(new SqlParameter("@OfficeID", officeId));
 
             var result = await Task.Run(() => _context.ProductListForSavingSummary
-            .FromSqlRaw(@"exec Proc_GetProductAccordingtoOffice @Prodtype, @OrgID, @ItemType, @OfficeID", parameter.ToArray()));
+            .FromSqlRaw(@"exec Proc_GetProductAccordingtoOfficeForSavingAccount @Prodtype, @OrgID, @ItemType, @OfficeID", parameter.ToArray()));
             return result.ToList();
         }
 
