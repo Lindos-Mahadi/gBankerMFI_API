@@ -10,5 +10,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IFileUploadRepository : ILegacyRepository<FileUploadTable>
     {
+        Task<FileUploadTable> CreateFileUpload(FileUploadTable fileCreate);
     }
 }

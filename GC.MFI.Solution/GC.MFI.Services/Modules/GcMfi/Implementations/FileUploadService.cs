@@ -13,8 +13,16 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
     public class FileUploadService : LegacyServiceBase<FileUploadTable>, IFileUploadService
     {
+        private readonly IFileUploadRepository _repository;
         public FileUploadService(IFileUploadRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
+            this._repository = repository;
+        }
+
+        public async Task<FileUploadTable> CreateFileUpload(FileUploadTable fileCreate)
+        {
+            var fModel = await _repository.CreateFileUpload(fileCreate);
+            return fModel;
         }
     }
 }

@@ -14,6 +14,24 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public FileUploadRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
         {
         }
+
+        public async Task<FileUploadTable> CreateFileUpload(FileUploadTable fileCreate)
+        {
+            BeginTransaction();
+            var fCreate = new FileUploadTable()
+            {
+                EntityName = fileCreate.EntityName,
+                EntityId = fileCreate.EntityId,
+                PropertyName = fileCreate.PropertyName,
+                File = fileCreate.File,
+                FileName = fileCreate.FileName,
+                Type = fileCreate.Type
+            };
+            DataContext.Add(fCreate);
+            CommitTransaction();
+            return fCreate;
+            
+        }
     }
 }
 

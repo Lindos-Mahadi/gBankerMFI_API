@@ -9,5 +9,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IFileUploadService : ILegacyServiceBase<FileUploadTable>
     {
+        Task<FileUploadTable> CreateFileUpload(FileUploadTable fileCreate);
     }
 }
