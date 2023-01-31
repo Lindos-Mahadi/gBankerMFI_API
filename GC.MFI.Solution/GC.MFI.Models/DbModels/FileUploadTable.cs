@@ -17,7 +17,7 @@ namespace GC.MFI.Models.DbModels
         public string EntityName { get; set; }
         public long EntityId { get; set; }
         public string PropertyName { get; set; }
-        public string File { get; set; }
+        public byte[] File { get; set; }
         public string FileName { get; set; }
         public string Type { get; set; }
     }
