@@ -14,8 +14,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         private readonly ILogger<FileUploadController> _logger;
         private readonly IFileUploadService _service;
 
-        public FileUploadController(ILogger<FileUploadController> logger,
-            IFileUploadService service) : base(service)
+        public FileUploadController(ILogger<FileUploadController> logger, IFileUploadService service) : base(service)
         {
             this._logger = logger;
             this._service = service;

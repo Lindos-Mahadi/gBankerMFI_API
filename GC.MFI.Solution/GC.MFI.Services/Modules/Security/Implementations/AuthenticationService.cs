@@ -15,11 +15,13 @@ namespace GC.MFI.Services.Modules.Security.Implementations
     {
         private UserManager<ApplicationUser> _userManager;
         private IPortalMemberRepository _repository;
+        private readonly IFileUploadRepository _repositoryFile;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager, IPortalMemberRepository repository)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, IPortalMemberRepository repository, IFileUploadRepository repositoryFile)
         {
             this._userManager = userManager;
             this._repository = repository;
+            this._repositoryFile = repositoryFile;
         }
         public async Task<ApplicationUser> Authenticate(string username, string password)
         {
@@ -44,6 +46,18 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             if (model != null && identity == null)
             {
                 var PortalMember = await _repository.CreatePortalMember(model);
+                string[] imageType = model.NidPic.Split("/:|;/");
+                
+                var fileCreate = new FileUploadTable
+                {
+                    EntityName = "Member",
+                    EntityId = PortalMember.Id,
+                    PropertyName = "MemberNID",
+                    File = model.NidPic,
+                    FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
+                    Type = imageType[1],
+                };
+                await _repositoryFile.CreateFileUpload(fileCreate);
                 var user = new ApplicationUser() { 
                     UserName = model.UserName,
                     EmployeeID = 1,
