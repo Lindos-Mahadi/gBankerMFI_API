@@ -51,6 +51,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<DistrictList> DistrictList { get; set; }
         public virtual DbSet<UpozillaList> UpozillaList { get; set; }
         public virtual DbSet<ProductListForSavingSummary> ProductListForSavingSummary { get; set; }
+        public virtual DbSet<FileUploadTable> FileUploadTable { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>

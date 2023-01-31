@@ -163,6 +163,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<INomineeXPortalSavingSummaryRepository, NomineeXPortalSavingSummaryRepository>();
             services.AddScoped<INomineeXPortalSavingSummaryService, NomineeXPortalSavingSummaryService>();
 
+            // File Upload Dependancy
+            services.AddScoped<IFileUploadRepository, FileUploadRepository>();
+            services.AddScoped<IFileUploadService, FileUploadService>();
+
             // Register for model Validation
             services.AddControllers(
                 options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
