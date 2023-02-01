@@ -53,6 +53,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 DivisionCode= signUp.DivisionCode,
                 UpozillaCode = signUp.UpozillaCode,
                 PostCode = signUp.PostCode,
+                UnionCode = signUp.UnionCode,
+                VillageCode = signUp.VillageCode,
                 CreateDate= DateTime.Now,
                 UpdateDate= DateTime.Now,
                 Status = "A"

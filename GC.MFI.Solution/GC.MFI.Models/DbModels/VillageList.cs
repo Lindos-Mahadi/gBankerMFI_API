@@ -8,8 +8,8 @@ namespace GC.MFI.Models.DbModels
 {
     public class VillageList
     {
+        public string VillageCode { get; set; }
         public string VillageName { get; set; }
-        public string VillageCode { get;}
 
     }
 }

@@ -44,6 +44,8 @@ namespace GC.MFI.Models.DbModels
         public string DivisionCode { get; set; }
         public string UpozillaCode { get; set; }
         public string PostCode { get; set; }
+        public string UnionCode { get; set; }
+        public string VillageCode { get; set; }
         public int CountryID { get; set; }
         public string EducationQualification { get; set; }
 
