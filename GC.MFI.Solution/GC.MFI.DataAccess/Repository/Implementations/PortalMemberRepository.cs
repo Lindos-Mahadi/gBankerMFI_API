@@ -65,5 +65,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             return portalMember;
 
         }
+        public void CreatePortalMemberNID(long portalMemberId, long portalMemberFId)
+        {
+            var memberId = DataContext.PortalMember.Where(t=> t.Id == portalMemberId).FirstOrDefault();
+            memberId.MemberNID= portalMemberFId;
+            DataContext.SaveChanges();
+        }
     }
 }

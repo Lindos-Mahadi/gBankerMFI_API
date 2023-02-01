@@ -38,5 +38,7 @@ namespace GC.MFI.Models.DbModels
         public int CountryID { get; set; }
         public DateTime DOB { get; set; }
         public string PostCode { get; set; }
+        public long MemberNID { get; set; }
+        public long GurrantorNID { get; set; }
     }
 }

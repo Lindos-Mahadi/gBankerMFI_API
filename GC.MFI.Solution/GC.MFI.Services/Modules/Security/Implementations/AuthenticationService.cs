@@ -62,6 +62,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                         Type = imageType,
                     };
                     await _repositoryFile.CreateFileUpload(fileCreate);
+                    _repository.CreatePortalMemberNID(PortalMember.Id, fileCreate.FileUploadId);
                }
                 var user = new ApplicationUser() { 
                     UserName = model.UserName,
