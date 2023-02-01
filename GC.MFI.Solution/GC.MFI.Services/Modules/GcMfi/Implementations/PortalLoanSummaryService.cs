@@ -22,10 +22,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             _repository = repository;
         }
 
-        public void Create(PortalLoanSummary entity)
+        public void CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity)
         {
-            _repository.Add(entity);
-            Save();
+            _repository.CreatePortalLoanSummary(entity);
         }
 
         public virtual IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()

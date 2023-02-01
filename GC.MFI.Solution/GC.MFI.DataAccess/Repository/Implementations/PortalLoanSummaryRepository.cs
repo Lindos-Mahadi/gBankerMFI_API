@@ -4,6 +4,7 @@ using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,9 +22,108 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             this._context = context;
         }
 
-        public void Create(PortalLoanSummary entity)
+        public void CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity)
         {
-            _context.PortalLoanSummary.Add(entity);
+            BeginTransaction();
+            
+            var portal = new PortalLoanSummary
+            {
+                PortalLoanSummaryID= entity.PortalLoanSummaryID,
+                OfficeID = entity.OfficeID,
+                MemberID = entity.MemberID,
+                ProductID = entity.ProductID,
+                CenterID = entity.CenterID,
+                MemberCategoryID = entity.MemberCategoryID,
+                LoanTerm = entity.LoanTerm,
+                PurposeID = entity.PurposeID,
+                LoanNo = entity.LoanNo,
+                PrincipalLoan = entity.PrincipalLoan,
+                ApproveDate = entity.ApproveDate,
+                DisburseDate = entity.DisburseDate,
+                Duration = entity.Duration,
+                LoanRepaid = entity.LoanRepaid,
+                IntCharge = entity.IntCharge,
+                IntPaid = entity.IntPaid,
+                LoanInstallment = entity.LoanInstallment,
+                IntInstallment = entity.IntInstallment,
+                InterestRate = entity.InterestRate,
+                InstallmentStartDate = entity.InstallmentStartDate,
+                InstallmentNo = entity.InstallmentNo,
+                DropInstallment = entity.DropInstallment,
+                Holidays = entity.Holidays,
+                InstallmentDate = entity.InstallmentDate,
+                TransType = entity.TransType,
+                ContinuousDrop = entity.ContinuousDrop,
+                LoanStatus = entity.LoanStatus,
+                Balance = entity.Balance,
+                Advance = entity.Advance,
+                DueRecovery = entity.DueRecovery,
+                LoanCloseDate = entity.LoanCloseDate,
+                OverdueDate = entity.OverdueDate,
+                EmployeeId = entity.EmployeeId,
+                InvestorID = entity.InvestorID,
+                ExcessPay = entity.ExcessPay,
+                CurLoan = entity.CurLoan,
+                PreLoan = entity.PreLoan,
+                CumLoanDue = entity.CumLoanDue,
+                WriteOffLoan = entity.WriteOffLoan,
+                WriteOffInterest = entity.WriteOffInterest,
+                Posted = entity.Posted,
+                OrgID = entity.OrgID,
+                IsActive = entity.IsActive,
+                InActiveDate = entity.InActiveDate,
+                CreateUser = entity.CreateUser,
+                CreateDate = entity.CreateDate,
+                BankName = entity.BankName,
+                ChequeNo = entity.ChequeNo,
+                IsApproved = entity.IsApproved,
+                CoApplicantName = entity.CoApplicantName,
+                Guarantor = entity.Guarantor,
+                MemberPassBookRegisterID = entity.MemberPassBookRegisterID,
+                ChequeIssueDate = entity.ChequeIssueDate,
+                CumIntDue = entity.CumIntDue,
+                ApprovedAmount = entity.ApprovedAmount,
+                PartialAmount = entity.PartialAmount,
+                FinalDisbursement = entity.FinalDisbursement,
+                DisbursementType = entity.DisbursementType,
+                PartialIntCharge = entity.PartialIntCharge,
+                PartialIntPaid = entity.PartialIntPaid,
+                FirstInstallmentStartDate = entity.FirstInstallmentStartDate,
+                FirstInstallmentDate = entity.FirstInstallmentDate,
+                CurIntPaid = entity.CurIntPaid,
+                CurIntCharge = entity.CurIntCharge,
+                LoanAccountNo = entity.LoanAccountNo,
+                SecurityBankName = entity.SecurityBankName,
+                SecurityBankBranchName = entity.SecurityBankBranchName,
+                SecurityBankCheckNo = entity.SecurityBankCheckNo,
+                CurLoanDue = entity.CurLoanDue,
+                CurIntDue = entity.CurIntDue,
+                LastInstallmentNo = entity.LastInstallmentNo,
+                CSFRate = entity.CSFRate,
+                CSFAmount = entity.CSFAmount,
+                Remarks = entity.Remarks,
+                ApprovalStatus = entity.ApprovalStatus
+            };
+            _context.PortalLoanSummary.Add(portal);
+            
+
+            FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
+            for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
+            {
+                file[i] = new FileUploadTable
+                {
+
+                    EntityId = portal.PortalLoanSummaryID,
+                    EntityName = "PortalLoanSummary",
+                    PropertyName = entity.PortalLoanFileUpload[i].PropertyName,
+                    FileName = entity.PortalLoanFileUpload[i].FileName,
+                    Type = entity.PortalLoanFileUpload[i].Type,
+                    File = System.Convert.FromBase64String(entity.PortalLoanFileUpload[i].File)
+                };
+
+            }
+            _context.FileUploadTable.AddRange(file);
+            CommitTransaction();
         }
 
         public IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
