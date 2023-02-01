@@ -1,7 +1,7 @@
 ﻿using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.BntPos.Interfaces;
-using GC.MFI.Services.Modules.Security.Interfaces;
+using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.WebApi.Controllers.Modules.Pos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +19,14 @@ namespace GC.MFI.WebApi.Controllers.Modules
         {
             this._logger = logger;
             this._service = service;
+        }
+
+        [HttpGet]
+        [Route("getmemberbyid")]
+        public async Task<MemberProfile> GetMemberById(long Id)
+        {
+            var member = await _service.GetMemberById(Id);
+            return member;
         }
     }
 }
