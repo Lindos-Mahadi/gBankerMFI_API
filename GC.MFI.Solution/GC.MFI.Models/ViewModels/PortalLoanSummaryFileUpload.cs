@@ -1,26 +1,28 @@
-﻿using GC.MFI.Models.DbModels.BaseModels;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using GC.MFI.Models.DbModels;
 
-namespace GC.MFI.Models.DbModels
+namespace GC.MFI.Models.ViewModels
 {
-    [Table("PortalLoanSummary")]
-    public partial class PortalLoanSummary : LegacyDbModelBase, ILegacyDbModelBase
+    public class PortalLoanSummaryFileUpload
     {
         [Key]
         public long PortalLoanSummaryID { get; set; }
         [Required]
         public int OfficeID { get; set; }
-      
+
         public long? MemberID { get; set; }
         [Required]
         public short ProductID { get; set; }
-        
+
         public int? CenterID { get; set; }
-     
+
         public byte? MemberCategoryID { get; set; }
         //[Required]
         public byte? LoanTerm { get; set; }
@@ -29,30 +31,30 @@ namespace GC.MFI.Models.DbModels
 
         [StringLength(100)]
         public string LoanNo { get; set; }
-    
+
         [Column(TypeName = "numeric")]
         public decimal? PrincipalLoan { get; set; }
-    
+
         [Column(TypeName = "date")]
         public DateTime? ApproveDate { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? DisburseDate { get; set; }
-     
+
         public int? Duration { get; set; }
-      
+
         [Column(TypeName = "numeric")]
         public decimal? LoanRepaid { get; set; }
-  
+
         [Column(TypeName = "numeric")]
         public decimal? IntCharge { get; set; }
-    
+
         [Column(TypeName = "numeric")]
         public decimal? IntPaid { get; set; }
-   
+
         [Column(TypeName = "numeric")]
         public decimal? LoanInstallment { get; set; }
-  
+
         [Column(TypeName = "numeric")]
         public decimal? IntInstallment { get; set; }
 
@@ -73,15 +75,15 @@ namespace GC.MFI.Models.DbModels
 
         public byte? TransType { get; set; }
         public short? ContinuousDrop { get; set; }
-     
+
         public byte? LoanStatus { get; set; }
-    
+
         [Column(TypeName = "numeric")]
         public decimal? Balance { get; set; }
-     
+
         [Column(TypeName = "numeric")]
         public decimal? Advance { get; set; }
-   
+
         [Column(TypeName = "numeric")]
         public decimal? DueRecovery { get; set; }
 
@@ -90,11 +92,11 @@ namespace GC.MFI.Models.DbModels
 
         [Column(TypeName = "date")]
         public DateTime? OverdueDate { get; set; }
-      
+
         public short? EmployeeId { get; set; }
 
         public byte? InvestorID { get; set; }
-    
+
         [Column(TypeName = "numeric")]
         public decimal? ExcessPay { get; set; }
 
@@ -124,7 +126,7 @@ namespace GC.MFI.Models.DbModels
 
         [StringLength(35)]
         public string CreateUser { get; set; }
-     
+
         [Column(TypeName = "smalldatetime")]
         public DateTime? CreateDate { get; set; }
 
@@ -205,7 +207,6 @@ namespace GC.MFI.Models.DbModels
         [StringLength(50)]
         public string Remarks { get; set; }
         public bool? ApprovalStatus { get; set; } = false;
-
-        
+        public List<PortalLoanFileUpload> PortalLoanFileUpload { get; set; }
     }
 }

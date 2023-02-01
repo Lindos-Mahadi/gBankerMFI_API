@@ -23,7 +23,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         [HttpPost]
         [Route("create")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public IActionResult Create([FromBody] PortalLoanSummary objectToSave)
+        public IActionResult Create([FromBody] PortalLoanSummaryFileUpload objectToSave)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 {
                     objectToSave.CreateUser = "Administrator";
                     objectToSave.CreateDate = DateTime.UtcNow;
-                    _service.Create(objectToSave);
+                    _service.CreatePortalLoanSummary(objectToSave);
                     
                 }
                 return Ok(objectToSave);

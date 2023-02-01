@@ -192,7 +192,7 @@ namespace GC.MFI.DataAccess
                 .HasOne(O => O.PortalSavingSummary)
                 .WithMany(M => M.MemberNomines);
 
-           
+      
 
             modelBuilder.Entity<Upozilla>()
                 .Property(e => e.CreateUser)
