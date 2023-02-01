@@ -7,7 +7,10 @@ using GC.MFI.Services.Modules.Security.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GC.MFI.Services.Modules.Security.Implementations
 {
@@ -43,18 +46,19 @@ namespace GC.MFI.Services.Modules.Security.Implementations
 
             var identity = new ApplicationUser();
             identity = _userManager.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+            string[] imageTypes = { "image/jpg", "image/png", "image/jpeg" , "image/gif", "image/bmp", "image/tif", "image/tiff", "document/pdf" };
             if (model != null && identity == null)
             {
                 var PortalMember = await _repository.CreatePortalMember(model);
                 string[] image = model.NidPic.Split(new Char[] { ':', ';', ',' });
                 string imageType = image[1];
                 string imageUrl = image[3];
-                byte[] imageBytes = Convert.FromBase64String(imageUrl);
-                if (imageType != null)
+                byte[] imageBytes = Convert.FromBase64String(model.NidPic);
+                if (imageTypes.Contains(imageType))
                 {
                     var fileCreate = new FileUploadTable
                     {
-                        EntityName = "Member",
+                        EntityName = "PortalMember",
                         EntityId = PortalMember.Id,
                         PropertyName = "MemberNID",
                         File = imageBytes,

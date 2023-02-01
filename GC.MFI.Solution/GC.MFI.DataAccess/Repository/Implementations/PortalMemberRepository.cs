@@ -2,6 +2,7 @@
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.DataAccess.Repository.Interfaces.Security;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,33 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             DataContext.Add(portalMember);
             CommitTransaction();
             return portalMember;
-
+        }
+        public async Task<MemberProfile> GetMemberById(long Id)
+        {
+            var portalMember =(from m in DataContext.Member 
+                               join pMember in DataContext.PortalMember on m.PortalMemberId equals pMember.Id 
+                               select new MemberProfile
+                               {
+                                   MemberId = m.MemberID,
+                                   Gender = m.Gender,
+                                   FirstName = m.FirstName,
+                                   LastName = m.LastName,
+                                   MotherName = m.MotherName,
+                                   Email = m.Email,
+                                   Occupation = pMember.Occupation,
+                                   Address = pMember.Address,
+                                   Photo = pMember.Photo,
+                                   Phone = pMember.Phone,
+                                   MemberAge = pMember.MemberAge,
+                                   EducationQualification = pMember.EducationQualification,
+                                   DistrictCode = pMember.DistrictCode,
+                                   DivisionCode = pMember.DivisionCode,
+                                   UpozillaCode = pMember.UpozillaCode,
+                                   countryID = pMember.CountryID,
+                                   DOB = pMember.DOB,
+                                   postCode = pMember.PostCode
+                               }).Where(t=> t.MemberId == Id).FirstOrDefault();
+            return portalMember;
         }
         public void CreatePortalMemberNID(long portalMemberId, long portalMemberFId)
         {
