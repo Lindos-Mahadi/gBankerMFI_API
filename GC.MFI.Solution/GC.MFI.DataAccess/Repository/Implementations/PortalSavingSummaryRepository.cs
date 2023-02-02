@@ -4,7 +4,9 @@ using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.RequestModels;
 using GC.MFI.Models.ViewModels;
+using GC.MFI.Utility.Helpers;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -85,19 +87,21 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             CommitTransaction();
 
             BeginTransaction();
+            // BULT INSERT DATA
             FileUploadTable[] file = new FileUploadTable[entity.PortalSavingFileUpload.Count];
             for (int i = 0; i < entity.PortalSavingFileUpload.Count(); i++)
             {
+                Base64File filesType = ImageHelper.GetFileDetails(entity.PortalSavingFileUpload[i].File);
                 file[i] = new FileUploadTable
                 {
 
                     EntityId = model.PortalSavingSummaryID,
                     EntityName = "PortalSavingSummary",
+                    PropertyName = "SupportingDocument",
+                    FileName = $"SupportingDocument_L{model.PortalSavingSummaryID}_{i + 1}",
+                    Type = filesType.MimeType,
+                    File = filesType.DataBytes,
                     DocumentType = entity.PortalSavingFileUpload[i].DocumentType,
-                    PropertyName = entity.PortalSavingFileUpload[i].PropertyName,
-                    FileName = entity.PortalSavingFileUpload[i].FileName,
-                    Type = entity.PortalSavingFileUpload[i].Type,
-                    File = System.Convert.FromBase64String(entity.PortalSavingFileUpload[i].File)
                 };
 
             }
