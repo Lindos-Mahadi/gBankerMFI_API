@@ -3,6 +3,7 @@ using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
+using GC.MFI.Utility.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -108,32 +109,26 @@ namespace GC.MFI.DataAccess.Repository.Implementations
              _context.PortalLoanSummary.Add(portal);
             CommitTransaction();
             BeginTransaction();
+
             // For GuarantorNID & image
-            string[] Gnid = entity.GuarantorNID.Split(new Char[] { ':', ';', ',' });
-            string NidType = Gnid[1];
-            string NidUrl = Gnid[3];
-            byte[] Nid = Convert.FromBase64String(NidUrl);
-
-
+            Base64File nidType = ImageHelper.GetFileDetails(entity.GuarantorNID);
             var GuarantorNID = new FileUploadTable
             {
                 EntityId = portal.PortalLoanSummaryID,
                 EntityName = "PortalLoanSummary GuarantorNID",
                 PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
-                File = Nid,
-                Type = NidType
+                File = nidType.DataBytes,
+                Type = nidType.MimeType
             };
-            string[] Gimage = entity.GuarantorImg.Split(new Char[] { ':', ';', ',' });
-            string imageType = Gimage[1];
-            string imageUrl = Gimage[3];
-            byte[] image = Convert.FromBase64String(imageUrl);
+
+            Base64File gPhotoType = ImageHelper.GetFileDetails(entity.GuarantorImg);
             var GuarantorPhoto = new FileUploadTable
             {
                 EntityId = portal.PortalLoanSummaryID,
                 EntityName = "PortalLoanSummary GuarantorImage",
                 PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
-                File = image,
-                Type = imageType
+                File = gPhotoType.DataBytes,
+                Type = gPhotoType.MimeType
             };
             DataContext.FileUploadTable.Add(GuarantorNID);
             DataContext.FileUploadTable.Add(GuarantorPhoto);
@@ -141,6 +136,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
             for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
             {
+                Base64File filesTypes = ImageHelper.GetFileDetails(entity.PortalLoanFileUpload[i].File);
                 file[i] = new FileUploadTable
                 {
 
@@ -148,8 +144,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                     EntityName = "PortalLoanSummary",
                     PropertyName = entity.PortalLoanFileUpload[i].PropertyName,
                     FileName = entity.PortalLoanFileUpload[i].FileName,
-                    Type = entity.PortalLoanFileUpload[i].Type,
-                    File = System.Convert.FromBase64String(entity.PortalLoanFileUpload[i].File)
+                    Type = filesTypes.MimeType,
+                    File = filesTypes.DataBytes
                 };
 
             }
