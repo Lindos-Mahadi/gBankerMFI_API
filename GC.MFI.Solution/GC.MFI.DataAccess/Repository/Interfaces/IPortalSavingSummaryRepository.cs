@@ -13,10 +13,11 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IPortalSavingSummaryRepository : ILegacyRepository<PortalSavingSummary>
     {
-        Task<PortalSavingSummary> Create(PortalSavingSummary request);
+        //Task<PortalSavingSummary> Create(PortalSavingSummary request);
         Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id);
 
         Task<IEnumerable<PortalSavingSummary>> getBySavingStatus(byte type, long memberId );
+        void CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity);
 
     }
 }

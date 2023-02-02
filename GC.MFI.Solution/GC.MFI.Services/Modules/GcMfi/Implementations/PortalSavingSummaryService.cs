@@ -22,10 +22,15 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             this._repository = repository;
         }
 
-        public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
+        //public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
+        //{
+        //    var model = await _repository.Create(request);
+        //    return model;
+        //}
+
+        public void CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity)
         {
-            var model = await _repository.Create(request);
-            return model;
+            _repository.CreatePortalSavingSummary(entity);
         }
 
         public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id)

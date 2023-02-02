@@ -12,9 +12,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IPortalSavingSummaryService : ILegacyServiceBase<PortalSavingSummary>
     {
-        Task<PortalSavingSummary> Create(PortalSavingSummary request);
+        //Task<PortalSavingSummary> Create(PortalSavingSummary request);
         Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter , long Id);
 
         Task<IEnumerable<PortalSavingSummary>> getBySavingStatus(byte type, long memberId);
+
+        void CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity);
     }
 }
