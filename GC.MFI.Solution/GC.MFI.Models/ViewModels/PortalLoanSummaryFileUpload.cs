@@ -207,6 +207,8 @@ namespace GC.MFI.Models.ViewModels
         [StringLength(50)]
         public string Remarks { get; set; }
         public bool? ApprovalStatus { get; set; } = false;
+        public string GuarantorNID { get; set; }
+        public string GuarantorImg { get; set; }
         public List<PortalLoanFileUpload> PortalLoanFileUpload { get; set; }
     }
 }
