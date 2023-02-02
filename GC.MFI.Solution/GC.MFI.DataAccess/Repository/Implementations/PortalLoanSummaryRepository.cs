@@ -3,6 +3,7 @@ using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
+using GC.MFI.Utility.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -11,6 +12,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
@@ -104,27 +106,55 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Remarks = entity.Remarks,
                 ApprovalStatus = entity.ApprovalStatus
             };
-            var portalLoanId = _context.PortalLoanSummary.Add(portal);
+             _context.PortalLoanSummary.Add(portal);
             CommitTransaction();
             BeginTransaction();
-           
+
+            // For GuarantorNID & image
+            Base64File nidType = ImageHelper.GetFileDetails(entity.GuarantorNID);
+            var GuarantorNID = new FileUploadTable
+            {
+                EntityId = portal.PortalLoanSummaryID,
+                EntityName = "PortalLoanSummary",
+                PropertyName = "GuarantorNID",
+                FileName = $"GuarantorNID_{portal.PortalLoanSummaryID}",
+                File = nidType.DataBytes,
+                Type = nidType.MimeType
+            };
+
+            Base64File gPhotoType = ImageHelper.GetFileDetails(entity.GuarantorImg);
+            var GuarantorPhoto = new FileUploadTable
+            {
+                EntityId = portal.PortalLoanSummaryID,
+                EntityName = "PortalLoanSummary",
+                PropertyName = "GuarantorImage",
+                FileName = $"GuarantorImage_{portal.PortalLoanSummaryID}",
+                File = gPhotoType.DataBytes,
+                Type = gPhotoType.MimeType
+            };
+            DataContext.FileUploadTable.Add(GuarantorNID);
+            DataContext.FileUploadTable.Add(GuarantorPhoto);
+            // For bulk insert
             FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
             for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
             {
+                Base64File filesTypes = ImageHelper.GetFileDetails(entity.PortalLoanFileUpload[i].File);
                 file[i] = new FileUploadTable
                 {
 
                     EntityId = portal.PortalLoanSummaryID,
                     EntityName = "PortalLoanSummary",
-                    PropertyName = entity.PortalLoanFileUpload[i].PropertyName,
-                    FileName = entity.PortalLoanFileUpload[i].FileName,
-                    Type = entity.PortalLoanFileUpload[i].Type,
-                    File = System.Convert.FromBase64String(entity.PortalLoanFileUpload[i].File)
+                    PropertyName = "SupportingDocument",
+                    FileName = $"SupportingDocument_L{portal.PortalLoanSummaryID}_{i + 1}",
+                    Type = filesTypes.MimeType,
+                    File = filesTypes.DataBytes,
+                    DocumentType = entity.PortalLoanFileUpload[i].DocumentType
                 };
 
             }
             _context.FileUploadTable.AddRange(file);
             CommitTransaction();
+            NidPhotoIdentity(portal.PortalLoanSummaryID, GuarantorPhoto.FileUploadId ,GuarantorNID.FileUploadId);
         }
 
         public IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
@@ -235,6 +265,19 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public async Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long memberId)
         {
             return _context.PortalLoanSummary.Where(t => t.LoanStatus == type && t.MemberID == memberId);
+        }
+
+        public void NidPhotoIdentity(long PortalLoanSummaryId,long Photo,long NID)
+        {
+            BeginTransaction();
+            var portalLoanSummary = GetById(PortalLoanSummaryId);
+            if(portalLoanSummary != null)
+            {
+                portalLoanSummary.GuarantorImg = Photo;
+                portalLoanSummary.GuarantorNID = NID;
+            }
+            CommitTransaction();
+
         }
     }
 }

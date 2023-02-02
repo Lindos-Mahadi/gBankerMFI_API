@@ -20,6 +20,7 @@ namespace GC.MFI.Models.DbModels
         public byte[] File { get; set; }
         public string FileName { get; set; }
         public string Type { get; set; }
+        public string DocumentType { get; set; }
 
 
     }
