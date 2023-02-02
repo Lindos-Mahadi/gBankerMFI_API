@@ -26,15 +26,41 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             this._nService = _nService;
         }
 
-
         [HttpPost]
-        [Route("create")]
+        [Route("PortalSavingSummaryFileUpload")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
+        public IActionResult PortalSavingSummaryFileUpload([FromBody] PortalSavingSummaryFileUpload objectToSave)
         {
-            var model = await _service.Create(request);
-            return model;
+            try
+            {
+                //objectToSave.CreateUser = "Administrator";
+                //objectToSave.CreateDate = DateTime.UtcNow;
+                //_service.Create(objectToSave);
+                //return objectToSave;
+
+                if (ModelState.IsValid)
+                {
+                    objectToSave.CreateUser = "Administrator";
+                    objectToSave.CreateDate = DateTime.UtcNow;
+                    _service.CreatePortalSavingSummary(objectToSave);
+                }
+                return Ok(objectToSave);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, null);
+                throw;
+            }
         }
+
+        //[HttpPost]
+        //[Route("create")]
+        //[ServiceFilter(typeof(ValidationFilterAttribute))]
+        //public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
+        //{
+        //    var model = await _service.Create(request);
+        //    return model;
+        //}
 
         [HttpGet]
         [Route("getproductlistforsavingaccount")]
@@ -81,6 +107,8 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var result = await _service.getBySavingStatus(type , memberId);
             return result;
         }
+
+        
 
     }
 }
