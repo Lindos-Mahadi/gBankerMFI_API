@@ -115,8 +115,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var GuarantorNID = new FileUploadTable
             {
                 EntityId = portal.PortalLoanSummaryID,
-                EntityName = "PortalLoanSummary GuarantorNID",
-                PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
+                EntityName = "PortalLoanSummary",
+                PropertyName = "GuarantorNID",
+                FileName = $"GuarantorNID_{portal.PortalLoanSummaryID}",
                 File = nidType.DataBytes,
                 Type = nidType.MimeType
             };
@@ -125,8 +126,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var GuarantorPhoto = new FileUploadTable
             {
                 EntityId = portal.PortalLoanSummaryID,
-                EntityName = "PortalLoanSummary GuarantorImage",
-                PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
+                EntityName = "PortalLoanSummary",
+                PropertyName = "GuarantorImage",
+                FileName = $"GuarantorImage_{portal.PortalLoanSummaryID}",
                 File = gPhotoType.DataBytes,
                 Type = gPhotoType.MimeType
             };
@@ -142,10 +144,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
                     EntityId = portal.PortalLoanSummaryID,
                     EntityName = "PortalLoanSummary",
-                    PropertyName = entity.PortalLoanFileUpload[i].PropertyName,
-                    FileName = entity.PortalLoanFileUpload[i].FileName,
+                    PropertyName = "SupportingDocument",
+                    FileName = $"SupportingDocument_L{portal.PortalLoanSummaryID}_{i + 1}",
                     Type = filesTypes.MimeType,
-                    File = filesTypes.DataBytes
+                    File = filesTypes.DataBytes,
+                    DocumentType = entity.PortalLoanFileUpload[i].DocumentType
                 };
 
             }
