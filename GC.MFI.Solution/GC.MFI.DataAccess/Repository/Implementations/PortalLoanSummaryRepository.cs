@@ -11,6 +11,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
@@ -108,22 +109,31 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             CommitTransaction();
             BeginTransaction();
             // For GuarantorNID & image
+            string[] Gnid = entity.GuarantorNID.Split(new Char[] { ':', ';', ',' });
+            string NidType = Gnid[1];
+            string NidUrl = Gnid[3];
+            byte[] Nid = Convert.FromBase64String(NidUrl);
+
 
             var GuarantorNID = new FileUploadTable
             {
                 EntityId = portal.PortalLoanSummaryID,
                 EntityName = "PortalLoanSummary GuarantorNID",
                 PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
-                File = System.Convert.FromBase64String(entity.GuarantorNID),
-                Type = "image/pdf"
+                File = Nid,
+                Type = NidType
             };
+            string[] Gimage = entity.GuarantorImg.Split(new Char[] { ':', ';', ',' });
+            string imageType = Gimage[1];
+            string imageUrl = Gimage[3];
+            byte[] image = Convert.FromBase64String(imageUrl);
             var GuarantorPhoto = new FileUploadTable
             {
                 EntityId = portal.PortalLoanSummaryID,
                 EntityName = "PortalLoanSummary GuarantorImage",
                 PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
-                File = System.Convert.FromBase64String(entity.GuarantorImg),
-                Type = "image/pdf"
+                File = image,
+                Type = imageType
             };
             DataContext.FileUploadTable.Add(GuarantorNID);
             DataContext.FileUploadTable.Add(GuarantorPhoto);

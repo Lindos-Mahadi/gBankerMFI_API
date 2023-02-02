@@ -53,7 +53,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 string[] image = model.NidPic.Split(new Char[] { ':', ';', ',' });
                 string imageType = image[1];
                 string imageUrl = image[3];
-                byte[] imageBytes = Convert.FromBase64String(model.NidPic);
+                byte[] imageBytes = Convert.FromBase64String(imageUrl);
                 if (imageTypes.Contains(imageType))
                 {
                     var fileCreate = new FileUploadTable
