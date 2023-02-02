@@ -4,8 +4,10 @@ using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Models.Modules.Security;
 using GC.MFI.Services.Modules.Security.Interfaces;
+using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Buffers.Text;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
@@ -50,20 +52,20 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             if (model != null && identity == null)
             {
                 var PortalMember = await _repository.CreatePortalMember(model);
-                string[] image = model.NidPic.Split(new Char[] { ':', ';', ',' });
-                string imageType = image[1];
-                string imageUrl = image[3];
-                byte[] imageBytes = Convert.FromBase64String(imageUrl);
-                if (imageTypes.Contains(imageType))
+
+                Base64File PNID = ImageHelper.GetFileDetails(model.NidPic);
+
+
+                if (imageTypes.Contains(PNID.MimeType))
                 {
                     var fileCreate = new FileUploadTable
                     {
                         EntityName = "PortalMember",
                         EntityId = PortalMember.Id,
                         PropertyName = "MemberNID",
-                        File = imageBytes,
+                        File = PNID.DataBytes,
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
-                        Type = imageType,
+                        Type = PNID.MimeType,
                     };
                     await _repositoryFile.CreateFileUpload(fileCreate);
                     _repository.CreatePortalMemberNID(PortalMember.Id, fileCreate.FileUploadId);
