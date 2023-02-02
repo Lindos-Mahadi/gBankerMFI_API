@@ -93,6 +93,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
                     EntityId = model.PortalSavingSummaryID,
                     EntityName = "PortalSavingSummary",
+                    DocumentType = entity.PortalSavingFileUpload[i].DocumentType,
                     PropertyName = entity.PortalSavingFileUpload[i].PropertyName,
                     FileName = entity.PortalSavingFileUpload[i].FileName,
                     Type = entity.PortalSavingFileUpload[i].Type,

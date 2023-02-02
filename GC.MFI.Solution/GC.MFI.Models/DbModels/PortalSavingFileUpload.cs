@@ -17,5 +17,6 @@ namespace GC.MFI.Models.DbModels
         public string File { get; set; }
         public string FileName { get; set; }
         public string Type { get; set; }
+        public string DocumentType { get; set; }
     }
 }
