@@ -104,9 +104,10 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Remarks = entity.Remarks,
                 ApprovalStatus = entity.ApprovalStatus
             };
-            _context.PortalLoanSummary.Add(portal);
-            
-
+            var portalLoanId = _context.PortalLoanSummary.Add(portal);
+            CommitTransaction();
+            BeginTransaction();
+           
             FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
             for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
             {
