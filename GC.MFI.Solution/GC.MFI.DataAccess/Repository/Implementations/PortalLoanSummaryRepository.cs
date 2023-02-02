@@ -104,10 +104,30 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Remarks = entity.Remarks,
                 ApprovalStatus = entity.ApprovalStatus
             };
-            var portalLoanId = _context.PortalLoanSummary.Add(portal);
+             _context.PortalLoanSummary.Add(portal);
             CommitTransaction();
             BeginTransaction();
-           
+            // For GuarantorNID & image
+
+            var GuarantorNID = new FileUploadTable
+            {
+                EntityId = portal.PortalLoanSummaryID,
+                EntityName = "PortalLoanSummary GuarantorNID",
+                PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
+                File = System.Convert.FromBase64String(entity.GuarantorNID),
+                Type = "image/pdf"
+            };
+            var GuarantorPhoto = new FileUploadTable
+            {
+                EntityId = portal.PortalLoanSummaryID,
+                EntityName = "PortalLoanSummary GuarantorImage",
+                PropertyName = $"{portal.PortalLoanSummaryID} - {portal.MemberID} - NID",
+                File = System.Convert.FromBase64String(entity.GuarantorImg),
+                Type = "image/pdf"
+            };
+            DataContext.FileUploadTable.Add(GuarantorNID);
+            DataContext.FileUploadTable.Add(GuarantorPhoto);
+            // For bulk insert
             FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
             for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
             {
@@ -125,6 +145,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
             _context.FileUploadTable.AddRange(file);
             CommitTransaction();
+            NidPhotoIdentity(portal.PortalLoanSummaryID, GuarantorPhoto.FileUploadId ,GuarantorNID.FileUploadId);
         }
 
         public IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
@@ -235,6 +256,19 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public async Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long memberId)
         {
             return _context.PortalLoanSummary.Where(t => t.LoanStatus == type && t.MemberID == memberId);
+        }
+
+        public void NidPhotoIdentity(long PortalLoanSummaryId,long Photo,long NID)
+        {
+            BeginTransaction();
+            var portalLoanSummary = GetById(PortalLoanSummaryId);
+            if(portalLoanSummary != null)
+            {
+                portalLoanSummary.GuarantorImg = Photo;
+                portalLoanSummary.GuarantorNID = NID;
+            }
+            CommitTransaction();
+
         }
     }
 }
