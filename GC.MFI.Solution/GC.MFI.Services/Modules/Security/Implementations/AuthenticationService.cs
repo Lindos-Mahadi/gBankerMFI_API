@@ -54,6 +54,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 var PortalMember = await _repository.CreatePortalMember(model);
 
                 Base64File PNID = ImageHelper.GetFileDetails(model.NidPic);
+                Base64File memImage = ImageHelper.GetFileDetails(model.Image);
 
 
                 if (imageTypes.Contains(PNID.MimeType))
@@ -69,7 +70,23 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     };
                     await _repositoryFile.CreateFileUpload(fileCreate);
                     _repository.CreatePortalMemberNID(PortalMember.Id, fileCreate.FileUploadId);
-               }
+                }
+
+                if (imageTypes.Contains(memImage.MimeType))
+                {
+                    var fileCreate = new FileUploadTable
+                    {
+                        EntityName = "PortalMember",
+                        EntityId = PortalMember.Id,
+                        PropertyName = "Image",
+                        File = memImage.DataBytes,
+                        FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
+                        Type = memImage.MimeType,
+                    };
+                    await _repositoryFile.CreateFileUpload(fileCreate);
+                    _repository.CreatePortalMemberImage(PortalMember.Id, fileCreate.FileUploadId);
+                }
+
                 var user = new ApplicationUser() { 
                     UserName = model.UserName,
                     EmployeeID = 1,
