@@ -68,8 +68,8 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
                         Type = PNID.MimeType,
                     };
-                    await _repositoryFile.CreateFileUpload(fileCreate);
-                    _repository.CreatePortalMemberNID(PortalMember.Id, fileCreate.FileUploadId);
+                   var nidUpload = await _repositoryFile.CreateFileUpload(fileCreate);
+                    _repository.CreatePortalMemberNID(PortalMember.Id, nidUpload.FileUploadId);
                 }
 
                 if (imageTypes.Contains(memImage.MimeType))
@@ -83,8 +83,8 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
                         Type = memImage.MimeType,
                     };
-                    await _repositoryFile.CreateFileUpload(fileCreate);
-                    _repository.CreatePortalMemberImage(PortalMember.Id, fileCreate.FileUploadId);
+                   var imageUpload = await _repositoryFile.CreateFileUpload(fileCreate);
+                    _repository.CreatePortalMemberImage(PortalMember.Id, imageUpload.FileUploadId);
                 }
 
                 var user = new ApplicationUser() { 
