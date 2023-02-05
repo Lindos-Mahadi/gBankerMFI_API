@@ -207,7 +207,7 @@ namespace GC.MFI.Models.DbModels
         public bool? ApprovalStatus { get; set; } = false;
         public long GuarantorNID { get; set; }
         public long GuarantorImg { get; set; }
-
+        public string SupportingDocumentsId { get; set; }
 
     }
 }

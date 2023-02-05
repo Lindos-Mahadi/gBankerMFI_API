@@ -89,6 +89,7 @@ namespace GC.MFI.Models.DbModels
         public string SavingAccountNo { get; set; }
         public int? Ref_EmployeeID { get; set; }
         public bool? ApprovalStatus { get; set; }
+        public string SupportingDocumentsId { get; set; }
 
         public virtual List<NomineeXPortalSavingSummary> MemberNomines { get; set; }
     }

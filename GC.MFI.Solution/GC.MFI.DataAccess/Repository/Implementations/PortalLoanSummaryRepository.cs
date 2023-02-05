@@ -155,6 +155,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             _context.FileUploadTable.AddRange(file);
             CommitTransaction();
             NidPhotoIdentity(portal.PortalLoanSummaryID, GuarantorPhoto.FileUploadId ,GuarantorNID.FileUploadId);
+            SupportingDocumentIdentity(portal.PortalLoanSummaryID);
         }
 
         public IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
@@ -278,6 +279,20 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
             CommitTransaction();
 
+        }
+        public void SupportingDocumentIdentity(long PortalLoanId)
+        {
+            BeginTransaction();
+            var getSupportingDocument = DataContext.FileUploadTable.Where(t=> t.EntityId== PortalLoanId && t.PropertyName == "SupportingDocument").ToList();
+            long[] SD = new long[getSupportingDocument.Count];
+            for(int i = 0; i < getSupportingDocument.Count(); i++)
+            {
+               SD[i] = getSupportingDocument[i].FileUploadId;
+            }
+            var SDID = string.Join(",", SD);
+            var getPortalLoanSummary = GetById(PortalLoanId);
+            getPortalLoanSummary.SupportingDocumentsId = SDID;
+            CommitTransaction();
         }
     }
 }
