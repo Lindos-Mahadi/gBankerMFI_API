@@ -48,7 +48,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
 
             var identity = new ApplicationUser();
             identity = _userManager.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
-            string[] imageTypes = { "image/jpg", "image/png", "image/jpeg" , "image/gif", "image/bmp", "image/tif", "image/tiff", "document/pdf" };
+            string[] imageTypes = { "image/jpg", "image/png", "image/jpeg" , "image/gif", "image/bmp", "image/tif", "image/tiff", "application/pdf" };
             if (model != null && identity == null)
             {
                 var PortalMember = await _repository.CreatePortalMember(model);
