@@ -48,6 +48,7 @@ namespace GC.MFI.Models.DbModels
         public string VillageCode { get; set; }
         public int CountryID { get; set; }
         public string EducationQualification { get; set; }
+        public string Image { get; set; }
 
     }
 }
