@@ -27,7 +27,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpPost]
-        [Route("PortalSavingSummaryFileUpload")]
+        [Route("create")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult PortalSavingSummaryFileUpload([FromBody] PortalSavingSummaryFileUpload objectToSave)
         {
