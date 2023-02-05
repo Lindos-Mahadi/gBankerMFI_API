@@ -94,9 +94,10 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         }
         public void CreatePortalMemberNID(long portalMemberId, long portalMemberFId)
         {
+            BeginTransaction();
             var memberId = DataContext.PortalMember.Where(t=> t.Id == portalMemberId).FirstOrDefault();
             memberId.MemberNID= portalMemberFId;
-            DataContext.SaveChanges();
+            CommitTransaction();
         }
 
         public void CreatePortalMemberImage(long portalMemberId, long portalMemberIId)

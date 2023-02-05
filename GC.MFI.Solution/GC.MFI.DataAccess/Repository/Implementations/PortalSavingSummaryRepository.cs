@@ -107,6 +107,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
             _context.FileUploadTable.AddRange(file);
             CommitTransaction();
+            SupportingDocumentIdentity(model.PortalSavingSummaryID);
         }
 
         public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id)
@@ -177,6 +178,21 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var getStatus = DataContext.PortalSavingSummary.Where(t => t.SavingStatus == type && t.MemberID == memberId);
             return getStatus;
 
+        }
+
+        public void SupportingDocumentIdentity(long PortalSavingId)
+        {
+            BeginTransaction();
+            var getSupportingDocument = DataContext.FileUploadTable.Where(t => t.EntityId == PortalSavingId && t.PropertyName == "SupportingDocument").ToList();
+            long[] SD = new long[getSupportingDocument.Count];
+            for (int i = 0; i < getSupportingDocument.Count(); i++)
+            {
+                SD[i] = getSupportingDocument[i].FileUploadId;
+            }
+            var SDID = string.Join(",", SD);
+            var getPortalSavingSummary = GetById(PortalSavingId);
+            getPortalSavingSummary.SupportingDocumentsId = SDID;
+            CommitTransaction();
         }
     }
 }
