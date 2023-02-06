@@ -2,13 +2,16 @@
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Models.Modules.Security;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Security.Jwt;
 using GC.MFI.Security.Models;
 using GC.MFI.Services.Modules.Security.Interfaces;
+using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
+using System.Net.Http.Headers;
 
 namespace GC.MFI.Controllers
 {
@@ -89,6 +92,28 @@ namespace GC.MFI.Controllers
 
             }
         }
+        [Authorize]
+        [HttpPost]
+        [Route("changepassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel CPM)
+        {
+            try
+            {
+                var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+                JwtTokenModel token = JwtTokenDecode.GetDetailsFromToken(header);
+                var result = await authenticationService.ChangePassword(CPM , token.UserId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log(LogLevel.Error, ex.Message);
+                throw;
+
+            }
+            
+
+        }
+
 
     }
 }

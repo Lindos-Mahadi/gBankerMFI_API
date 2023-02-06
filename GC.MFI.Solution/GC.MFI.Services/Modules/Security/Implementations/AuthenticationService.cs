@@ -3,6 +3,7 @@ using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Models.Modules.Security;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -124,6 +125,19 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             if (identity == null)
                 return true;
             return false;
+        }
+
+        public async Task<ResponseStatus> ChangePassword(ChangePasswordModel CPM, string UserId)
+        {
+            ApplicationUser user = await _userManager.FindByIdAsync(UserId);
+            var result = await _userManager.ChangePasswordAsync(user, CPM.OldPassword, CPM.NewPassword);
+            if (result.Succeeded) 
+            {
+                return new ResponseStatus { IsSuccess = true , Message = "Password Change Successfully" };
+            }else
+            {
+                return new ResponseStatus { IsSuccess = false , Message = "Given password wrong" };
+            }
         }
     }
 }
