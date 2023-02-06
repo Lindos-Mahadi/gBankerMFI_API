@@ -265,7 +265,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 };
             }
             DataContext.NomineeXPortalSavingSummary.AddRange(NomineeXSaving);
-            EndTransaction();
+            CommitTransaction();
         }
     }
 }
