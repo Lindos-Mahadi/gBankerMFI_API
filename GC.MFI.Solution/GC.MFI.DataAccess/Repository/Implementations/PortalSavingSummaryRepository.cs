@@ -82,7 +82,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Ref_EmployeeID= entity.Ref_EmployeeID,
                 ApprovalStatus= entity.ApprovalStatus
             };
-            var portalSaveId = _context.PortalSavingSummary.Add(model);
+             _context.PortalSavingSummary.Add(model);
+            CommitTransaction();
+            BeginTransaction();
 
 
             // Nominee Image upload in FileUploadTable
