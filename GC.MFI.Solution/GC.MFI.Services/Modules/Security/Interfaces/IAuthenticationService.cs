@@ -12,6 +12,6 @@ namespace GC.MFI.Services.Modules.Security.Interfaces
         Task<ApplicationUser> Authenticate(string username, string password);
         Task<SignUpResponse> Create(SignUpModel model);
         Task<bool> CheckUserName(string username);
-        Task<ResponseMessage> ChangePassword(ChangePasswordModel CPM, string UserId);
+        Task<ResponseStatus> ChangePassword(ChangePasswordModel CPM, string UserId);
     }
 }

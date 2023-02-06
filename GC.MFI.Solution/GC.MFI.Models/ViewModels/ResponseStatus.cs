@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Models.ViewModels
 {
-    public class ResponseMessage
+    public class ResponseStatus
     {
+        public bool IsSuccess { get; set; }
         public string Message { get; set; }
     }
 }
