@@ -127,16 +127,16 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             return false;
         }
 
-        public async Task<ResponseMessage> ChangePassword(ChangePasswordModel CPM, string UserId)
+        public async Task<ResponseStatus> ChangePassword(ChangePasswordModel CPM, string UserId)
         {
             ApplicationUser user = await _userManager.FindByIdAsync(UserId);
             var result = await _userManager.ChangePasswordAsync(user, CPM.OldPassword, CPM.NewPassword);
             if (result.Succeeded) 
             {
-                return new ResponseMessage { Message = "Password Change Successfully" };
+                return new ResponseStatus { IsSuccess = true , Message = "Password Change Successfully" };
             }else
             {
-                return new ResponseMessage { Message = "Given password wrong" };
+                return new ResponseStatus { IsSuccess = false , Message = "Given password wrong" };
             }
         }
     }
