@@ -67,7 +67,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 MaturedDate= entity.MaturedDate,
                 ClosingDate= entity.ClosingDate,
                 TransType= entity.TransType,
-                SavingStatus= entity.SavingStatus,
+                SavingStatus= 1,
                 //EmployeeId = entity.EmployeeId,
                 //MemberCategoryID= entity.MemberCategoryID,
                 Posted = entity.Posted,

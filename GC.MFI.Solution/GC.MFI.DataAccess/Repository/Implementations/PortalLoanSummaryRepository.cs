@@ -56,7 +56,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 InstallmentDate = entity.InstallmentDate,
                 TransType = entity.TransType,
                 ContinuousDrop = entity.ContinuousDrop,
-                LoanStatus = entity.LoanStatus,
+                LoanStatus = 1,
                 Balance = entity.Balance,
                 Advance = entity.Advance,
                 DueRecovery = entity.DueRecovery,
