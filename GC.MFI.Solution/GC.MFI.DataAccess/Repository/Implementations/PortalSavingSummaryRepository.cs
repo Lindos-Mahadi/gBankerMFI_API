@@ -80,34 +80,83 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 //OrgID= entity.OrgID,
                 SavingAccountNo= entity.SavingAccountNo,
                 Ref_EmployeeID= entity.Ref_EmployeeID,
-                ApprovalStatus= entity.ApprovalStatus,
-                MemberNomines= entity.MemberNomines,
+                ApprovalStatus= entity.ApprovalStatus
             };
             var portalSaveId = _context.PortalSavingSummary.Add(model);
-            CommitTransaction();
 
-            BeginTransaction();
-            // BULT INSERT DATA
-            FileUploadTable[] file = new FileUploadTable[entity.PortalSavingFileUpload.Count];
-            for (int i = 0; i < entity.PortalSavingFileUpload.Count(); i++)
+
+            // Nominee Image upload in FileUploadTable
+            FileUploadTable[] nomineeImage = new FileUploadTable[entity.MemberNomines.Count];
+            for (int i = 0; i < nomineeImage.Length; i++)
             {
-                Base64File filesType = ImageHelper.GetFileDetails(entity.PortalSavingFileUpload[i].File);
-                file[i] = new FileUploadTable
+                Base64File Nimg = ImageHelper.GetFileDetails(entity.MemberNomines[i].Image);
+                nomineeImage[i] = new FileUploadTable
                 {
-
                     EntityId = model.PortalSavingSummaryID,
                     EntityName = "PortalSavingSummary",
-                    PropertyName = "SupportingDocument",
-                    FileName = $"SupportingDocument_L{model.PortalSavingSummaryID}_{i + 1}",
-                    Type = filesType.MimeType,
-                    File = filesType.DataBytes,
-                    DocumentType = entity.PortalSavingFileUpload[i].DocumentType,
+                    PropertyName = "NomineeImage",
+                    FileName = $"Nominee_Image {model.PortalSavingSummaryID}",
+                    File = Nimg.DataBytes,
+                    Type = Nimg.MimeType,
+                    DocumentType = "Nominee Image"
                 };
+            }
+            DataContext.FileUploadTable.AddRange(nomineeImage);
+
+            // Nominee NId upload in FileUploadTable
+
+            FileUploadTable[] nomineeNID = new FileUploadTable[entity.MemberNomines.Count];
+            for (int i = 0; i < nomineeNID.Length; i++)
+            {
+                Base64File Nnid = ImageHelper.GetFileDetails(entity.MemberNomines[i].Nid);
+                nomineeNID[i] = new FileUploadTable
+                {
+                    EntityId = model.PortalSavingSummaryID,
+                    EntityName = "PortalSavingSummary",
+                    PropertyName = "NomineeNID",
+                    FileName = $"Nominee_NID {model.PortalSavingSummaryID}",
+                    File = Nnid.DataBytes,
+                    Type = Nnid.MimeType,
+                    DocumentType = "Nominee NID"
+                };
+            }
+            DataContext.FileUploadTable.AddRange(nomineeNID);
+
+            CommitTransaction();
+
+            NomineeImageAndNidIdentity(model.PortalSavingSummaryID, entity.MemberNomines.ToList());
+
+
+
+
+            // For Supporting Document File Upload
+            if (entity.PortalSavingFileUpload.Count > 0)
+            {
+                BeginTransaction();
+                // BULT INSERT DATA
+                FileUploadTable[] file = new FileUploadTable[entity.PortalSavingFileUpload.Count];
+                for (int i = 0; i < entity.PortalSavingFileUpload.Count(); i++)
+                {
+                    Base64File filesType = ImageHelper.GetFileDetails(entity.PortalSavingFileUpload[i].File);
+                    file[i] = new FileUploadTable
+                    {
+
+                        EntityId = model.PortalSavingSummaryID,
+                        EntityName = "PortalSavingSummary",
+                        PropertyName = "SupportingDocument",
+                        FileName = $"SupportingDocument_L{model.PortalSavingSummaryID}_{i + 1}",
+                        Type = filesType.MimeType,
+                        File = filesType.DataBytes,
+                        DocumentType = entity.PortalSavingFileUpload[i].DocumentType,
+                    };
+
+                }
+                _context.FileUploadTable.AddRange(file);
+                CommitTransaction();
+                SupportingDocumentIdentity(model.PortalSavingSummaryID);
 
             }
-            _context.FileUploadTable.AddRange(file);
-            CommitTransaction();
-            SupportingDocumentIdentity(model.PortalSavingSummaryID);
+            
         }
 
         public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id)
@@ -193,6 +242,28 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var getPortalSavingSummary = GetById(PortalSavingId);
             getPortalSavingSummary.SupportingDocumentsId = SDID;
             CommitTransaction();
+        }
+        public void NomineeImageAndNidIdentity(long savingId, List<NomineeXPortalSavingSummaryFile> file)
+        {
+            BeginTransaction();
+            var getImage = DataContext.FileUploadTable.Where(t => t.EntityId == savingId && t.PropertyName == "NomineeImage").ToList();
+            var getNID = DataContext.FileUploadTable.Where(t => t.EntityId == savingId && t.PropertyName == "NomineeNID").ToList();
+            NomineeXPortalSavingSummary[] NomineeXSaving = new NomineeXPortalSavingSummary[file.Count];
+            for(int i = 0; i < NomineeXSaving.Length ; i++)
+            {
+                NomineeXSaving[i] = new NomineeXPortalSavingSummary
+                {
+                    PortalSavingSummaryID = savingId,
+                    NomineeName = file[i].NomineeName,
+                    NFatherName = file[i].NFatherName,
+                    NAddressName = file[i].NAddressName,
+                    NAlocation = file[i].NAlocation,
+                    ImageId = getImage[i].FileUploadId,
+                    NIDId = getNID[i].FileUploadId
+                };
+            }
+            DataContext.NomineeXPortalSavingSummary.AddRange(NomineeXSaving);
+            EndTransaction();
         }
     }
 }

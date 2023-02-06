@@ -90,6 +90,6 @@ namespace GC.MFI.Models.ViewModels
         public bool? ApprovalStatus { get; set; }
 
         public List<PortalSavingFileUpload> PortalSavingFileUpload { get; set; }
-        public virtual List<NomineeXPortalSavingSummary> MemberNomines { get; set; }
+        public virtual List<NomineeXPortalSavingSummaryFile> MemberNomines { get; set; }
     }
 }

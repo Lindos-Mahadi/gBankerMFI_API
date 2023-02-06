@@ -1,17 +1,14 @@
-﻿using GC.MFI.Models.DbModels.BaseModels;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using GC.MFI.Models.DbModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.Json.Serialization;
 
-namespace GC.MFI.Models.DbModels
+namespace GC.MFI.Models.ViewModels
 {
-    public class NomineeXPortalSavingSummary : LegacyDbModelBase, ILegacyDbModelBase
+    public class NomineeXPortalSavingSummaryFile
     {
         [Key]
         public long PortalMemberNomineeId { get; set; }
@@ -21,11 +18,9 @@ namespace GC.MFI.Models.DbModels
         public string NRelationName { get; set; }
         public string NAddressName { get; set; }
         public int? NAlocation { get; set; }
-        public long ImageId { get; set; }
-        public long NIDId { get; set; }
+        public string Image { get; set; }
+        public string Nid { get; set; }
 
         public long PortalSavingSummaryID { get; set; }
-        [JsonIgnore]
-        public PortalSavingSummary PortalSavingSummary { get; set; }
     }
 }
