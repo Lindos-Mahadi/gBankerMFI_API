@@ -132,7 +132,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
 
             // For Supporting Document File Upload
-            if (entity.PortalSavingFileUpload.Count > 0)
+            if (entity.PortalSavingFileUpload != null)
             {
                 BeginTransaction();
                 // BULT INSERT DATA
