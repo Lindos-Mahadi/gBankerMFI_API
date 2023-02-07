@@ -41,5 +41,7 @@ namespace GC.MFI.Models.DbModels
         public long MemberNID { get; set; }
         public long Image { get; set; }
         public string NationalID {get;set;}
+        public string PlaceOfBirth { get;set;}
+        public string Cityzenship { get;set;}
     }
 }
