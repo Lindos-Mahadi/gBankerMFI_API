@@ -49,6 +49,7 @@ namespace GC.MFI.Models.DbModels
         public int CountryID { get; set; }
         public string EducationQualification { get; set; }
         public string Image { get; set; }
+        public string NationalID { get; set; }
 
     }
 }
