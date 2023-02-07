@@ -42,17 +42,38 @@ namespace GC.MFI.WebApi.Controllers.Modules
             {
                 new { Text = "Pre-Primary", Value = "1" },
                 new  { Text = "Primary", Value = "2" },
-                new { Text = "JSC", Value = "JSC" },
+                //new { Text = "JSC", Value = "3" },
                 new { Text = "Secondary", Value = "3" },
                 new { Text = "Higher Secondary", Value = "4" },
-                new { Text = "Diploma", Value = "DIP" },
+                //new { Text = "Diploma", Value = "6" },
                 new { Text = "Graduate", Value = "5" },
                 new { Text = "PostGraduate", Value = "6" },
-                new { Text = "Illiterate", Value = "ILL" },
+                //new { Text = "Illiterate", Value = "9" },
                 new { Text = "Other", Value = "7" }
+            };
+
+            return JsonConvert.SerializeObject(jObject);
+        }
+
+        [HttpGet]
+        [Route("getOccupationList")]
+        public async Task<string> getOccupationList()
+        {
+            var jObject = new[]
+            {
+                new { Text = "SelfEmployed", Value = "SF" },
+                new { Text = "Service", Value = "SE" },
+                new { Text = "Business", Value = "BU" },
+
+                new { Text = "House Hold", Value = "HH" },
+                new { Text = "Farmer", Value = "FR" },
+                new { Text = "Agriculture", Value = "AG" },
+                new { Text = "Others", Value = "OT" }
+
             };
 
             return JsonConvert.SerializeObject(jObject);
         }
     }
 }
+
