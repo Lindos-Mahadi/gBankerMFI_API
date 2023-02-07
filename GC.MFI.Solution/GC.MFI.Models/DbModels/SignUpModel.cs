@@ -53,6 +53,6 @@ namespace GC.MFI.Models.DbModels
         public string PlaceOfBirth { get; set; }
         public string Cityzenship { get; set; }
         public string MaritalStatus { get; set; }
-
+        public string HomeType { get; set; }
     }
 }

@@ -61,7 +61,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 NationalID = signUp.NationalID,
                 PlaceOfBirth = signUp.PlaceOfBirth,
                 Cityzenship = signUp.Cityzenship,
-                MaritalStatus = signUp.MaritalStatus
+                MaritalStatus = signUp.MaritalStatus,
+                HomeType = signUp.HomeType
 
             };
             DataContext.Add(portalMember);
