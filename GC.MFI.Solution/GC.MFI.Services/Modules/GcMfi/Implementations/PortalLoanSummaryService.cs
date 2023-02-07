@@ -39,7 +39,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return result;
         }
 
-        public Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long memberId)
+        public Task<IEnumerable<PortalLoanSummaryViewModel>> getByLoanStatus(byte type, long memberId)
         {
             var getLoanStatus = _repository.getByLoanStatus(type, memberId);
             return getLoanStatus;

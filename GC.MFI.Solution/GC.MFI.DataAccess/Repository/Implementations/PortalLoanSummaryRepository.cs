@@ -175,7 +175,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public async Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter,long Id)
         {
 
-            var totalElems = DataContext.PortalLoanSummary.Count(x => x.ApprovalStatus == true && x.MemberID == Id);
+            var totalElems = DataContext.PortalLoanSummary.Count(x => x.MemberID == Id);
             var portalList = (from pls in DataContext.PortalLoanSummary
                               join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
                               join prpse in DataContext.Purpose on pls.PurposeID equals prpse.PurposeID
@@ -260,7 +260,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   ApprovalStatus = pls.ApprovalStatus
                               }
                               ).Where(filter.search)
-                               .Where(x => x.ApprovalStatus == true && x.MemberID == Id)
+                               .Where(x => x.MemberID == Id)
                                .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                .Take(filter.pageSize);
 
@@ -273,9 +273,53 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             
         }
 
-        public async Task<IEnumerable<PortalLoanSummary>> getByLoanStatus(byte type, long memberId)
+        public async Task<IEnumerable<PortalLoanSummaryViewModel>> getByLoanStatus(byte type, long memberId)
         {
-            return _context.PortalLoanSummary.Where(t => t.LoanStatus == type && t.MemberID == memberId);
+            var portalLoanList = (from pls in DataContext.PortalLoanSummary
+                              join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
+                              select new PortalLoanSummaryViewModel
+                              {
+                                  PortalLoanSummaryID = pls.PortalLoanSummaryID,
+                                  OfficeID = pls.OfficeID,
+                                  MemberID = pls.MemberID,
+                                  ProductID = pls.ProductID,
+                                  ProductName = prdct.ProductName,
+                                  CenterID = pls.CenterID,
+                                  MemberCategoryID = pls.MemberCategoryID,
+                                  
+                                  ApproveDate = pls.ApproveDate,
+                                  DisburseDate = pls.DisburseDate,
+                                  Duration = pls.Duration,
+                                 
+                                  LoanInstallment = pls.LoanInstallment,
+                                  IntInstallment = pls.IntInstallment,
+                                  InterestRate = pls.InterestRate,
+                                  InstallmentStartDate = pls.InstallmentStartDate,
+                                  InstallmentNo = pls.InstallmentNo,
+                                  DropInstallment = pls.DropInstallment,
+                                  Holidays = pls.Holidays,
+                                  InstallmentDate = pls.InstallmentDate,
+                                  TransType = pls.TransType,
+                                  ContinuousDrop = pls.ContinuousDrop,
+                                  LoanStatus = pls.LoanStatus,
+                                  Balance = pls.Balance,
+                                  Advance = pls.Advance,
+                                  DueRecovery = pls.DueRecovery,
+                                 
+                                  Posted = pls.Posted,
+                                  OrgID = pls.OrgID,
+                                  IsActive = pls.IsActive,
+                                  InActiveDate = pls.InActiveDate,
+                                  CreateUser = pls.CreateUser,
+                                  CreateDate = pls.CreateDate,
+                                  
+                                  IsApproved = pls.IsApproved,
+                                 
+                                  ApprovalStatus = pls.ApprovalStatus
+                              }
+                              ).Where(t => t.LoanStatus == type && t.MemberID == memberId);
+
+            return portalLoanList;
         }
 
         public void NidPhotoIdentity(long PortalLoanSummaryId,long Photo,long NID)

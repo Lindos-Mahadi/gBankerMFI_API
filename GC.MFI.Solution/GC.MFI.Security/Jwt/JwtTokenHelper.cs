@@ -51,10 +51,10 @@ namespace GC.MFI.Security.Jwt
             var roles = await _userManager.GetRolesAsync(userModel);
             var claims = new List<Claim>();
             //add static claims
-            claims.Add(new Claim("fullName", $"{userModel.UserName}"));
             claims.Add(new Claim("email", userModel.Email));
             claims.Add(new Claim("userName", userModel.UserName));
             claims.Add(new Claim("id", userModel.Id));
+            claims.Add(new Claim("fullName", userModel.FirstName +( userModel.LastName != null ? userModel.LastName : "" ) ));
             if(userModel.PortalMemberID != null)
             {
                 long id = (long)userModel.PortalMemberID;
