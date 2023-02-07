@@ -286,7 +286,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   ProductName = prdct.ProductName,
                                   CenterID = pls.CenterID,
                                   MemberCategoryID = pls.MemberCategoryID,
-                                  
+                                  PrincipalLoan = pls.PrincipalLoan,
                                   ApproveDate = pls.ApproveDate,
                                   DisburseDate = pls.DisburseDate,
                                   Duration = pls.Duration,
