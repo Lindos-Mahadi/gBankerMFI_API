@@ -26,136 +26,146 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public void CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity)
         {
-            BeginTransaction();
-            
-            var portal = new PortalLoanSummary
+            try
             {
-                PortalLoanSummaryID= entity.PortalLoanSummaryID,
-                OfficeID = entity.OfficeID,
-                MemberID = entity.MemberID,
-                ProductID = entity.ProductID,
-                CenterID = entity.CenterID,
-                MemberCategoryID = entity.MemberCategoryID,
-                LoanTerm = entity.LoanTerm,
-                PurposeID = entity.PurposeID,
-                LoanNo = entity.LoanNo,
-                PrincipalLoan = entity.PrincipalLoan,
-                ApproveDate = entity.ApproveDate,
-                DisburseDate = entity.DisburseDate,
-                Duration = entity.Duration,
-                LoanRepaid = entity.LoanRepaid,
-                IntCharge = entity.IntCharge,
-                IntPaid = entity.IntPaid,
-                LoanInstallment = entity.LoanInstallment,
-                IntInstallment = entity.IntInstallment,
-                InterestRate = entity.InterestRate,
-                InstallmentStartDate = entity.InstallmentStartDate,
-                InstallmentNo = entity.InstallmentNo,
-                DropInstallment = entity.DropInstallment,
-                Holidays = entity.Holidays,
-                InstallmentDate = entity.InstallmentDate,
-                TransType = entity.TransType,
-                ContinuousDrop = entity.ContinuousDrop,
-                LoanStatus = 1,
-                Balance = entity.Balance,
-                Advance = entity.Advance,
-                DueRecovery = entity.DueRecovery,
-                LoanCloseDate = entity.LoanCloseDate,
-                OverdueDate = entity.OverdueDate,
-                EmployeeId = entity.EmployeeId,
-                InvestorID = entity.InvestorID,
-                ExcessPay = entity.ExcessPay,
-                CurLoan = entity.CurLoan,
-                PreLoan = entity.PreLoan,
-                CumLoanDue = entity.CumLoanDue,
-                WriteOffLoan = entity.WriteOffLoan,
-                WriteOffInterest = entity.WriteOffInterest,
-                Posted = entity.Posted,
-                OrgID = entity.OrgID,
-                IsActive = entity.IsActive,
-                InActiveDate = entity.InActiveDate,
-                CreateUser = entity.CreateUser,
-                CreateDate = entity.CreateDate,
-                BankName = entity.BankName,
-                ChequeNo = entity.ChequeNo,
-                IsApproved = entity.IsApproved,
-                CoApplicantName = entity.CoApplicantName,
-                Guarantor = entity.Guarantor,
-                MemberPassBookRegisterID = entity.MemberPassBookRegisterID,
-                ChequeIssueDate = entity.ChequeIssueDate,
-                CumIntDue = entity.CumIntDue,
-                ApprovedAmount = entity.ApprovedAmount,
-                PartialAmount = entity.PartialAmount,
-                FinalDisbursement = entity.FinalDisbursement,
-                DisbursementType = entity.DisbursementType,
-                PartialIntCharge = entity.PartialIntCharge,
-                PartialIntPaid = entity.PartialIntPaid,
-                FirstInstallmentStartDate = entity.FirstInstallmentStartDate,
-                FirstInstallmentDate = entity.FirstInstallmentDate,
-                CurIntPaid = entity.CurIntPaid,
-                CurIntCharge = entity.CurIntCharge,
-                LoanAccountNo = entity.LoanAccountNo,
-                SecurityBankName = entity.SecurityBankName,
-                SecurityBankBranchName = entity.SecurityBankBranchName,
-                SecurityBankCheckNo = entity.SecurityBankCheckNo,
-                CurLoanDue = entity.CurLoanDue,
-                CurIntDue = entity.CurIntDue,
-                LastInstallmentNo = entity.LastInstallmentNo,
-                CSFRate = entity.CSFRate,
-                CSFAmount = entity.CSFAmount,
-                Remarks = entity.Remarks,
-                ApprovalStatus = entity.ApprovalStatus
-            };
-             _context.PortalLoanSummary.Add(portal);
-            CommitTransaction();
-            BeginTransaction();
-
-            // For GuarantorNID & image
-            Base64File nidType = ImageHelper.GetFileDetails(entity.GuarantorNID);
-            var GuarantorNID = new FileUploadTable
-            {
-                EntityId = portal.PortalLoanSummaryID,
-                EntityName = "PortalLoanSummary",
-                PropertyName = "GuarantorNID",
-                FileName = $"GuarantorNID_{portal.PortalLoanSummaryID}",
-                File = nidType.DataBytes,
-                Type = nidType.MimeType
-            };
-
-            Base64File gPhotoType = ImageHelper.GetFileDetails(entity.GuarantorImg);
-            var GuarantorPhoto = new FileUploadTable
-            {
-                EntityId = portal.PortalLoanSummaryID,
-                EntityName = "PortalLoanSummary",
-                PropertyName = "GuarantorImage",
-                FileName = $"GuarantorImage_{portal.PortalLoanSummaryID}",
-                File = gPhotoType.DataBytes,
-                Type = gPhotoType.MimeType
-            };
-            DataContext.FileUploadTable.Add(GuarantorNID);
-            DataContext.FileUploadTable.Add(GuarantorPhoto);
-            // For bulk insert
-            FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
-            for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
-            {
-                Base64File filesTypes = ImageHelper.GetFileDetails(entity.PortalLoanFileUpload[i].File);
-                file[i] = new FileUploadTable
+                BeginTransaction();
+                var portal = new PortalLoanSummary
                 {
+                    PortalLoanSummaryID = entity.PortalLoanSummaryID,
+                    OfficeID = entity.OfficeID,
+                    MemberID = entity.MemberID,
+                    ProductID = entity.ProductID,
+                    CenterID = entity.CenterID,
+                    MemberCategoryID = entity.MemberCategoryID,
+                    LoanTerm = entity.LoanTerm,
+                    PurposeID = entity.PurposeID,
+                    LoanNo = entity.LoanNo,
+                    PrincipalLoan = entity.PrincipalLoan,
+                    ApproveDate = entity.ApproveDate,
+                    DisburseDate = entity.DisburseDate,
+                    Duration = entity.Duration,
+                    LoanRepaid = entity.LoanRepaid,
+                    IntCharge = entity.IntCharge,
+                    IntPaid = entity.IntPaid,
+                    LoanInstallment = entity.LoanInstallment,
+                    IntInstallment = entity.IntInstallment,
+                    InterestRate = entity.InterestRate,
+                    InstallmentStartDate = entity.InstallmentStartDate,
+                    InstallmentNo = entity.InstallmentNo,
+                    DropInstallment = entity.DropInstallment,
+                    Holidays = entity.Holidays,
+                    InstallmentDate = entity.InstallmentDate,
+                    TransType = entity.TransType,
+                    ContinuousDrop = entity.ContinuousDrop,
+                    LoanStatus = 1,
+                    Balance = entity.Balance,
+                    Advance = entity.Advance,
+                    DueRecovery = entity.DueRecovery,
+                    LoanCloseDate = entity.LoanCloseDate,
+                    OverdueDate = entity.OverdueDate,
+                    EmployeeId = entity.EmployeeId,
+                    InvestorID = entity.InvestorID,
+                    ExcessPay = entity.ExcessPay,
+                    CurLoan = entity.CurLoan,
+                    PreLoan = entity.PreLoan,
+                    CumLoanDue = entity.CumLoanDue,
+                    WriteOffLoan = entity.WriteOffLoan,
+                    WriteOffInterest = entity.WriteOffInterest,
+                    Posted = entity.Posted,
+                    OrgID = entity.OrgID,
+                    IsActive = entity.IsActive,
+                    InActiveDate = entity.InActiveDate,
+                    CreateUser = entity.CreateUser,
+                    CreateDate = entity.CreateDate,
+                    BankName = entity.BankName,
+                    ChequeNo = entity.ChequeNo,
+                    IsApproved = entity.IsApproved,
+                    CoApplicantName = entity.CoApplicantName,
+                    Guarantor = entity.Guarantor,
+                    MemberPassBookRegisterID = entity.MemberPassBookRegisterID,
+                    ChequeIssueDate = entity.ChequeIssueDate,
+                    CumIntDue = entity.CumIntDue,
+                    ApprovedAmount = entity.ApprovedAmount,
+                    PartialAmount = entity.PartialAmount,
+                    FinalDisbursement = entity.FinalDisbursement,
+                    DisbursementType = entity.DisbursementType,
+                    PartialIntCharge = entity.PartialIntCharge,
+                    PartialIntPaid = entity.PartialIntPaid,
+                    FirstInstallmentStartDate = entity.FirstInstallmentStartDate,
+                    FirstInstallmentDate = entity.FirstInstallmentDate,
+                    CurIntPaid = entity.CurIntPaid,
+                    CurIntCharge = entity.CurIntCharge,
+                    LoanAccountNo = entity.LoanAccountNo,
+                    SecurityBankName = entity.SecurityBankName,
+                    SecurityBankBranchName = entity.SecurityBankBranchName,
+                    SecurityBankCheckNo = entity.SecurityBankCheckNo,
+                    CurLoanDue = entity.CurLoanDue,
+                    CurIntDue = entity.CurIntDue,
+                    LastInstallmentNo = entity.LastInstallmentNo,
+                    CSFRate = entity.CSFRate,
+                    CSFAmount = entity.CSFAmount,
+                    Remarks = entity.Remarks,
+                    ApprovalStatus = false
+                };
+                DataContext.PortalLoanSummary.Add(portal);
+                DataContext.SaveChanges();
 
+                // For GuarantorNID & image
+                Base64File nidType = ImageHelper.GetFileDetails(entity.GuarantorNID);
+                var GuarantorNID = new FileUploadTable
+                {
                     EntityId = portal.PortalLoanSummaryID,
                     EntityName = "PortalLoanSummary",
-                    PropertyName = "SupportingDocument",
-                    FileName = $"SupportingDocument_L{portal.PortalLoanSummaryID}_{i + 1}",
-                    Type = filesTypes.MimeType,
-                    File = filesTypes.DataBytes,
-                    DocumentType = entity.PortalLoanFileUpload[i].DocumentType
+                    PropertyName = "GuarantorNID",
+                    FileName = $"GuarantorNID_{portal.PortalLoanSummaryID}",
+                    File = nidType.DataBytes,
+                    Type = nidType.MimeType
                 };
 
+                Base64File gPhotoType = ImageHelper.GetFileDetails(entity.GuarantorImg);
+                var GuarantorPhoto = new FileUploadTable
+                {
+                    EntityId = portal.PortalLoanSummaryID,
+                    EntityName = "PortalLoanSummary",
+                    PropertyName = "GuarantorImage",
+                    FileName = $"GuarantorImage_{portal.PortalLoanSummaryID}",
+                    File = gPhotoType.DataBytes,
+                    Type = gPhotoType.MimeType
+                };
+                DataContext.FileUploadTable.Add(GuarantorNID);
+                DataContext.FileUploadTable.Add(GuarantorPhoto);
+                // For bulk insert
+                FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
+                for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
+                {
+                    Base64File filesTypes = ImageHelper.GetFileDetails(entity.PortalLoanFileUpload[i].File);
+                    file[i] = new FileUploadTable
+                    {
+
+                        EntityId = portal.PortalLoanSummaryID,
+                        EntityName = "PortalLoanSummary",
+                        PropertyName = "SupportingDocument",
+                        FileName = $"SupportingDocument_L{portal.PortalLoanSummaryID}_{i + 1}",
+                        Type = filesTypes.MimeType,
+                        File = filesTypes.DataBytes,
+                        DocumentType = entity.PortalLoanFileUpload[i].DocumentType
+                    };
+
+                }
+                DataContext.FileUploadTable.AddRange(file);
+                DataContext.SaveChanges();
+
+                NidPhotoIdentity(portal.PortalLoanSummaryID, GuarantorPhoto.FileUploadId, GuarantorNID.FileUploadId);
+                SupportingDocumentIdentity(portal.PortalLoanSummaryID);
+                CommitTransaction();
+
             }
-            _context.FileUploadTable.AddRange(file);
-            CommitTransaction();
-            NidPhotoIdentity(portal.PortalLoanSummaryID, GuarantorPhoto.FileUploadId ,GuarantorNID.FileUploadId);
-            SupportingDocumentIdentity(portal.PortalLoanSummaryID);
+            catch(Exception ex)
+            {
+                RollbackTransaction();
+                throw ex;
+            }
+           
         }
 
         public IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
@@ -270,19 +280,17 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public void NidPhotoIdentity(long PortalLoanSummaryId,long Photo,long NID)
         {
-            BeginTransaction();
             var portalLoanSummary = GetById(PortalLoanSummaryId);
             if(portalLoanSummary != null)
             {
                 portalLoanSummary.GuarantorImg = Photo;
                 portalLoanSummary.GuarantorNID = NID;
             }
-            CommitTransaction();
+            DataContext.SaveChanges();
 
         }
         public void SupportingDocumentIdentity(long PortalLoanId)
         {
-            BeginTransaction();
             var getSupportingDocument = DataContext.FileUploadTable.Where(t=> t.EntityId== PortalLoanId && t.PropertyName == "SupportingDocument").ToList();
             long[] SD = new long[getSupportingDocument.Count];
             for(int i = 0; i < getSupportingDocument.Count(); i++)
@@ -292,7 +300,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var SDID = string.Join(",", SD);
             var getPortalLoanSummary = GetById(PortalLoanId);
             getPortalLoanSummary.SupportingDocumentsId = SDID;
-            CommitTransaction();
+            DataContext.SaveChanges();
         }
     }
 }
