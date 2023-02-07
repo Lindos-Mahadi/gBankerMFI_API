@@ -60,7 +60,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Status = "A",
                 NationalID = signUp.NationalID,
                 PlaceOfBirth = signUp.PlaceOfBirth,
-                Cityzenship = signUp.Cityzenship
+                Cityzenship = signUp.Cityzenship,
+                MaritalStatus = signUp.MaritalStatus
 
             };
             DataContext.Add(portalMember);
