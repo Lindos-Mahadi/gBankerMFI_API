@@ -86,6 +86,20 @@ namespace GC.MFI.WebApi.Controllers.Modules
             };
             return JsonConvert.SerializeObject(jObject);
         }
+
+        [HttpGet]
+        [Route("getCitizenshipList")]
+        public async Task<string> getCitizenshipList()
+        {
+            var jObject = new[]
+            {
+                new { Text = "By Birth", Value = "BB" },
+                new { Text = "Migrated", Value = "MI" },
+                new { Text = "Marital", Value = "MA" },
+                new { Text = "Nutralization", Value = "NU" }
+            };
+            return JsonConvert.SerializeObject(jObject);
+        }
     }
 }
 
