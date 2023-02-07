@@ -277,8 +277,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         }
         public void NomineeImageAndNidIdentity(long savingId, List<NomineeXPortalSavingSummaryFile> file)
         {
-            var getImage = DataContext.FileUploadTable.Where(t => t.EntityId == savingId && t.PropertyName == "NomineeImage").ToList();
-            var getNID = DataContext.FileUploadTable.Where(t => t.EntityId == savingId && t.PropertyName == "NomineeNID").ToList();
             NomineeXPortalSavingSummary[] NomineeXSaving = new NomineeXPortalSavingSummary[file.Count];
             for(int i = 0; i < NomineeXSaving.Length ; i++)
             {
