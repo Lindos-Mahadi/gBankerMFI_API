@@ -215,7 +215,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     MaxLimit = pl.MaxLimit
                                 })
                                     .Where(filter.search)
-                                    .Where(x => x.ApprovalStatus == true && x.MemberID == Id)
+                                    .Where(x => x.MemberID == Id)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                     .Take(filter.pageSize).ToList();
             //for(int i=0;i<savingSummary.Count();i++)

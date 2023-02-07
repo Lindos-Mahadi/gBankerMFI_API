@@ -260,7 +260,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   ApprovalStatus = pls.ApprovalStatus
                               }
                               ).Where(filter.search)
-                               .Where(x => x.ApprovalStatus == true && x.MemberID == Id)
+                               .Where(x => x.MemberID == Id)
                                .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                .Take(filter.pageSize);
 
