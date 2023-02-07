@@ -245,6 +245,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                      ProductID = (short)pl.ProductID,
                                      ProductName = pl.ProductName,
                                      CenterID = pps.CenterID,
+                                     Balance = pps.Balance,
                                      SavingInstallment = pps.SavingInstallment,
                                      SavingStatus = pps.SavingStatus,
                                      IsActive = pps.IsActive,
