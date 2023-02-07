@@ -175,7 +175,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public async Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter,long Id)
         {
 
-            var totalElems = DataContext.PortalLoanSummary.Count(x => x.ApprovalStatus == true && x.MemberID == Id);
+            var totalElems = DataContext.PortalLoanSummary.Count(x => x.MemberID == Id);
             var portalList = (from pls in DataContext.PortalLoanSummary
                               join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
                               join prpse in DataContext.Purpose on pls.PurposeID equals prpse.PurposeID

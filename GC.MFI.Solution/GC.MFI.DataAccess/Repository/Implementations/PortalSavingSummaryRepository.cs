@@ -170,7 +170,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id)
         {
-            var TotalElement = DataContext.PortalSavingSummary.Count(t => t.ApprovalStatus == true && t.MemberID == Id);
+            var TotalElement = DataContext.PortalSavingSummary.Count(t => t.MemberID == Id);
 
             var savingSummary =(from pps in DataContext.PortalSavingSummary
                                 join pl in DataContext.Product on pps.ProductID equals pl.ProductID
