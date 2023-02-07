@@ -57,7 +57,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 VillageCode = signUp.VillageCode,
                 CreateDate= DateTime.Now,
                 UpdateDate= DateTime.Now,
-                Status = "A"
+                Status = "A",
+                NationalID = signUp.NationalID
 
 
             };
