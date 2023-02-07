@@ -18,6 +18,7 @@ namespace GC.MFI.Models.ViewModels
         public string NRelationName { get; set; }
         public string NAddressName { get; set; }
         public int? NAlocation { get; set; }
+        public string NIDNumber { get; set; }
         public string Image { get; set; }
         public string Nid { get; set; }
 

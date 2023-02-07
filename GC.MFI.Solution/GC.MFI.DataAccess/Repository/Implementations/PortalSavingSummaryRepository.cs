@@ -98,10 +98,10 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                         EntityId = model.PortalSavingSummaryID,
                         EntityName = "PortalSavingSummary",
                         PropertyName = "NomineeImage",
-                        FileName = $"Nominee_Image {model.PortalSavingSummaryID}",
+                        FileName = $"Nominee_Image_{entity.MemberNomines[i].NIDNumber}",
                         File = Nimg.DataBytes,
                         Type = Nimg.MimeType,
-                        DocumentType = "Nominee Image"
+                        DocumentType = "NomineeImage"
                     };
                 }
                 DataContext.FileUploadTable.AddRange(nomineeImage);
@@ -117,10 +117,10 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                         EntityId = model.PortalSavingSummaryID,
                         EntityName = "PortalSavingSummary",
                         PropertyName = "NomineeNID",
-                        FileName = $"Nominee_NID {model.PortalSavingSummaryID}",
+                        FileName = $"Nominee_NID_{entity.MemberNomines[i].NIDNumber}",
                         File = Nnid.DataBytes,
                         Type = Nnid.MimeType,
-                        DocumentType = "Nominee NID"
+                        DocumentType = "NomineeNID"
                     };
                 }
                 DataContext.FileUploadTable.AddRange(nomineeNID);
@@ -282,6 +282,15 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             NomineeXPortalSavingSummary[] NomineeXSaving = new NomineeXPortalSavingSummary[file.Count];
             for(int i = 0; i < NomineeXSaving.Length ; i++)
             {
+                var img = DataContext.FileUploadTable
+                    .Where(t => t.EntityId == savingId 
+                    && t.PropertyName == "NomineeImage" &&
+                    t.FileName == $"Nominee_Image_{file[i].NIDNumber}").FirstOrDefault();
+                var Nid = DataContext.FileUploadTable
+                    .Where(t => t.EntityId == savingId
+                    && t.PropertyName == "NomineeNID" &&
+                    t.FileName == $"Nominee_NID_{file[i].NIDNumber}").FirstOrDefault();
+
                 NomineeXSaving[i] = new NomineeXPortalSavingSummary
                 {
                     PortalSavingSummaryID = savingId,
@@ -289,8 +298,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                     NFatherName = file[i].NFatherName,
                     NAddressName = file[i].NAddressName,
                     NAlocation = file[i].NAlocation,
-                    ImageId = getImage[i].FileUploadId,
-                    NIDId = getNID[i].FileUploadId
+                    NIDNumber = file[i].NIDNumber,
+                    ImageId = img.FileUploadId,
+                    NIDId = Nid.FileUploadId
                 };
             }
             DataContext.NomineeXPortalSavingSummary.AddRange(NomineeXSaving);
