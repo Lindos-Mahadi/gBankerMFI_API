@@ -93,7 +93,7 @@ namespace GC.MFI.Models.ViewModels
         public decimal? MinLimit { get; set; }
         public decimal? MaxLimit { get; set; }
 
-        public string SavingDescription { 
+        public string StatusDesc { 
             get { return 
                     SavingStatus == 1 ? "Pending" : 
                     SavingStatus == 2 ? "Approved" : 

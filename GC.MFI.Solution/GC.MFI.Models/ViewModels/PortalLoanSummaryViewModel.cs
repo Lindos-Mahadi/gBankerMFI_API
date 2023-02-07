@@ -208,6 +208,17 @@ namespace GC.MFI.Models.ViewModels
         public string Remarks { get; set; }
         public bool? ApprovalStatus { get; set; } = false;
 
+        public string StatusDesc
+        {
+            get
+            {
+                return
+                    LoanStatus == 1 ? "Pending" :
+                    LoanStatus == 2 ? "Approved" :
+                    LoanStatus == 3 ? "Running" : "UnApprove";
+            }
+        }
+
 
         // mapping property
         [Display(Name = "Frequency Mode")]

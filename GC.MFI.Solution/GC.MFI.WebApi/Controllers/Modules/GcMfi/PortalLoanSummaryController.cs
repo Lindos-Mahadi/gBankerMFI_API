@@ -75,7 +75,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpGet]
         [Route("getLoanSummaryStatus")]
-        public async Task<IEnumerable<PortalLoanSummary>> getLoanSummaryStatus(byte type, long memberId)
+        public async Task<IEnumerable<PortalLoanSummaryViewModel>> getLoanSummaryStatus(byte type, long memberId)
         {
             var result = await _service.getByLoanStatus(type, memberId);
             return result;
