@@ -41,12 +41,12 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                     {
                         nid = new Nid
                         {
-                            fullNameEN = "MD asd asd",
-                            fathersNameEN = "Md asd",
-                            mothersNameEN = "Mrs asdas",
-                            spouseNameEN = "",
-                            presentAddressEN = "asdasd",
-                            permenantAddressEN = "asdasd",
+                            fullNameEN = "MD Ashiful Arefin",
+                            fathersNameEN = "Abu Arefin",
+                            mothersNameEN = "Umme Arefin",
+                            spouseNameEN = "Mrs Arefin",
+                            presentAddressEN = "Uttarkhan",
+                            permenantAddressEN = "Dhaka",
                             fullNameBN = "মোঃ আসিফুল আরেফিন",
                             fathersNameBN = "মোঃ আব্দুল হক",
                             mothersNameBN = "",
