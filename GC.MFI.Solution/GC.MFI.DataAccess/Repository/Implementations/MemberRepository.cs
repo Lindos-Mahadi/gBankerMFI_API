@@ -2,6 +2,7 @@
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
+using GC.MFI.Utility.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,7 +136,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             Member getMember = GetById(memberId);
             var PortalMemberID = getMember.PortalMemberId;
             FileUploadTable Image = DataContext.FileUploadTable.Where(t => t.EntityId == PortalMemberID && t.EntityName == "PortalMember" && t.PropertyName == "Image").FirstOrDefault();
-            string ToBase64 = $"data:{Image.Type};base64,"+ Convert.ToBase64String(Image.File);
+            string ToBase64 = FileDecodeHelper.Base64(Image.Type , Image.File);
             return ToBase64;
         }
     }
