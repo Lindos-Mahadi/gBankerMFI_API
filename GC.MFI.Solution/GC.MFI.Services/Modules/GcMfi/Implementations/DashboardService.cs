@@ -21,10 +21,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 
         public async Task<DashboardModel> GetDashboardInfo(long MemberId)
         {
-            var loanSummary = portalLoanSummaryRepository.GetMany(t => t.MemberID == MemberId && t.LoanStatus == 3);
+            var loanSummary = portalLoanSummaryRepository.GetMany(t => t.MemberID == MemberId && t.ApprovalStatus == true);
             var loanSummarySum = loanSummary.Sum(t => t.PrincipalLoan);
 
-            var savingSummary = portalSavingSummaryRepository.GetMany(t => t.MemberID == MemberId && t.SavingStatus == 3);
+            var savingSummary = portalSavingSummaryRepository.GetMany(t => t.MemberID == MemberId && t.ApprovalStatus == true);
                 
              var savingSummarySum = savingSummary.Sum(t => t.Balance);
             var totalProduct = loanSummary.Count() + savingSummary.Count();
