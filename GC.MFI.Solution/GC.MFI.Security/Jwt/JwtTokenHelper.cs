@@ -54,7 +54,7 @@ namespace GC.MFI.Security.Jwt
             claims.Add(new Claim("email", userModel.Email));
             claims.Add(new Claim("userName", userModel.UserName));
             claims.Add(new Claim("id", userModel.Id));
-            claims.Add(new Claim("fullName", userModel.FirstName +( userModel.LastName != null ? userModel.LastName : "" ) ));
+            claims.Add(new Claim("fullName", userModel.FirstName +" " +( userModel.LastName != null ? userModel.LastName : "" ) ));
             if(userModel.PortalMemberID != null)
             {
                 long id = (long)userModel.PortalMemberID;
