@@ -27,7 +27,7 @@ namespace GC.MFI.WebApi.Controllers.Modules
         }
 
         [HttpGet]
-        [Route("getmemberbyid")]
+        [Route("portalmemberprofile")]
         public async Task<MemberProfile> GetMemberById(long Id)
         {
             var member = await _service.GetMemberById(Id);
