@@ -76,6 +76,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                select new MemberProfile
                                {
                                    MemberId = m.MemberID,
+                                   PortalMemberId = pMember.Id,
                                    Gender = m.Gender,
                                    FirstName = m.FirstName,
                                    LastName = m.LastName,
@@ -93,7 +94,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                    countryID = pMember.CountryID,
                                    DOB = pMember.DOB,
                                    postCode = pMember.PostCode
-                               }).Where(t=> t.MemberId == Id).FirstOrDefault();
+                               }).Where(t=> t.MemberId == Id || t.PortalMemberId == Id ).FirstOrDefault();
             return portalMember;
         }
         public void CreatePortalMemberNID(long portalMemberId, long portalMemberFId)

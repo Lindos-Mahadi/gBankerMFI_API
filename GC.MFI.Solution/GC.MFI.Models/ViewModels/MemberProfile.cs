@@ -9,6 +9,7 @@ namespace GC.MFI.Models.ViewModels
     public class MemberProfile
     {
         public long MemberId { get; set; }
+        public long PortalMemberId { get; set; }
         public string Gender { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
