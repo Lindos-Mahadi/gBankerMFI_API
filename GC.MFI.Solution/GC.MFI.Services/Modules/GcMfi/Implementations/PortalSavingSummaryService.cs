@@ -39,7 +39,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return result;
         }
 
-        public Task<IEnumerable<PortalSavingSummary>> getBySavingStatus(byte type, long memberId)
+        public Task<IEnumerable<SavingSummaryViewModel>> getBySavingStatus(byte type, long memberId)
         {
             var getSavingStatus = _repository.getBySavingStatus(type, memberId);
             return getSavingStatus;

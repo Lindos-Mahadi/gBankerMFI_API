@@ -58,8 +58,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 CreateDate= DateTime.Now,
                 UpdateDate= DateTime.Now,
                 Status = "A",
-                NationalID = signUp.NationalID
-
+                NationalID = signUp.NationalID,
+                PlaceOfBirth = signUp.PlaceOfBirth,
+                Cityzenship = signUp.Cityzenship,
+                MaritalStatus = signUp.MaritalStatus,
+                HomeType = signUp.HomeType
 
             };
             DataContext.Add(portalMember);

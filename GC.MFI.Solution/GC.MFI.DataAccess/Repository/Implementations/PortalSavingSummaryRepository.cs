@@ -98,10 +98,10 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                         EntityId = model.PortalSavingSummaryID,
                         EntityName = "PortalSavingSummary",
                         PropertyName = "NomineeImage",
-                        FileName = $"Nominee_Image {model.PortalSavingSummaryID}",
+                        FileName = $"Nominee_Image_{entity.MemberNomines[i].NIDNumber}",
                         File = Nimg.DataBytes,
                         Type = Nimg.MimeType,
-                        DocumentType = "Nominee Image"
+                        DocumentType = "NomineeImage"
                     };
                 }
                 DataContext.FileUploadTable.AddRange(nomineeImage);
@@ -117,10 +117,10 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                         EntityId = model.PortalSavingSummaryID,
                         EntityName = "PortalSavingSummary",
                         PropertyName = "NomineeNID",
-                        FileName = $"Nominee_NID {model.PortalSavingSummaryID}",
+                        FileName = $"Nominee_NID_{entity.MemberNomines[i].NIDNumber}",
                         File = Nnid.DataBytes,
                         Type = Nnid.MimeType,
-                        DocumentType = "Nominee NID"
+                        DocumentType = "NomineeNID"
                     };
                 }
                 DataContext.FileUploadTable.AddRange(nomineeNID);
@@ -170,7 +170,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public async Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id)
         {
-            var TotalElement = DataContext.PortalSavingSummary.Count(t => t.ApprovalStatus == true && t.MemberID == Id);
+            var TotalElement = DataContext.PortalSavingSummary.Count(t => t.MemberID == Id);
 
             var savingSummary =(from pps in DataContext.PortalSavingSummary
                                 join pl in DataContext.Product on pps.ProductID equals pl.ProductID
@@ -215,7 +215,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     MaxLimit = pl.MaxLimit
                                 })
                                     .Where(filter.search)
-                                    .Where(x => x.ApprovalStatus == true && x.MemberID == Id)
+                                    .Where(x => x.MemberID == Id)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                     .Take(filter.pageSize).ToList();
             //for(int i=0;i<savingSummary.Count();i++)
@@ -231,10 +231,34 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 TotalElement / filter.pageSize);
         }
 
-        public async Task<IEnumerable<PortalSavingSummary>> getBySavingStatus(byte type, long memberId)
+        public async Task<IEnumerable<SavingSummaryViewModel>> getBySavingStatus(byte type, long memberId)
         {
-            var getStatus = DataContext.PortalSavingSummary.Where(t => t.SavingStatus == type && t.MemberID == memberId);
-            return getStatus;
+            var savingSummary = (from pps in DataContext.PortalSavingSummary
+                                 join pl in DataContext.Product on pps.ProductID equals pl.ProductID
+                                 join m in DataContext.Member on pps.MemberID equals m.MemberID
+                                 select new SavingSummaryViewModel
+                                 {
+                                     PortalSavingSummaryID = pps.PortalSavingSummaryID,
+                                     OfficeID = pps.OfficeID,
+                                     MemberID = pps.MemberID,
+                                     MemberName = m.FirstName,
+                                     ProductID = (short)pl.ProductID,
+                                     ProductName = pl.ProductName,
+                                     CenterID = pps.CenterID,
+                                     Balance = pps.Balance,
+                                     SavingInstallment = pps.SavingInstallment,
+                                     SavingStatus = pps.SavingStatus,
+                                     IsActive = pps.IsActive,
+                                     InActiveDate = pps.InActiveDate,
+                                     CreateDate = pps.CreateDate,
+                                     CreateUser = pps.CreateUser,
+                                     OrgID = pps.OrgID,
+                                     ApprovalStatus = pps.ApprovalStatus,
+                                     MinLimit = pl.MinLimit,
+                                     MaxLimit = pl.MaxLimit
+                                 }).Where(t => t.SavingStatus == type && t.MemberID == memberId);
+                           
+            return savingSummary;
 
         }
 
@@ -253,11 +277,18 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         }
         public void NomineeImageAndNidIdentity(long savingId, List<NomineeXPortalSavingSummaryFile> file)
         {
-            var getImage = DataContext.FileUploadTable.Where(t => t.EntityId == savingId && t.PropertyName == "NomineeImage").ToList();
-            var getNID = DataContext.FileUploadTable.Where(t => t.EntityId == savingId && t.PropertyName == "NomineeNID").ToList();
             NomineeXPortalSavingSummary[] NomineeXSaving = new NomineeXPortalSavingSummary[file.Count];
             for(int i = 0; i < NomineeXSaving.Length ; i++)
             {
+                var img = DataContext.FileUploadTable
+                    .Where(t => t.EntityId == savingId 
+                    && t.PropertyName == "NomineeImage" &&
+                    t.FileName == $"Nominee_Image_{file[i].NIDNumber}").FirstOrDefault();
+                var Nid = DataContext.FileUploadTable
+                    .Where(t => t.EntityId == savingId
+                    && t.PropertyName == "NomineeNID" &&
+                    t.FileName == $"Nominee_NID_{file[i].NIDNumber}").FirstOrDefault();
+
                 NomineeXSaving[i] = new NomineeXPortalSavingSummary
                 {
                     PortalSavingSummaryID = savingId,
@@ -265,8 +296,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                     NFatherName = file[i].NFatherName,
                     NAddressName = file[i].NAddressName,
                     NAlocation = file[i].NAlocation,
-                    ImageId = getImage[i].FileUploadId,
-                    NIDId = getNID[i].FileUploadId
+                    NIDNumber = file[i].NIDNumber,
+                    ImageId = img.FileUploadId,
+                    NIDId = Nid.FileUploadId
                 };
             }
             DataContext.NomineeXPortalSavingSummary.AddRange(NomineeXSaving);

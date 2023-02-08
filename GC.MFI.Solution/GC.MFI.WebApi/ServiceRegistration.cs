@@ -167,6 +167,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<IFileUploadRepository, FileUploadRepository>();
             services.AddScoped<IFileUploadService, FileUploadService>();
 
+            // Dashbord dependancy
+            services.AddScoped<IDashboardService, DashboardService>();
+
+
             // Register for model Validation
             services.AddControllers(
                 options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);

@@ -64,14 +64,40 @@ namespace GC.MFI.WebApi.Controllers.Modules
                 new { Text = "SelfEmployed", Value = "SF" },
                 new { Text = "Service", Value = "SE" },
                 new { Text = "Business", Value = "BU" },
-
                 new { Text = "House Hold", Value = "HH" },
                 new { Text = "Farmer", Value = "FR" },
                 new { Text = "Agriculture", Value = "AG" },
                 new { Text = "Others", Value = "OT" }
 
             };
+            return JsonConvert.SerializeObject(jObject);
+        }
+        [HttpGet]
+        [Route("getHomeTypeList")]
+        public async Task<string> getHomeTypeList()
+        {
+            var jObject = new[]
+            {
+                new { Text = "Building", Value = "BU" },
+                new { Text = "Muddy", Value = "MU" },
+                new { Text = "Rented", Value = "RE" },
+                new { Text = "Semi Building", Value = "SB" },
+                new { Text = "Tin Shade", Value = "TN" }
+            };
+            return JsonConvert.SerializeObject(jObject);
+        }
 
+        [HttpGet]
+        [Route("getCitizenshipList")]
+        public async Task<string> getCitizenshipList()
+        {
+            var jObject = new[]
+            {
+                new { Text = "By Birth", Value = "BB" },
+                new { Text = "Migrated", Value = "MI" },
+                new { Text = "Marital", Value = "MA" },
+                new { Text = "Nutralization", Value = "NU" }
+            };
             return JsonConvert.SerializeObject(jObject);
         }
     }

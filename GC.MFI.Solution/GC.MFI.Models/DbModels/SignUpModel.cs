@@ -50,6 +50,9 @@ namespace GC.MFI.Models.DbModels
         public string EducationQualification { get; set; }
         public string Image { get; set; }
         public string NationalID { get; set; }
-
+        public string PlaceOfBirth { get; set; }
+        public string Cityzenship { get; set; }
+        public string MaritalStatus { get; set; }
+        public string HomeType { get; set; }
     }
 }
