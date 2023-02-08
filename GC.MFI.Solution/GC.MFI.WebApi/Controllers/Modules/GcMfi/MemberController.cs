@@ -51,5 +51,20 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw;
             }
         }
+
+        [HttpGet]
+        [Route("memberimage")]
+        public async Task<string> GetImageByMemberID(long memberId)
+        {
+            try
+            {
+                return await _service.GetImageByMemberID(memberId);
+
+            }catch (Exception ex)
+            {
+                LogError(ex, null);
+                throw;
+            }
+        }
     }
 }

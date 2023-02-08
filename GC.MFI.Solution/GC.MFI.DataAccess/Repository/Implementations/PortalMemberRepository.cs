@@ -71,29 +71,28 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         }
         public async Task<MemberProfile> GetMemberById(long Id)
         {
-            var portalMember =(from m in DataContext.Member 
-                               join pMember in DataContext.PortalMember on m.PortalMemberId equals pMember.Id 
+            var portalMember =(from m in DataContext.PortalMember
                                select new MemberProfile
                                {
-                                   MemberId = m.MemberID,
+                                   PortalMemberId = m.Id,
                                    Gender = m.Gender,
                                    FirstName = m.FirstName,
                                    LastName = m.LastName,
                                    MotherName = m.MotherName,
                                    Email = m.Email,
-                                   Occupation = pMember.Occupation,
-                                   Address = pMember.Address,
-                                   Photo = pMember.Photo,
-                                   Phone = pMember.Phone,
-                                   MemberAge = pMember.MemberAge,
-                                   EducationQualification = pMember.EducationQualification,
-                                   DistrictCode = pMember.DistrictCode,
-                                   DivisionCode = pMember.DivisionCode,
-                                   UpozillaCode = pMember.UpozillaCode,
-                                   countryID = pMember.CountryID,
-                                   DOB = pMember.DOB,
-                                   postCode = pMember.PostCode
-                               }).Where(t=> t.MemberId == Id).FirstOrDefault();
+                                   Occupation = m.Occupation,
+                                   Address = m.Address,
+                                   Photo = m.Photo,
+                                   Phone = m.Phone,
+                                   MemberAge = m.MemberAge,
+                                   EducationQualification = m.EducationQualification,
+                                   DistrictCode = m.DistrictCode,
+                                   DivisionCode = m.DivisionCode,
+                                   UpozillaCode = m.UpozillaCode,
+                                   countryID = m.CountryID,
+                                   DOB = m.DOB,
+                                   postCode = m.PostCode
+                               }).Where(t=>  t.PortalMemberId == Id ).FirstOrDefault();
             return portalMember;
         }
         public void CreatePortalMemberNID(long portalMemberId, long portalMemberFId)

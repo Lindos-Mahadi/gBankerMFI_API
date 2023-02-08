@@ -295,6 +295,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                     NomineeName = file[i].NomineeName,
                     NFatherName = file[i].NFatherName,
                     NAddressName = file[i].NAddressName,
+                    NRelationName = file[i].NRelationName,
                     NAlocation = file[i].NAlocation,
                     NIDNumber = file[i].NIDNumber,
                     ImageId = img.FileUploadId,

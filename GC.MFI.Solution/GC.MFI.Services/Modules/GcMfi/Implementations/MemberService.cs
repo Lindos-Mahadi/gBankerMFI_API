@@ -36,5 +36,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var memeber = await _repository.GetMemberByPortalId(portalMemberId);
             return memeber;
         }
+        public async Task<string> GetImageByMemberID(long memberId)
+        {
+            return await _repository.GetImageByMemberID(memberId);
+        }
     }
 }

@@ -54,11 +54,13 @@ namespace GC.MFI.Security.Jwt
             claims.Add(new Claim("email", userModel.Email));
             claims.Add(new Claim("userName", userModel.UserName));
             claims.Add(new Claim("id", userModel.Id));
-            claims.Add(new Claim("fullName", userModel.FirstName +( userModel.LastName != null ? userModel.LastName : "" ) ));
+            claims.Add(new Claim("fullName", userModel.FirstName +" " +( userModel.LastName != null ? userModel.LastName : "" ) ));
+          
             if(userModel.PortalMemberID != null)
             {
                 long id = (long)userModel.PortalMemberID;
-                var Member = await memberService.GetMemberByPortalId(id) ;
+                claims.Add(new Claim("PortalMemberId", id.ToString()));
+                var Member = await memberService.GetMemberByPortalId(id);
                 if(Member != null)
                 {
                     claims.Add(new Claim("memberId", Member.MemberID.ToString()));
