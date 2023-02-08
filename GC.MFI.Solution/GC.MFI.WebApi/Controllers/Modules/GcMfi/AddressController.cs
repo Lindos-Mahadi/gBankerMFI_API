@@ -13,11 +13,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     {
         private readonly ILogger<AddressController> _logger;
         private readonly IStoredProcedureService _storedProcedureService;
-
-        public AddressController(ILogger<AddressController> logger, IStoredProcedureService storedProcedureService)
+        private readonly IOfficeService _service;
+        public AddressController(ILogger<AddressController> logger, 
+            IStoredProcedureService storedProcedureService,
+            IOfficeService service)
         {
             _storedProcedureService = storedProcedureService;
             this._logger = logger;
+            _service = service;
         }
 
         [HttpGet]
@@ -104,6 +107,15 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Route("getOfficeByUnionId")]
+        public async Task<IEnumerable<Office>> getOfficeByUnionId(int unionId)
+        {
+            var office = await _service.GetOfficeByUnionId(unionId);
+            return office;
+        }
+
         #region Error Handling
         protected void LogError(Exception ex, ViewModelBase viewModel)
         {

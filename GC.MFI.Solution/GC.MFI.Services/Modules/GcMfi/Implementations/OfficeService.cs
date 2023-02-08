@@ -25,6 +25,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var officeList = await _repository.GetAll(search);
             return officeList;
         }
+
+        public Task<IEnumerable<Office>> GetOfficeByUnionId(int unionId)
+        {
+            var getOffice = _repository.GetOfficeByUnionId(unionId);
+            return getOffice;
+        }
     }
 
     

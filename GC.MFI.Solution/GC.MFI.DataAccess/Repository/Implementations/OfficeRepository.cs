@@ -27,5 +27,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
             return _context.Office.Skip(0).Take(10);
         }
+
+        public async Task<IEnumerable<Office>> GetOfficeByUnionId(int unionId)
+        {
+            var getOffice = _context.Office.Where(t => t.UnionID == unionId);
+            return getOffice;
+        }
     }
 }

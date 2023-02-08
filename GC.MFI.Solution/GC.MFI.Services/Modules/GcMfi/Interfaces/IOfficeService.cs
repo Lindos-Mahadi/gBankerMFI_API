@@ -7,5 +7,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     public interface IOfficeService
     {
         Task<IEnumerable<Office>> GetAll(string search);
+        Task<IEnumerable<Office>> GetOfficeByUnionId(int unionId);
     }
 }
