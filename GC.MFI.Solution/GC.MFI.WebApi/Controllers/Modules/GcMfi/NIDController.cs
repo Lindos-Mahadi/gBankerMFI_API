@@ -17,11 +17,17 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         private readonly ILogger<NIDController> logger;
         private readonly INIDService nIDService;
         private readonly INIDLoggingService loggingService;
-        public NIDController(ILogger<NIDController> logger, INIDService nIDService, INIDLoggingService loggingService)
+        private readonly IConfiguration configuration;
+        public NIDController(
+            ILogger<NIDController> logger, 
+            INIDService nIDService, 
+            INIDLoggingService loggingService,
+            IConfiguration configuration)
         {
             this.logger = logger;
             this.nIDService = nIDService;
             this.loggingService = loggingService;
+            this.configuration = configuration;
         }
 
         [HttpPost]
@@ -34,18 +40,24 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 {
                     throw new Exception("Insert All Required Fields");
                 }
-                //return await nIDService.GetNIDInfo(req);
+
+                var UsePorichoyAPI = configuration["UsePorichoyAPI"];
+
+                if(UsePorichoyAPI == "True")
+                {
+                    return await nIDService.GetNIDInfo(req);
+                }
                 return new NIDVerificationResponse
                 {
                     data = new Data
                     {
                         nid = new Nid
                         {
-                            fullNameEN = "MD asd asd",
-                            fathersNameEN = "Md asd",
-                            mothersNameEN = "Mrs asdas",
+                            fullNameEN = "MD Mahinur Rahman",
+                            fathersNameEN = "Md Shamsul Rahman",
+                            mothersNameEN = "Mrs Amena Begum",
                             spouseNameEN = "",
-                            presentAddressEN = "asdasd",
+                            presentAddressEN = "House-240, Sector-14, Uttara Dhaka",
                             permenantAddressEN = "asdasd",
                             fullNameBN = "মোঃ আসিফুল আরেফিন",
                             fathersNameBN = "মোঃ আব্দুল হক",
