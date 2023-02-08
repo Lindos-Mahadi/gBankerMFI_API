@@ -13,5 +13,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<Member> UpdateMember(Member member);
 
         Task<Member> GetMemberByPortalId(long portalMemberId);
+
+        Task<string> GetImageByMemberID(long memberId);
     }
 }
