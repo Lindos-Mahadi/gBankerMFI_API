@@ -17,6 +17,7 @@ namespace GC.MFI.Services
         TDbModel GetById(long id);
         TDbModel GetByIdShort(short id);
         TDbModel Create(TDbModel objectToCreate);
+        TDbModel[] BulkCreate(TDbModel[] objectToCreate);
         TDbModel CreateWithoutSave(TDbModel objectToCreate);
         void Update(TDbModel objectToUpdate);
         void Delete(Expression<Func<TDbModel, bool>> condition);

@@ -13,6 +13,7 @@ namespace GC.MFI.DataAccess.InfrastructureBase
     {
         void Add(TDbModel entity);
         void Update(TDbModel entity);
+        void BulkInsert(TDbModel[] entity);
         void Delete(TDbModel entity);
         void Delete(Expression<Func<TDbModel, bool>> where);
         TDbModel GetById(long id);

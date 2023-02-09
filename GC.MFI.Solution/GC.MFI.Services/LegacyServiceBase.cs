@@ -31,6 +31,14 @@ namespace GC.MFI.Services
             var viewModel = _mapper.Map<TDbModel>(dbModel);
             return viewModel;
         }
+        public virtual TDbModel[] BulkCreate(TDbModel[] objectToCreate)
+        {
+            var dbModel = _mapper.Map<TDbModel[]>(objectToCreate);
+            repository.BulkInsert(dbModel);
+            Save();
+            var viewModel = _mapper.Map<TDbModel[]>(dbModel);
+            return viewModel;
+        }
 
         public virtual TDbModel CreateWithoutSave(TDbModel objectToCreate)
         {

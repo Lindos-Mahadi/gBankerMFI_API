@@ -88,6 +88,10 @@ namespace GC.MFI.DataAccess.InfrastructureBase
         {
             _dbset.Add(entity);
         }
+        public virtual void BulkInsert(TDbModel[] entity)
+        {
+            _dbset.AddRange(entity);
+        }
 
         public virtual void Update(TDbModel entity)
         {

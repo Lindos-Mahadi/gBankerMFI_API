@@ -17,7 +17,7 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
         Task<PagedResponse<IEnumerable<SavingSummaryViewModel>>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingSummaryViewModel> filter, long Id);
 
         Task<IEnumerable<SavingSummaryViewModel>> getBySavingStatus(byte type, long memberId );
-        void CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity);
+        
 
     }
 }
