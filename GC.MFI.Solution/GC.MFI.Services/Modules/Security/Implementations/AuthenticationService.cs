@@ -4,6 +4,7 @@ using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Models.Modules.Security;
 using GC.MFI.Models.ViewModels;
+using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Services.Modules.Security.Interfaces;
 using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -21,13 +22,13 @@ namespace GC.MFI.Services.Modules.Security.Implementations
     {
         private UserManager<ApplicationUser> _userManager;
         private IPortalMemberRepository _repository;
-        private readonly IFileUploadRepository _repositoryFile;
+        private readonly IFileUploadService _fileService;
 
-        public AuthenticationService(UserManager<ApplicationUser> userManager, IPortalMemberRepository repository, IFileUploadRepository repositoryFile)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, IPortalMemberRepository repository, IFileUploadService fileService)
         {
             this._userManager = userManager;
             this._repository = repository;
-            this._repositoryFile = repositoryFile;
+            this._fileService = fileService;
         }
         public async Task<ApplicationUser> Authenticate(string username, string password)
         {
@@ -69,7 +70,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
                         Type = PNID.MimeType,
                     };
-                   var nidUpload = await _repositoryFile.CreateFileUpload(fileCreate);
+                   var nidUpload = _fileService.Create(fileCreate);
                     _repository.CreatePortalMemberNID(PortalMember.Id, nidUpload.FileUploadId);
                 }
 
@@ -84,7 +85,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
                         Type = memImage.MimeType,
                     };
-                   var imageUpload = await _repositoryFile.CreateFileUpload(fileCreate);
+                   var imageUpload = _fileService.Create(fileCreate);
                     _repository.CreatePortalMemberImage(PortalMember.Id, imageUpload.FileUploadId);
                 }
 

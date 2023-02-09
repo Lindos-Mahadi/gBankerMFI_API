@@ -181,6 +181,8 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return getSavingStatus;
         }
 
+        #region Helper function
+
         public void SupportingDocumentIdentity(long PortalSavingId)
         {
             var getSupportingDocument = _uploadService.GetMany(t => t.EntityId == PortalSavingId && t.PropertyName == "SupportingDocument").ToList();
@@ -194,6 +196,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             getPortalSavingSummary.SupportingDocumentsId = SDID;
             _uploadService.Save();
         }
+        #endregion
 
     }
 }

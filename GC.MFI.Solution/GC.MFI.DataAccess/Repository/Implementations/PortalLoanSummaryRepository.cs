@@ -18,16 +18,8 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 {
     public class PortalLoanSummaryRepository : LegacyRepositoryBase<PortalLoanSummary>, IPortalLoanSummaryRepository
     {
-        private readonly GBankerDbContext _context;
-        public PortalLoanSummaryRepository(IDatabaseFactory databaseFactory, GBankerDbContext context) : base(databaseFactory)
+        public PortalLoanSummaryRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
         {
-            this._context = context;
-        }
-
-
-        public IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary()
-        {
-            return _context.PortalLoanSummary;
         }
         public async Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter,long Id)
         {

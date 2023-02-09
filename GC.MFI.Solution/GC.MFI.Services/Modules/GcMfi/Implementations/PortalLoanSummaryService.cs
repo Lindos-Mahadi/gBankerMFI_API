@@ -181,7 +181,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return getLoanStatus;
         }
 
-
+        #region Helper function
         public void NidPhotoIdentity(long PortalLoanSummaryId, long Photo, long NID)
         {
             var portalLoanSummary = GetById(PortalLoanSummaryId);
@@ -206,5 +206,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             getPortalLoanSummary.SupportingDocumentsId = SDID;
             Save();
         }
+        #endregion
     }
 }
