@@ -37,5 +37,7 @@ namespace GC.MFI.Models.ViewModels
         public int CountryID { get; set; }
         public DateTime DOB { get; set; }
         public string PostCode { get; set; }
+        public string SpouseName { get; set; }
+        public string SpouseNameBN { get; set; }
     }
 }

@@ -23,7 +23,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
             int dob = int.Parse(signUp.DOB.ToString("yyyyMMdd"));
             int age = (now - dob) / 10000;
-            BeginTransaction();
             var portalMember = new PortalMember()
             {
                 MemberCode = "12345",
@@ -62,11 +61,14 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 PlaceOfBirth = signUp.PlaceOfBirth,
                 Cityzenship = signUp.Cityzenship,
                 MaritalStatus = signUp.MaritalStatus,
-                HomeType = signUp.HomeType
+                HomeType = signUp.HomeType,
+                SpouseName = signUp.SpouseName,
+                SpouseNameBN = signUp.SpouseNameBN
+
 
             };
             DataContext.Add(portalMember);
-            CommitTransaction();
+            DataContext.SaveChanges();
             return portalMember;
         }
         public async Task<MemberProfile> GetMemberById(long Id)

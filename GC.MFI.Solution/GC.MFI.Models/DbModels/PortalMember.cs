@@ -45,5 +45,7 @@ namespace GC.MFI.Models.DbModels
         public string Cityzenship { get;set;}
         public string MaritalStatus { get;set;}
         public string HomeType { get; set; }
+        public string SpouseName { get; set; }
+        public string SpouseNameBN { get; set; }
     }
 }
