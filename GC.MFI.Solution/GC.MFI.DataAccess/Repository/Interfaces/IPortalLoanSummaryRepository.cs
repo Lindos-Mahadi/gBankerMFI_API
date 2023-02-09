@@ -13,7 +13,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
 {
     public interface IPortalLoanSummaryRepository : ILegacyRepository<PortalLoanSummary>
     {
-        void CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity);
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
         Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter, long Id);
         //IEnumerable<PortalLoanSummary> GetAll(Expression<Func<PortalLoanSummary, bool>> where);
