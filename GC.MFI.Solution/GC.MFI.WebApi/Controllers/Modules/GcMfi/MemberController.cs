@@ -1,4 +1,5 @@
-﻿using GC.MFI.Models.DbModels;
+﻿using GC.MFI.DataAccess.InfrastructureBase;
+using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
@@ -37,12 +38,12 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpPatch]
-        [Route("UpdateMember")]
-        public async Task<Member> UpdateMember(Member member)
+        [Route("UpdateMemberProfile")]
+        public async Task<Member> UpdateMemberProfile(Member member)
         {
             try
             {
-                var updateMember = await _service.UpdateMember(member);
+                var updateMember = await _service.UpdateMemberProfile(member);
                 return updateMember;
             }
             catch (Exception ex)
