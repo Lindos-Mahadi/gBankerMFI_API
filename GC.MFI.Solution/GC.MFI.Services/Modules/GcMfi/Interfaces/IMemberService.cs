@@ -10,7 +10,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     public interface IMemberService : ILegacyServiceBase<Member>
     {
         Task<IEnumerable<Member>> GetAllMember(string search);
-        Task<Member> UpdateMember(Member member);
+        Task<Member> UpdateMemberProfile(Member memberProfile);
 
         Task<Member> GetMemberByPortalId(long portalMemberId);
 

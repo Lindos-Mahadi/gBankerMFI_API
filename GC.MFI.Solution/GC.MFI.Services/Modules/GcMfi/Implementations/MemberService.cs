@@ -15,9 +15,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
     public class MemberService : LegacyServiceBase<Member>, IMemberService
     {
         private readonly IMemberRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
+
         public MemberService(IMemberRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<Member>> GetAllMember(string search)
@@ -26,10 +29,18 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return memberList;
         }
 
-        public async Task<Member> UpdateMember(Member member)
+        public async Task<Member> UpdateMemberProfile(Member memberProfile)
         {
-            var updateMember = await _repository.UpdateMember(member);
-            return updateMember;
+            var dbMember = _repository.GetById(memberProfile.MemberID);
+            ///map only the updated fields
+            ///
+
+            _repository.Update(dbMember);
+            _unitOfWork.Commit();
+
+           // var updateMember = await _repository.UpdateMemberProfile(memberProfile);
+            return dbMember;
+;
         }
         public async Task<Member> GetMemberByPortalId(long portalMemberId)
         {

@@ -14,9 +14,9 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
     public interface IMemberRepository   : ILegacyRepository<Member>
     {
         Task<IEnumerable<Member>> GetAllMember(string search);
-        Task<Member> UpdateMember(Member member);
         Task<Member> GetMemberByPortalId(long portalMemberId);
 
         Task<string> GetImageByMemberID (long memberId);
+        void UpdateMemberProfile(Member memberProfile);
     }
 }
