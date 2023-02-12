@@ -167,6 +167,11 @@ namespace GC.MFI.WebApi
             services.AddScoped<IFileUploadRepository, FileUploadRepository>();
             services.AddScoped<IFileUploadService, FileUploadService>();
 
+            //Savings Acc close dependancy
+            services.AddScoped<ISavingsAccCloseRepository, SavingsAccCloseRepository>();
+            services.AddScoped<ISavingsAccCloseService, SavingsAccCloseService>();
+
+
             // Dashbord dependancy
             services.AddScoped<IDashboardService, DashboardService>();
 
