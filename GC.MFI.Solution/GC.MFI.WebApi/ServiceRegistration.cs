@@ -171,6 +171,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<ISavingsAccCloseRepository, SavingsAccCloseRepository>();
             services.AddScoped<ISavingsAccCloseService, SavingsAccCloseService>();
 
+            //Loan Acc Close dependancy
+            services.AddScoped<ILoanAccCloseRepository, LoanAccCloseRepository>();
+            services.AddScoped<ILoanAccCloseService, LoanAccCloseService>();
+
 
             // Dashbord dependancy
             services.AddScoped<IDashboardService, DashboardService>();
