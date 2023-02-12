@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 using System.Text.Json.Nodes;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace GC.MFI.WebApi.Controllers.Modules
+namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
     [Route("api/gcmfi/portalmember")]
     public class PortalMemberController : GcMfiMembePortalBaseController<PortalMemberViewModel, PortalMember>
@@ -22,8 +22,8 @@ namespace GC.MFI.WebApi.Controllers.Modules
 
         public PortalMemberController(ILogger<PortalMemberController> logger, IPortalMemberService service) : base(service)
         {
-            this._logger = logger;
-            this._service = service;
+            _logger = logger;
+            _service = service;
         }
 
         [HttpGet]
