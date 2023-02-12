@@ -17,7 +17,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public MemberRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
         {
         }
-        public void  UpdateMemberProfile(Member memberProfile)
+        public void  UpdateMemberProfile(MemberProfileUpdate memberProfile)
         {
             DataContext.Update(memberProfile);
         }
