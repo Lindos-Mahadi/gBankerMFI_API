@@ -110,53 +110,37 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     ApprovalStatus = false
                 };
                 Create(portal);
-                // For GuarantorNID & image
-                Base64File nidType = ImageHelper.GetFileDetails(entity.GuarantorNID);
-                var GuarantorNID = new FileUploadTable
-                {
-                    EntityId = portal.PortalLoanSummaryID,
-                    EntityName = "PortalLoanSummary",
-                    PropertyName = "GuarantorNID",
-                    FileName = $"GuarantorNID_{portal.PortalLoanSummaryID}",
-                    File = nidType.DataBytes,
-                    Type = nidType.MimeType
-                };
-                Base64File gPhotoType = ImageHelper.GetFileDetails(entity.GuarantorImg);
-                var GuarantorPhoto = new FileUploadTable
-                {
-                    EntityId = portal.PortalLoanSummaryID,
-                    EntityName = "PortalLoanSummary",
-                    PropertyName = "GuarantorImage",
-                    FileName = $"GuarantorImage_{portal.PortalLoanSummaryID}",
-                    File = gPhotoType.DataBytes,
-                    Type = gPhotoType.MimeType
-                };
-                _fileService.Create(GuarantorNID);
-                _fileService.Create(GuarantorPhoto);
 
-                // For bulk insert
-                FileUploadTable[] file = new FileUploadTable[entity.PortalLoanFileUpload.Count];
-                for (int i = 0; i < entity.PortalLoanFileUpload.Count(); i++)
+                // For GuarantorNID & image
+                var fileUplods = new List<PortalLoanFileUpload>();
+                fileUplods.Add(new PortalLoanFileUpload { PropertyName = "GuarantorNID", File = entity.GuarantorNID, FileName = $"GuarantorNID_{portal.PortalLoanSummaryID}" });
+                fileUplods.Add(new PortalLoanFileUpload { PropertyName = "GuarantorImage", File = entity.GuarantorImg, FileName = $"GuarantorImage_{portal.PortalLoanSummaryID}" });
+                fileUplods.AddRange(entity.PortalLoanFileUpload);
+                // For bulk insert
+                FileUploadTable[] file = new FileUploadTable[fileUplods.Count()];
+                for (int i = 0; i < fileUplods.Count(); i++)
                 {
-                    Base64File filesTypes = ImageHelper.GetFileDetails(entity.PortalLoanFileUpload[i].File);
+                    var fileToUpload = fileUplods[i];
+                    Base64File filesTypes = ImageHelper.GetFileDetails(fileToUpload.File);
                     file[i] = new FileUploadTable
                     {
-
                         EntityId = portal.PortalLoanSummaryID,
                         EntityName = "PortalLoanSummary",
-                        PropertyName = "SupportingDocument",
-                        FileName = $"SupportingDocument_L{portal.PortalLoanSummaryID}_{i + 1}",
+                        PropertyName = string.IsNullOrEmpty(fileToUpload.PropertyName) ? "SupportingDocument" : fileToUpload.PropertyName,
+                        FileName = i == 0 ? $"GuarantorNID_{portal.PortalLoanSummaryID}" : i == 1 ? $"GuarantorImage_{portal.PortalLoanSummaryID}" : $"SupportingDocument_L{portal.PortalLoanSummaryID}_{i - 1}",
                         Type = filesTypes.MimeType,
                         File = filesTypes.DataBytes,
-                        DocumentType = entity.PortalLoanFileUpload[i].DocumentType
+                        DocumentType = fileToUpload.DocumentType
                     };
                 }
-                _fileService.BulkCreate(file);
-                NidPhotoIdentity(portal.PortalLoanSummaryID, GuarantorPhoto.FileUploadId, GuarantorNID.FileUploadId);
-                SupportingDocumentIdentity(portal.PortalLoanSummaryID);
+                var createdList = _fileService.BulkCreate(file);
+                var photoId =  createdList[1].FileUploadId;
+                var nid = createdList.First().FileUploadId;
+                var supportingDocIds = String.Join(",", createdList.Select(s => s.FileUploadId).ToArray());
+                NidPhotoIdentity(portal.PortalLoanSummaryID, photoId, nid, supportingDocIds);
                 _repository.CommitTransaction();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _repository.RollbackTransaction();
                 throw ex;
@@ -182,29 +166,16 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         }
 
         #region Helper function
-        public void NidPhotoIdentity(long PortalLoanSummaryId, long Photo, long NID)
+        public void NidPhotoIdentity(long PortalLoanSummaryId, long Photo, long NID, string documentIds)
         {
             var portalLoanSummary = GetById(PortalLoanSummaryId);
             if (portalLoanSummary != null)
             {
                 portalLoanSummary.GuarantorImg = Photo;
                 portalLoanSummary.GuarantorNID = NID;
+                portalLoanSummary.SupportingDocumentsId = documentIds;
                 Save();
             }
-        }
-
-        public void SupportingDocumentIdentity(long PortalLoanId)
-        {
-            var getSupportingDocument = _fileService.GetMany(t => t.EntityId == PortalLoanId && t.PropertyName == "SupportingDocument").ToList();
-            long[] SD = new long[getSupportingDocument.Count];
-            for (int i = 0; i < getSupportingDocument.Count(); i++)
-            {
-                SD[i] = getSupportingDocument[i].FileUploadId;
-            }
-            var SDID = string.Join(",", SD);
-            var getPortalLoanSummary = GetById(PortalLoanId);
-            getPortalLoanSummary.SupportingDocumentsId = SDID;
-            Save();
         }
         #endregion
     }
