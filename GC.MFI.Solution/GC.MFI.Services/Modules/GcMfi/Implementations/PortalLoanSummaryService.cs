@@ -26,6 +26,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             _fileService = fileService;
         }
 
+        public override PortalLoanSummary Create(PortalLoanSummary objectToCreate)
+        {
+            return base.Create(objectToCreate);
+        }
         public void CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity)
         {
             try
@@ -109,10 +113,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     Remarks = entity.Remarks,
                     ApprovalStatus = false
                 };
-                Create(portal);
+                _repository.Add(portal);
+                Save();
 
-                // For GuarantorNID & image
-                var fileUplods = new List<PortalLoanFileUpload>();
+                // For GuarantorNID & image
+                 var fileUplods = new List<PortalLoanFileUpload>();
                 fileUplods.Add(new PortalLoanFileUpload { PropertyName = "GuarantorNID", File = entity.GuarantorNID, FileName = $"GuarantorNID_{portal.PortalLoanSummaryID}" });
                 fileUplods.Add(new PortalLoanFileUpload { PropertyName = "GuarantorImage", File = entity.GuarantorImg, FileName = $"GuarantorImage_{portal.PortalLoanSummaryID}" });
                 fileUplods.AddRange(entity.PortalLoanFileUpload);
@@ -134,10 +139,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     };
                 }
                 var createdList = _fileService.BulkCreate(file);
-                var photoId =  createdList[1].FileUploadId;
-                var nid = createdList.First().FileUploadId;
+                portal.GuarantorImg =  createdList[1].FileUploadId;
+                portal.GuarantorNID = createdList.First().FileUploadId;
                 var supportingDocIds = String.Join(",", createdList.Select(s => s.FileUploadId).ToArray());
-                NidPhotoIdentity(portal.PortalLoanSummaryID, photoId, nid, supportingDocIds);
+                portal.SupportingDocumentsId = supportingDocIds;
+             
                 _repository.CommitTransaction();
             }
             catch (Exception ex)
@@ -164,19 +170,5 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var getLoanStatus = _repository.getByLoanStatus(type, memberId);
             return getLoanStatus;
         }
-
-        #region Helper function
-        public void NidPhotoIdentity(long PortalLoanSummaryId, long Photo, long NID, string documentIds)
-        {
-            var portalLoanSummary = GetById(PortalLoanSummaryId);
-            if (portalLoanSummary != null)
-            {
-                portalLoanSummary.GuarantorImg = Photo;
-                portalLoanSummary.GuarantorNID = NID;
-                portalLoanSummary.SupportingDocumentsId = documentIds;
-                Save();
-            }
-        }
-        #endregion
     }
 }
