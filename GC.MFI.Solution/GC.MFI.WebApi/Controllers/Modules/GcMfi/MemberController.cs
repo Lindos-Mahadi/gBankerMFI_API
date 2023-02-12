@@ -39,7 +39,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpPatch]
         [Route("UpdateMemberProfile")]
-        public async Task<Member> UpdateMemberProfile(Member member)
+        public async Task<Member> UpdateMemberProfile(MemberProfileUpdate member)
         {
             try
             {

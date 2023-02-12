@@ -1,4 +1,5 @@
 ﻿using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     public interface IMemberService : ILegacyServiceBase<Member>
     {
         Task<IEnumerable<Member>> GetAllMember(string search);
-        Task<Member> UpdateMemberProfile(Member memberProfile);
+        Task<Member> UpdateMemberProfile(MemberProfileUpdate memberProfile);
 
         Task<Member> GetMemberByPortalId(long portalMemberId);
 

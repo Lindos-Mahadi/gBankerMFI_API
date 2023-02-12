@@ -17,6 +17,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
         Task<Member> GetMemberByPortalId(long portalMemberId);
 
         Task<string> GetImageByMemberID (long memberId);
-        void UpdateMemberProfile(Member memberProfile);
+        void UpdateMemberProfile(MemberProfileUpdate memberProfile);
     }
 }

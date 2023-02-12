@@ -3,6 +3,7 @@ using GC.MFI.DataAccess;
 using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,16 +30,35 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return memberList;
         }
 
-        public async Task<Member> UpdateMemberProfile(Member memberProfile)
+        public async Task<Member> UpdateMemberProfile(MemberProfileUpdate memberProfile)
         {
-            var dbMember = _repository.GetById(memberProfile.MemberID);
+            var dbMember = _repository.GetById(memberProfile.memberId);
             ///map only the updated fields
-            ///
+                dbMember.BanglaName= memberProfile.BanglaName;
+                dbMember.BanglaName = memberProfile.BanglaName;
+                dbMember.FatherNameBN = memberProfile.FatherNameBN;
+                dbMember.MotherNameBN = memberProfile.MotherNameBN;
+                dbMember.SpouseName = memberProfile.SpouseName;
+                dbMember.SpouseNameBN = memberProfile.SpouseNameBN;
+                dbMember.IdentTypeID = memberProfile.IdentTypeID;
+                dbMember.CardIssueDate = memberProfile.CardIssueDate;
+                dbMember.ExpireDate = memberProfile.ExpireDate;
+                dbMember.OtherIdNo = memberProfile.OtherIdNo;
+                dbMember.ProvidedByCountryID = memberProfile.ProvidedByCountryID;
+                dbMember.FamilyContactNo = memberProfile.FamilyContactNo;
+                dbMember.FamilyMember = memberProfile.FamilyMember;
+                dbMember.RefereeName = memberProfile.RefereeName;
+                dbMember.CoApplicantName = memberProfile.CoApplicantName;
+                dbMember.TotalWealth = memberProfile.TotalWealth;
+                dbMember.MemCategory = memberProfile.MemCategory;
+                dbMember.TIN = memberProfile.TIN;
+                dbMember.FServiceName = memberProfile.FServiceName;
+                dbMember.FinServiceChoiceId = memberProfile.FinServiceChoiceId;
+                dbMember.TransactionChoiceId = memberProfile.TransactionChoiceId;
+                //dbMember.UpdateUser = DateTime.Now.ToString();
 
-            _repository.Update(dbMember);
-            _unitOfWork.Commit();
-
-           // var updateMember = await _repository.UpdateMemberProfile(memberProfile);
+            Update(dbMember);
+            
             return dbMember;
 ;
         }
