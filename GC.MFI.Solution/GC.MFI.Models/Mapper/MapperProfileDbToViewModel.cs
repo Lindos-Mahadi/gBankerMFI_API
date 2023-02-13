@@ -30,7 +30,7 @@ namespace GC.MFI.Models.Mapper
             CreateMap<PortalLoanSummary, PortalLoanSummaryViewModel > ();
             CreateMap<SavingsAccClose, SavingsAccCloseViewModel>();
 
-            CreateMap<LoanAccClose, LoanAccCloseViewModel>();
+            CreateMap<LoanAccReschedule, LoanAccRescheduleViewModel>();
 
         }
     }

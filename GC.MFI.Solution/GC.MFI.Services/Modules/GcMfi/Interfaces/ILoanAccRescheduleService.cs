@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface ILoanAccCloseService : IServiceBase<LoanAccCloseViewModel, LoanAccClose>
+    public interface ILoanAccRescheduleService : IServiceBase<LoanAccRescheduleViewModel, LoanAccReschedule>
     {
     }
 }

@@ -55,7 +55,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<VillageList> VillageList { get; set; }
         public virtual DbSet<UnionList> UnionList { get; set; }
         public virtual DbSet<SavingsAccClose> SavingsAccClose { get; set; }
-        public virtual DbSet<LoanAccClose> LoanAccClose { get; set; }
+        public virtual DbSet<LoanAccReschedule> LoanAccReschedule { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>

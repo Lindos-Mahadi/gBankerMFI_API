@@ -11,6 +11,8 @@ namespace GC.MFI.Models.ViewModels
         public string UserName { get; set; }
         public string UserId { get; set; }
         public string UserEmail { get; set; }
+        public string MemberID { get; set; }
+        public string OfficeId { get; set; }
 
     }
 }

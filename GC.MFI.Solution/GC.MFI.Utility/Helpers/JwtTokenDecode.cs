@@ -18,7 +18,10 @@ namespace GC.MFI.Utility.Helpers
             var userName = jwtSecurityToken.Claims.First(t => t.Type == "userName").Value;
             var userId = jwtSecurityToken.Claims.First(t => t.Type == "id").Value;
             var email = jwtSecurityToken.Claims.First(t => t.Type == "email").Value;
-            return new JwtTokenModel { UserName = userName, UserId = userId, UserEmail = email };
+            var memberID = jwtSecurityToken.Claims.First(t => t.Type == "memberId").Value;
+            var officeID = jwtSecurityToken.Claims.First(t => t.Type == "officeId").Value;
+            
+            return new JwtTokenModel { UserName = userName, UserId = userId, UserEmail = email , MemberID = memberID, OfficeId = officeID };
         }
     }
 }

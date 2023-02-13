@@ -4,9 +4,9 @@ using GC.MFI.Models.DbModels;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
-    public class LoanAccCloseRepository : RepositoryBase<LoanAccClose>, ILoanAccCloseRepository
+    public class LoanAccRescheduleRepository : RepositoryBase<LoanAccReschedule>, ILoanAccRescheduleRepository
     {
-        public LoanAccCloseRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
+        public LoanAccRescheduleRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
         {
         }
 
