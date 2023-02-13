@@ -52,6 +52,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 dbMember.TotalWealth = memberProfile.TotalWealth;
                 dbMember.MemCategory = memberProfile.MemCategory;
                 dbMember.TIN = memberProfile.TIN;
+                dbMember.TaxAmount = memberProfile.TaxAmount;
                 dbMember.FServiceName = memberProfile.FServiceName;
                 dbMember.FinServiceChoiceId = memberProfile.FinServiceChoiceId;
                 dbMember.TransactionChoiceId = memberProfile.TransactionChoiceId;
