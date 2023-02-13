@@ -97,7 +97,9 @@ namespace GC.MFI.Models.ViewModels
             get { return 
                     SavingStatus == 1 ? "Pending" : 
                     SavingStatus == 2 ? "Approved" : 
-                    SavingStatus == 3 ? "Running" : "UnApprove" ; } }
+                    SavingStatus == 3 ? "Running" : 
+                    SavingStatus == 4 ? "CloseRequested" :
+                    SavingStatus == 5 ? "Closed" : "UnApproved"; } }
 
 
         public virtual List<NomineeXPortalSavingSummary> MemberNomines { get; set; }

@@ -215,7 +215,9 @@ namespace GC.MFI.Models.ViewModels
                 return
                     LoanStatus == 1 ? "Pending" :
                     LoanStatus == 2 ? "Approved" :
-                    LoanStatus == 3 ? "Running" : "UnApprove";
+                    LoanStatus == 3 ? "Running" :
+                    LoanStatus == 4 ? "CloseRequested" :
+                    LoanStatus == 5 ? "Closed" : "UnApproved";
             }
         }
 
