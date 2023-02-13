@@ -3,6 +3,7 @@ using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Models.RequestModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
@@ -71,9 +72,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     Ref_EmployeeID = entity.Ref_EmployeeID,
                     ApprovalStatus = false
                 };
-                Create(model);
+                _repository.Add(model);
+                Save();
+
                 FileUploadTable[] nomineeImage = new FileUploadTable[entity.MemberNomines.Count];
-                for (int i = 0; i < nomineeImage.Length; i++)
+                FileUploadTable[] nomineeNID = new FileUploadTable[entity.MemberNomines.Count];
+                for (int i = 0; i < entity.MemberNomines.Count; i++)
                 {
                     Base64File Nimg = ImageHelper.GetFileDetails(entity.MemberNomines[i].Image);
                     nomineeImage[i] = new FileUploadTable
@@ -86,23 +90,20 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                         Type = Nimg.MimeType,
                         DocumentType = "NomineeImage"
                     };
-                }
-                _uploadService.BulkCreate(nomineeImage);
-                FileUploadTable[] nomineeNID = new FileUploadTable[entity.MemberNomines.Count];
-                for (int i = 0; i < nomineeNID.Length; i++)
-                {
-                    Base64File Nnid = ImageHelper.GetFileDetails(entity.MemberNomines[i].Nid);
+                    Base64File NNID = ImageHelper.GetFileDetails(entity.MemberNomines[i].Nid);
                     nomineeNID[i] = new FileUploadTable
                     {
                         EntityId = model.PortalSavingSummaryID,
                         EntityName = "PortalSavingSummary",
                         PropertyName = "NomineeNID",
                         FileName = $"Nominee_NID_{entity.MemberNomines[i].NIDNumber}",
-                        File = Nnid.DataBytes,
-                        Type = Nnid.MimeType,
+                        File = NNID.DataBytes,
+                        Type = NNID.MimeType,
                         DocumentType = "NomineeNID"
                     };
+
                 }
+                _uploadService.BulkCreate(nomineeImage);
                 _uploadService.BulkCreate(nomineeNID);
 
                 NomineeXPortalSavingSummary[] NomineeXSaving = new NomineeXPortalSavingSummary[entity.MemberNomines.Count];
@@ -153,13 +154,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     }
                     _uploadService.BulkCreate(file);
                     SupportingDocumentIdentity(model.PortalSavingSummaryID);
-                    _repository.CommitTransaction();
 
-                }else
-                {
-
-                    _repository.CommitTransaction();
                 }
+               _repository.CommitTransaction();
 
             }
             catch(Exception ex)
