@@ -27,9 +27,14 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 
         public override SavingsAccCloseViewModel Create(SavingsAccCloseViewModel acc)
         {
-            acc.Status = "p";
+            var getSavingClose = _repository.Get(t=> t.SavingAccountID == acc.SavingAccountID);
+            if(getSavingClose != null)
+            {
+                return null;
+            }
+            acc.Status = "P";
             acc.CreateDate = DateTime.UtcNow;
-            acc.CreateUser = "";
+            acc.UpdateDate = DateTime.UtcNow;
             var dbModel = _mapper.Map<SavingsAccClose>(acc);
             _repository.Add(dbModel);
 

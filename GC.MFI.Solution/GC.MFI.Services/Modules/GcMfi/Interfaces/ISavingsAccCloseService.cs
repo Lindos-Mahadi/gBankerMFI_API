@@ -6,6 +6,5 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface ISavingsAccCloseService : IServiceBase<SavingsAccCloseViewModel, SavingsAccClose>
     {
-        SavingsAccCloseViewModel Create(SavingsAccCloseViewModel acc);
     }
 }

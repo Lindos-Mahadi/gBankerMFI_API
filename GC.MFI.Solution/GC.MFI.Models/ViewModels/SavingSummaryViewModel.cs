@@ -98,7 +98,7 @@ namespace GC.MFI.Models.ViewModels
                     SavingStatus == 1 ? "Pending" : 
                     SavingStatus == 2 ? "Approved" : 
                     SavingStatus == 3 ? "Running" : 
-                    SavingStatus == 4 ? "CloseRequested" :
+                    SavingStatus == 4 ? "Close Requested" :
                     SavingStatus == 5 ? "Closed" : "UnApproved"; } }
 
 

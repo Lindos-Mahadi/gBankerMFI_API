@@ -2,17 +2,21 @@
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.BntPos.Interfaces;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
 using GC.MFI.WebApi.Controllers.Modules.Pos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 using System.Text.Json.Nodes;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
+    [Authorize]
     [Route("api/gcmfi/SavingsAccClose")]
     public class SavingsAccCloseController : GcMfiMembePortalBaseController<SavingsAccCloseViewModel, SavingsAccClose>
     {
@@ -27,8 +31,18 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         [Route("create")]
         public override SavingsAccCloseViewModel Create(SavingsAccCloseViewModel acc)
         {
-            var getsavingacc = _service.Create(acc);
-            return getsavingacc;
+            try
+            {
+                var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+                var userName = JwtTokenDecode.GetDetailsFromToken(header);
+                acc.CreateUser = userName.UserName;
+                var getsavingacc = _service.Create(acc);
+                return getsavingacc;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }
