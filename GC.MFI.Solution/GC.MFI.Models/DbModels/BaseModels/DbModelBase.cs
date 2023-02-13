@@ -9,7 +9,7 @@ namespace GC.MFI.Models.DbModels
         public DateTime? CreateDate { get; set; } = DateTime.Now;
         public string UpdateUser { get; set; } = string.Empty;
         public DateTime? UpdateDate { get; set; }
-        public string Status { get; set; } = "A";
-        public string StatusDesc { get { return Status == "A" ? "Active" : "Inactive"; } }
+        public string Status { get; set; } 
+        public string StatusDesc { get { return Status == "A" ? "Active" : Status == "P" ? "Pending" : "Inactive"; } }
     }
 }

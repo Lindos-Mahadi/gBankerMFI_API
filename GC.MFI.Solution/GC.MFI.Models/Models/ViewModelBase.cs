@@ -11,6 +11,6 @@ namespace XenterSolution.Models.ViewModels
         public string UpdateUser { get; set; } = string.Empty;
         public DateTime? UpdateDate { get; set; }
         public string Status { get; set; } = string.Empty;
-        public string StatusDesc { get { return Status == "A" ? "Active" : "Inactive"; } }
+        public string StatusDesc { get { return Status == "A" ? "Active" : Status == "P" ? "Pending" : "Inactive"; } }
     }
 }
