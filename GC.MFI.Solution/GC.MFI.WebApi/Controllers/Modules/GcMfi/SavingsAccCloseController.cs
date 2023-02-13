@@ -23,6 +23,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             _logger = logger;
             _service = service;
         }
+        [HttpPost]
+        [Route("create")]
+        public override SavingsAccCloseViewModel Create(SavingsAccCloseViewModel acc)
+        {
+            var getsavingacc = _service.Create(acc);
+            return getsavingacc;
+        }
 
     }
 }
