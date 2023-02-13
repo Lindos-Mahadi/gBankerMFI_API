@@ -32,9 +32,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             if (GetLoan != null)
                 return null;
             objectToCreate.Status = "P";
+            objectToCreate.CreateDate = DateTime.UtcNow;
+            objectToCreate.UpdateDate = DateTime.UtcNow;
             var RStatus = _portalLoanSummaryRepository.GetById(objectToCreate.LoanID);
             RStatus.LoanStatus = 4;
-
             return base.Create(objectToCreate);
         }
     }

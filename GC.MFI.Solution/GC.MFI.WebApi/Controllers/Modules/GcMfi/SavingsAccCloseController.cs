@@ -34,8 +34,10 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             try
             {
                 var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
-                var userName = JwtTokenDecode.GetDetailsFromToken(header);
-                acc.CreateUser = userName.UserName;
+                var tokenDecode = JwtTokenDecode.GetDetailsFromToken(header);
+                acc.CreateUser = tokenDecode.UserName;
+                acc.MemberID = long.Parse(tokenDecode.MemberID);
+                acc.OfficeID = long.Parse(tokenDecode.OfficeId);
                 var getsavingacc = _service.Create(acc);
                 return getsavingacc;
             }

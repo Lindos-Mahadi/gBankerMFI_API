@@ -35,14 +35,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             acc.Status = "P";
             acc.CreateDate = DateTime.UtcNow;
             acc.UpdateDate = DateTime.UtcNow;
-            var dbModel = _mapper.Map<SavingsAccClose>(acc);
-            _repository.Add(dbModel);
-
             var status = _portalSavingSummaryRepository.GetById(acc.SavingAccountID);
             status.SavingStatus = 4;
-            _portalSavingSummaryRepository.Update(status);
-            Save();
-            return acc;
+            return base.Create(acc);
         }
 
 

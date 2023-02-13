@@ -28,7 +28,6 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             {
                 var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
                 var decodedToken = JwtTokenDecode.GetDetailsFromToken(header);
-                acc.CreateDate = DateTime.UtcNow;
                 acc.CreateUser = decodedToken.UserName;
                 acc.MemberID = long.Parse(decodedToken.MemberID);
                 acc.OfficeID = long.Parse(decodedToken.OfficeId);
