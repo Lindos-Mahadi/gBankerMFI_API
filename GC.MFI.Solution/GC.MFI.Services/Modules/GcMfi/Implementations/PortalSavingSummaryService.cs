@@ -21,11 +21,13 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         private readonly IPortalSavingSummaryRepository _repository;
         private readonly IFileUploadService _uploadService;
         private readonly INomineeXPortalSavingSummaryService _nominee;
+        private readonly IMapper mapper;
         public PortalSavingSummaryService(IPortalSavingSummaryRepository repository,INomineeXPortalSavingSummaryService nominee, IFileUploadService fService, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             this._repository = repository;
             this._uploadService = fService;
             this._nominee = nominee;
+            this.mapper = _mapper;
         }
 
         //public async Task<PortalSavingSummary> Create(PortalSavingSummary request)
@@ -74,9 +76,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 };
                 _repository.Add(model);
                 Save();
-
-                FileUploadTable[] nomineeImage = new FileUploadTable[entity.MemberNomines.Count];
-                FileUploadTable[] nomineeNID = new FileUploadTable[entity.MemberNomines.Count];
+                int count = entity.MemberNomines.Count;
+                FileUploadTable[] nomineeImage = new FileUploadTable[count];
+                FileUploadTable[] nomineeNID = new FileUploadTable[count];
+                
+                FileUploadTable[] list = new FileUploadTable[count + count];
+                int j = 0;
                 for (int i = 0; i < entity.MemberNomines.Count; i++)
                 {
                     Base64File Nimg = ImageHelper.GetFileDetails(entity.MemberNomines[i].Image);
@@ -90,6 +95,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                         Type = Nimg.MimeType,
                         DocumentType = "NomineeImage"
                     };
+                    
+                    list[j] = nomineeImage[i];
+                    j++;
                     Base64File NNID = ImageHelper.GetFileDetails(entity.MemberNomines[i].Nid);
                     nomineeNID[i] = new FileUploadTable
                     {
@@ -101,10 +109,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                         Type = NNID.MimeType,
                         DocumentType = "NomineeNID"
                     };
-
+                    list[j] = nomineeNID[i];
+                    j++;
                 }
-                _uploadService.BulkCreate(nomineeImage);
-                _uploadService.BulkCreate(nomineeNID);
+
+                _uploadService.BulkCreate(list);
 
                 NomineeXPortalSavingSummary[] NomineeXSaving = new NomineeXPortalSavingSummary[entity.MemberNomines.Count];
                 for (int i = 0; i < NomineeXSaving.Length; i++)
