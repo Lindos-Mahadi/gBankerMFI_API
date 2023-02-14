@@ -25,7 +25,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             int age = (now - dob) / 10000;
             var portalMember = new PortalMember()
             {
-                MemberCode = "12345",
                 OfficeID = signUp.OfficeID,
                 CenterID = signUp.CenterID,
                 GroupID = signUp.GroupID,
