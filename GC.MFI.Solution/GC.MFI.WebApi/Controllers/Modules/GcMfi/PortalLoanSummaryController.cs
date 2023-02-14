@@ -80,6 +80,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var result = await _service.getByLoanStatus(type, memberId);
             return result;
         }
+        [HttpGet]
+        [Route("getloansummary")]
+        public virtual PortalLoanSummaryViewModel GetLoanSummary(long Id)
+        {
+            var getLoan = _service.GetById(Id);
+            return getLoan;
+        }
 
     }
 }

@@ -170,5 +170,43 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var getLoanStatus = _repository.getByLoanStatus(type, memberId);
             return getLoanStatus;
         }
+
+        public PortalLoanSummaryViewModel GetById(long id)
+        {
+            var GetLoan = _repository.GetById(id);
+            var GetGuaranntorImage = _fileService.GetById(GetLoan.GuarantorImg);
+            var GetGuranntorNId = _fileService.GetById(GetLoan.GuarantorImg);
+
+            var supportingDoc = _fileService.GetMany(t => t.EntityId == id && t.PropertyName == "SupportingDocument").ToList();
+            FileUploadTableViewModel[] list = new FileUploadTableViewModel[supportingDoc.Count()];
+            
+            for(int i = 0; i < supportingDoc.Count(); i++)
+            {
+                list[i] = new FileUploadTableViewModel
+                {
+                    FileUploadId = supportingDoc[i].FileUploadId,
+                    FileName = supportingDoc[i].FileName,
+                    EntityId = supportingDoc[i].EntityId,
+                    EntityName = supportingDoc[i].EntityName,
+                    PropertyName = supportingDoc[i].PropertyName,
+                    DocumentType = supportingDoc[i].DocumentType,
+                    FileUrl = FileDecodeHelper.Base64(supportingDoc[i].Type, supportingDoc[i].File),
+
+                };
+            }
+
+            string GImgUrl = FileDecodeHelper.Base64(GetGuaranntorImage.Type, GetGuaranntorImage.File);
+            string GNidUrl = FileDecodeHelper.Base64(GetGuranntorNId.Type, GetGuranntorNId.File);
+
+
+            return new PortalLoanSummaryViewModel
+            {
+                PortalLoanSummaryID = GetLoan.PortalLoanSummaryID,
+                ImageUrl = GImgUrl,
+                NidUrl = GNidUrl,
+                FileUploads = list,
+            };
+            
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GC.MFI.Models.DbModels;
 
 namespace GC.MFI.Models.ViewModels
 {
@@ -207,7 +208,9 @@ namespace GC.MFI.Models.ViewModels
         [StringLength(50)]
         public string Remarks { get; set; }
         public bool? ApprovalStatus { get; set; } = false;
-
+        public string ImageUrl { get; set; }
+        public string NidUrl { get; set; }
+        public virtual FileUploadTableViewModel[] FileUploads { get; set; }
         public string StatusDesc
         {
             get
