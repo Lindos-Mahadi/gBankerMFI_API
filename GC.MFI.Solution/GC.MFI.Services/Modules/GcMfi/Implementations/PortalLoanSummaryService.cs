@@ -175,7 +175,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         {
             var GetLoan = _repository.GetById(id);
             var GetGuaranntorImage = _fileService.GetById(GetLoan.GuarantorImg);
-            var GetGuranntorNId = _fileService.GetById(GetLoan.GuarantorImg);
+            var GetGuranntorNId = _fileService.GetById(GetLoan.GuarantorNID);
 
             var supportingDoc = _fileService.GetMany(t => t.EntityId == id && t.PropertyName == "SupportingDocument").ToList();
             FileUploadTableViewModel[] list = new FileUploadTableViewModel[supportingDoc.Count()];
