@@ -141,7 +141,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 var createdList = _fileService.BulkCreate(file);
                 portal.GuarantorImg =  createdList[1].FileUploadId;
                 portal.GuarantorNID = createdList.First().FileUploadId;
-                var supportingDocIds = String.Join(",", createdList.Select(s => s.FileUploadId).ToArray());
+                var supportingDocIds = String.Join(",", createdList.Where(t=> t.EntityName == "SupportingDocument").Select(s => s.FileUploadId).ToArray());
                 portal.SupportingDocumentsId = supportingDocIds;
              
                 _repository.CommitTransaction();
