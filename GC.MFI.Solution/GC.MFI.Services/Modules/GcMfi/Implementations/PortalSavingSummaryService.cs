@@ -186,6 +186,45 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var getSavingStatus = _repository.getBySavingStatus(type, memberId);
             return getSavingStatus;
         }
+        public async Task<PortalSavingSummaryViewModel> PortalSavingSummaryDetails(long Id)
+        {
+            try
+            {
+                PortalSavingSummary savingSummary = GetById(Id);
+                var map = mapper.Map<PortalSavingSummaryViewModel>(savingSummary);
+
+                FileUploadTable[] savingSummaries = _uploadService.GetMany(t => t.EntityId == Id ).ToArray();
+
+                NomineeXPortalSavingSummary[] nominee = _nominee.GetMany(t => t.PortalSavingSummaryID == Id).ToArray();
+
+                var NomineeMap = mapper.Map<NomineeXPortalSavingSummaryViewModel[]>(nominee);
+ 
+               for(int i = 0; i < NomineeMap.Length; i++)
+                {
+                    var NomineeImg = savingSummaries.Where(t => t.FileUploadId == NomineeMap[i].ImageId).FirstOrDefault();
+                    var NomineeNID = savingSummaries.Where(t => t.FileUploadId == NomineeMap[i].NIDId).FirstOrDefault();
+                    NomineeMap[i].Nid = FileDecodeHelper.Base64(NomineeNID.Type, NomineeNID.File);
+                    NomineeMap[i].Image = FileDecodeHelper.Base64(NomineeImg.Type, NomineeImg.File);
+                }
+                map.MemberNomines = NomineeMap;
+                if (!String.IsNullOrEmpty(map.SupportingDocumentsId))
+                {
+                    FileUploadTable[] savingSummaryFile = savingSummaries.Where(t => t.PropertyName == "SupportingDocument").ToArray();
+                    var fileMap = mapper.Map<FileUploadTableViewModel[]>(savingSummaryFile);
+
+                    for (int i = 0; i < fileMap.Length; i++)
+                    {
+                      fileMap[i].FileUrl = FileDecodeHelper.Base64(savingSummaryFile[i].Type, savingSummaryFile[i].File);
+                    }
+                    map.PortalSavingFileUpload = fileMap;
+                }
+                return map;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         #region Helper function
 

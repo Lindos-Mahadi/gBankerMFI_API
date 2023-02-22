@@ -10,15 +10,11 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Models.ViewModels
 {
-    public class PortalSavingSummaryFileUpload
+    public class PortalSavingSummaryViewModel
     {
-        [Key]
         public long PortalSavingSummaryID { get; set; }
-        [Required]
         public int OfficeID { get; set; }
-        [Required]
         public long MemberID { get; set; }
-        [Required]
         public short ProductID { get; set; }
         public int? CenterID { get; set; }
 
@@ -83,13 +79,13 @@ namespace GC.MFI.Models.ViewModels
 
         [Column(TypeName = "smalldatetime")]
         public DateTime CreateDate { get; set; }
-        //public int? OrgID { get; set; }
 
+        public string SupportingDocumentsId { get; set; }
         public string SavingAccountNo { get; set; }
         public int? Ref_EmployeeID { get; set; }
         public bool? ApprovalStatus { get; set; }
 
-        public virtual List<PortalSavingFileUpload> PortalSavingFileUpload { get; set; }
-        public virtual List<NomineeXPortalSavingSummaryFile> MemberNomines { get; set; }
+        public virtual FileUploadTableViewModel[] PortalSavingFileUpload { get; set; }
+        public virtual NomineeXPortalSavingSummaryViewModel[] MemberNomines { get; set; }
     }
 }
