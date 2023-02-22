@@ -6,6 +6,7 @@ using GC.MFI.DataAccess.Repository.Pos.Implementations;
 using GC.MFI.DataAccess.Repository.Pos.Interfaces;
 using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Security.Jwt;
 using GC.MFI.Security.Models;
@@ -178,6 +179,10 @@ namespace GC.MFI.WebApi
 
             // Dashbord dependancy
             services.AddScoped<IDashboardService, DashboardService>();
+
+            // Email Notification dependancy
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddScoped<IMailService, MailService>();
 
 
             // Register for model Validation
