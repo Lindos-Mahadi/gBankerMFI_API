@@ -209,6 +209,10 @@ namespace GC.MFI.Models.ViewModels
         public bool? ApprovalStatus { get; set; } = false;
         public string GuarantorNID { get; set; }
         public string GuarantorImg { get; set; }
+
+        public long GuarantorNIDId { get; set; }
+        public long GuarantorImgId { get; set; }
+        public string SupportingDocumentsId { get; set; }
         public List<PortalLoanFileUpload> PortalLoanFileUpload { get; set; }
     }
 }

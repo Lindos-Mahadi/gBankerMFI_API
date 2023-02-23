@@ -20,10 +20,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         private readonly IPortalLoanSummaryRepository _repository;
 
         private readonly IFileUploadService _fileService;
+        private readonly IMapper mapper;
         public PortalLoanSummaryService(IPortalLoanSummaryRepository repository, IFileUploadService fileService, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             _repository = repository;
             _fileService = fileService;
+            this.mapper = _mapper;
         }
 
         public override PortalLoanSummary Create(PortalLoanSummary objectToCreate)
@@ -35,84 +37,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             try
             {
                 _repository.BeginTransaction();
-                var portal = new PortalLoanSummary
-                {
-                    PortalLoanSummaryID = entity.PortalLoanSummaryID,
-                    OfficeID = entity.OfficeID,
-                    MemberID = entity.MemberID,
-                    ProductID = entity.ProductID,
-                    CenterID = entity.CenterID,
-                    MemberCategoryID = entity.MemberCategoryID,
-                    LoanTerm = entity.LoanTerm,
-                    PurposeID = entity.PurposeID,
-                    LoanNo = entity.LoanNo,
-                    PrincipalLoan = entity.PrincipalLoan,
-                    ApproveDate = entity.ApproveDate,
-                    DisburseDate = entity.DisburseDate,
-                    Duration = entity.Duration,
-                    LoanRepaid = entity.LoanRepaid,
-                    IntCharge = entity.IntCharge,
-                    IntPaid = entity.IntPaid,
-                    LoanInstallment = entity.LoanInstallment,
-                    IntInstallment = entity.IntInstallment,
-                    InterestRate = entity.InterestRate,
-                    InstallmentStartDate = entity.InstallmentStartDate,
-                    InstallmentNo = entity.InstallmentNo,
-                    DropInstallment = entity.DropInstallment,
-                    Holidays = entity.Holidays,
-                    InstallmentDate = entity.InstallmentDate,
-                    TransType = entity.TransType,
-                    ContinuousDrop = entity.ContinuousDrop,
-                    LoanStatus = 1,
-                    Balance = entity.Balance,
-                    Advance = entity.Advance,
-                    DueRecovery = entity.DueRecovery,
-                    LoanCloseDate = entity.LoanCloseDate,
-                    OverdueDate = entity.OverdueDate,
-                    EmployeeId = entity.EmployeeId,
-                    InvestorID = entity.InvestorID,
-                    ExcessPay = entity.ExcessPay,
-                    CurLoan = entity.CurLoan,
-                    PreLoan = entity.PreLoan,
-                    CumLoanDue = entity.CumLoanDue,
-                    WriteOffLoan = entity.WriteOffLoan,
-                    WriteOffInterest = entity.WriteOffInterest,
-                    Posted = entity.Posted,
-                    OrgID = entity.OrgID,
-                    IsActive = entity.IsActive,
-                    InActiveDate = entity.InActiveDate,
-                    CreateUser = entity.CreateUser,
-                    CreateDate = entity.CreateDate,
-                    BankName = entity.BankName,
-                    ChequeNo = entity.ChequeNo,
-                    IsApproved = entity.IsApproved,
-                    CoApplicantName = entity.CoApplicantName,
-                    Guarantor = entity.Guarantor,
-                    MemberPassBookRegisterID = entity.MemberPassBookRegisterID,
-                    ChequeIssueDate = entity.ChequeIssueDate,
-                    CumIntDue = entity.CumIntDue,
-                    ApprovedAmount = entity.ApprovedAmount,
-                    PartialAmount = entity.PartialAmount,
-                    FinalDisbursement = entity.FinalDisbursement,
-                    DisbursementType = entity.DisbursementType,
-                    PartialIntCharge = entity.PartialIntCharge,
-                    PartialIntPaid = entity.PartialIntPaid,
-                    FirstInstallmentStartDate = entity.FirstInstallmentStartDate,
-                    FirstInstallmentDate = entity.FirstInstallmentDate,
-                    CurIntPaid = entity.CurIntPaid,
-                    CurIntCharge = entity.CurIntCharge,
-                    LoanAccountNo = entity.LoanAccountNo,
-                    SecurityBankName = entity.SecurityBankName,
-                    SecurityBankBranchName = entity.SecurityBankBranchName,
-                    SecurityBankCheckNo = entity.SecurityBankCheckNo,
-                    CurLoanDue = entity.CurLoanDue,
-                    CurIntDue = entity.CurIntDue,
-                    LastInstallmentNo = entity.LastInstallmentNo,
-                    CSFRate = entity.CSFRate,
-                    CSFAmount = entity.CSFAmount,
-                    Remarks = entity.Remarks,
-                    ApprovalStatus = false
-                };
+                entity.LoanStatus = 1;
+                entity.ApprovalStatus = false;
+                var portal = mapper.Map<PortalLoanSummary>(entity);
                 _repository.Add(portal);
                 Save();
 
@@ -139,9 +66,9 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     };
                 }
                 var createdList = _fileService.BulkCreate(file);
-                portal.GuarantorImg =  createdList[1].FileUploadId;
-                portal.GuarantorNID = createdList.First().FileUploadId;
-                var supportingDocIds = String.Join(",", createdList.Where(t=> t.EntityName == "SupportingDocument").Select(s => s.FileUploadId).ToArray());
+                portal.GuarantorImgId =  createdList[1].FileUploadId;
+                portal.GuarantorNIDId = createdList.First().FileUploadId;
+                var supportingDocIds = String.Join(",", createdList.Where(t=> t.PropertyName == "SupportingDocument").Select(s => s.FileUploadId).ToArray());
                 portal.SupportingDocumentsId = supportingDocIds;
              
                 _repository.CommitTransaction();
@@ -174,8 +101,8 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         public PortalLoanSummaryViewModel GetById(long id)
         {
             var GetLoan = _repository.GetById(id);
-            var GetGuaranntorImage = _fileService.GetById(GetLoan.GuarantorImg);
-            var GetGuranntorNId = _fileService.GetById(GetLoan.GuarantorNID);
+            var GetGuaranntorImage = _fileService.GetById(GetLoan.GuarantorImgId);
+            var GetGuranntorNId = _fileService.GetById(GetLoan.GuarantorNIDId);
 
             var supportingDoc = _fileService.GetMany(t => t.EntityId == id && t.PropertyName == "SupportingDocument").ToList();
             FileUploadTableViewModel[] list = new FileUploadTableViewModel[supportingDoc.Count()];
