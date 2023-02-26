@@ -3,11 +3,16 @@ using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
 using GC.MFI.WebApi.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using System.Net.Http.Headers;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
+    [Authorize(Roles = "PortalMember, PortalAdmin")]
     [Route("api/gcmfi/PortalLoanSummary")]
     public class PortalLoanSummaryController : GCMcfinaLegacyBaseController<PortalLoanSummary>
     {
@@ -27,14 +32,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             try
             {
-                //objectToSave.CreateUser = "Administrator";
-                //objectToSave.CreateDate = DateTime.UtcNow;
-                //_service.Create(objectToSave);
-                //return objectToSave;
+
 
                 if (ModelState.IsValid)
                 {
-                    objectToSave.CreateUser = "Administrator";
+                    var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+                    var userName = JwtTokenDecode.GetDetailsFromToken(header).UserName;
+                    objectToSave.CreateUser = userName;
                     objectToSave.CreateDate = DateTime.UtcNow;
                     _service.CreatePortalLoanSummary(objectToSave);
                     

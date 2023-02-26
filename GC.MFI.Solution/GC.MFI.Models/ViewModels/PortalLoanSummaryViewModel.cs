@@ -207,7 +207,9 @@ namespace GC.MFI.Models.ViewModels
 
         [StringLength(50)]
         public string Remarks { get; set; }
-        public bool? ApprovalStatus { get; set; } = false;
+        public bool? ApprovalStatus { get; set; }
+        public int? TotalRepayment { get; set; }
+        public DateTime? NextPaymentDate { get; set; }
         public string ImageUrl { get; set; }
         public string NidUrl { get; set; }
         public virtual FileUploadTableViewModel[] FileUploads { get; set; }

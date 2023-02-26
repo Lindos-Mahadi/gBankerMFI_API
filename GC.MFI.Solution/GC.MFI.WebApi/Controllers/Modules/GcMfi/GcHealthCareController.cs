@@ -1,8 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GC.MFI.Models.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Ocsp;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
@@ -135,6 +142,32 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
             }.ToList();
             return Ok(consultationReq);
+        }
+        [HttpGet]
+        [Route("gphealthmemberprofile")]
+        public IActionResult GetMemberProfile()
+        {
+            var list = new
+            {
+                PatientID = 134556,
+                Email = "portalmember@gHealth.com",
+                PhoneNo="01696969669",
+                Gender = "Male",
+                Age = 25,
+                RegDate = "2023-02-08",
+                BloodGroup = "B+",
+                Address = "Dhaka",
+                FullName = "Arefin Shokti",
+                UserName = 1234556,
+                ServiceSite = "Demonstration",
+                DateofBirth = DateTime.Now,
+                MaritalStatus = "Married",
+                Guardian = "Test Gurdian",
+                LastLogin = DateTime.Now,
+                Note = "Serious"
+
+            };
+            return Ok(list);
         }
     }
 }

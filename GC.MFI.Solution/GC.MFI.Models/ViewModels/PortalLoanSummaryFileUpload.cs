@@ -206,7 +206,10 @@ namespace GC.MFI.Models.ViewModels
 
         [StringLength(50)]
         public string Remarks { get; set; }
-        public bool? ApprovalStatus { get; set; } = false;
+        public bool? ApprovalStatus { get; set; }
+        public int? TotalRepayment { get; set; }
+        public DateTime? NextPaymentDate { get; set; }
+
         public string GuarantorNID { get; set; }
         public string GuarantorImg { get; set; }
 
