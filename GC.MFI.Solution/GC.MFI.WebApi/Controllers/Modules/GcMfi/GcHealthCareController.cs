@@ -23,11 +23,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var serviceHistory = new[]
             {
-                new  {SL = 1, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100},
-                new  {SL = 2, ReferenceNo = "2", Date = DateTime.Now, Total = 5000, Discount = 100},
-                new  {SL = 2, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100},
-                new  {SL = 4, ReferenceNo = "2", Date = DateTime.Now, Total = 5000, Discount = 100},
-                new  {SL = 5, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100},
+                new  {SL = 1, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
+                new  {SL = 2, ReferenceNo = "2", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
+                new  {SL = 2, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
+                new  {SL = 4, ReferenceNo = "2", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
+                new  {SL = 5, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
             };
             return Ok(serviceHistory);
             //var ss = JsonConvert.SerializeObject(serviceHistory);
