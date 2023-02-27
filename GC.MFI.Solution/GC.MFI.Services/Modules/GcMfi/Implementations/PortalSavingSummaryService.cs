@@ -41,39 +41,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             try
             {
                 _repository.BeginTransaction();
-                var model = new PortalSavingSummary()
-                {
-                    PortalSavingSummaryID = entity.PortalSavingSummaryID,
-                    OfficeID = entity.OfficeID,
-                    MemberID = entity.MemberID,
-                    ProductID = entity.ProductID,
-                    CenterID = entity.CenterID,
-                    NoOfAccount = entity.NoOfAccount,
-                    TransactionDate = entity.TransactionDate,
-                    Deposit = entity.Deposit,
-                    Withdrawal = entity.Withdrawal,
-                    Balance = entity.Balance,
-                    InterestRate = entity.InterestRate,
-                    SavingInstallment = entity.SavingInstallment,
-                    CumInterest = entity.CumInterest,
-                    MonthlyInterest = entity.MonthlyInterest,
-                    Penalty = entity.Penalty,
-                    OpeningDate = entity.OpeningDate,
-                    MaturedDate = entity.MaturedDate,
-                    ClosingDate = entity.ClosingDate,
-                    TransType = entity.TransType,
-                    SavingStatus = 1,
-                    Posted = entity.Posted,
-                    IsActive = entity.IsActive,
-                    InActiveDate = entity.InActiveDate,
-                    Duration = entity.Duration,
-                    InstallmentNo = entity.InstallmentNo,
-                    CreateDate = entity.CreateDate,
-                    CreateUser = entity.CreateUser,
-                    SavingAccountNo = entity.SavingAccountNo,
-                    Ref_EmployeeID = entity.Ref_EmployeeID,
-                    ApprovalStatus = false
-                };
+                entity.SavingStatus = 1;
+                entity.Balance = 0;
+                entity.ApprovalStatus = false;
+                var model = mapper.Map<PortalSavingSummary>(entity); 
                 _repository.Add(model);
                 Save();
                 int count = entity.MemberNomines.Count;
@@ -95,7 +66,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                         Type = Nimg.MimeType,
                         DocumentType = "NomineeImage"
                     };
-                    
                     list[j] = nomineeImage[i];
                     j++;
                     Base64File NNID = ImageHelper.GetFileDetails(entity.MemberNomines[i].Nid);
@@ -113,37 +83,25 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     j++;
                 }
 
-                _uploadService.BulkCreate(list);
-
-                NomineeXPortalSavingSummary[] NomineeXSaving = new NomineeXPortalSavingSummary[entity.MemberNomines.Count];
-                for (int i = 0; i < NomineeXSaving.Length; i++)
+               var nidImageInsert = _uploadService.BulkCreate(list);
+                for (int i = 0; i < model.MemberNomines.Count; i++)
                 {
-                    var img = _uploadService.Get(t => t.EntityId == model.PortalSavingSummaryID
+                    var img = nidImageInsert.Where(t => t.EntityId == model.PortalSavingSummaryID
                         && t.PropertyName == "NomineeImage" &&
-                        t.FileName == $"Nominee_Image_{entity.MemberNomines[i].NIDNumber}");
+                        t.FileName == $"Nominee_Image_{entity.MemberNomines[i].NIDNumber}").FirstOrDefault();
 
-                    var Nid = _uploadService.Get(t => t.EntityId == model.PortalSavingSummaryID
+                    var Nid = nidImageInsert.Where(t => t.EntityId == model.PortalSavingSummaryID
                         && t.PropertyName == "NomineeNID" &&
-                        t.FileName == $"Nominee_NID_{entity.MemberNomines[i].NIDNumber}");
+                        t.FileName == $"Nominee_NID_{entity.MemberNomines[i].NIDNumber}").FirstOrDefault();
 
-                    NomineeXSaving[i] = new NomineeXPortalSavingSummary
-                    {
-                        PortalSavingSummaryID = model.PortalSavingSummaryID,
-                        NomineeName = entity.MemberNomines[i].NomineeName,
-                        NFatherName = entity.MemberNomines[i].NFatherName,
-                        NAddressName = entity.MemberNomines[i].NAddressName,
-                        NRelationName = entity.MemberNomines[i].NRelationName,
-                        NAlocation = entity.MemberNomines[i].NAlocation,
-                        NIDNumber = entity.MemberNomines[i].NIDNumber,
-                        ImageId = img.FileUploadId,
-                        NIDId = Nid.FileUploadId
-                    };
+                    var nominee = model.MemberNomines.Where(t => t.NIDNumber == entity.MemberNomines[i].NIDNumber).FirstOrDefault();
+                    nominee.NIDId = Nid.FileUploadId;
+                    nominee.ImageId = img.FileUploadId;
                 }
-                _nominee.BulkCreate(NomineeXSaving);
 
                 if (entity.PortalSavingFileUpload != null)
                 {
-                    // BULT INSERT DATA
+                    // supporting document upload
                     FileUploadTable[] file = new FileUploadTable[entity.PortalSavingFileUpload.Count];
                     for (int i = 0; i < entity.PortalSavingFileUpload.Count(); i++)
                     {
@@ -159,14 +117,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                             File = filesType.DataBytes,
                             DocumentType = entity.PortalSavingFileUpload[i].DocumentType,
                         };
-
                     }
                     _uploadService.BulkCreate(file);
                     SupportingDocumentIdentity(model.PortalSavingSummaryID);
-
                 }
                _repository.CommitTransaction();
-
             }
             catch(Exception ex)
             {

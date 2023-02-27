@@ -30,11 +30,17 @@ namespace GC.MFI.Models.Mapper
             CreateMap<PortalLoanSummary, PortalLoanSummaryViewModel > ();
             CreateMap<SavingsAccClose, SavingsAccCloseViewModel>();
             CreateMap<PortalSavingSummary, PortalSavingSummaryViewModel>();
+
+            CreateMap<PortalSavingSummary, PortalSavingSummaryFileUpload>();
+
             CreateMap<LoanAccReschedule, LoanAccRescheduleViewModel>();
 
             CreateMap<NomineeXPortalSavingSummary, NomineeXPortalSavingSummaryViewModel>();
 
+
             CreateMap<FileUploadTable, FileUploadTableViewModel>();
+
+            CreateMap<NomineeXPortalSavingSummary, NomineeXPortalSavingSummaryFile>();
 
             CreateMap<PortalLoanSummary, PortalLoanSummaryFileUpload>();
         }
