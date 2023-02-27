@@ -169,5 +169,82 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             };
             return Ok(list);
         }
+
+       
+        [HttpGet]
+        [Route("UrinReport")]
+        public IActionResult UrinReport()
+        {
+            var urin = new[]
+            {
+                new {PSL =1, ReportID=12345, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =2, ReportID=67899, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =3, ReportID=75257, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =4, ReportID=32435, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =5, ReportID=64245, AnalysisDate = DateTime.Now, MicroscopicImages="Image" }
+            }.ToList();
+            return Ok(urin);
+        }
+
+        [HttpGet]
+        [Route("HematologicalReport")]
+        public IActionResult HematologicalReport()
+        {
+            var hemato = new[]
+            {
+                new {PSL =1, ReportID=43542, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =2, ReportID=23445, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =3, ReportID=23423, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =4, ReportID=76897, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =5, ReportID=68885, AnalysisDate = DateTime.Now, MicroscopicImages="Image" }
+            }.ToList();
+            return Ok(hemato);
+        }
+
+        [HttpGet]
+        [Route("BiochemistryReport")]
+        public IActionResult BiochemistryReport()
+        {
+            var bioche = new[]
+            {
+                new {PSL =1, ReportID=2544545, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =2, ReportID=4546666, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =3, ReportID=3245778, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =4, ReportID=4545677, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =5, ReportID=3435657, AnalysisDate = DateTime.Now, MicroscopicImages="Image" }
+            }.ToList();
+            return Ok(bioche);
+        }
+
+        [HttpGet]
+        [Route("StoolAnalysisReport")]
+        public IActionResult StoolAnalysisReport()
+        {
+            var stool = new[]
+            {
+                new {PSL =1, ReportID=98765565, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =2, ReportID=56565768, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =3, ReportID=23255657, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =4, ReportID=34564786, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =5, ReportID=00995566, AnalysisDate = DateTime.Now, MicroscopicImages="Image" }
+            }.ToList();
+            return Ok(stool);
+        }
+
+        [HttpGet]
+        [Route("MicrobiologyReport")]
+        public IActionResult MicrobiologyReport()
+        {
+            var micbio = new[]
+            {
+                new {PSL =1, ReportID=2125425, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =2, ReportID=2323454, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =3, ReportID=3565778, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =4, ReportID=8676766, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =5, ReportID=6789467, AnalysisDate = DateTime.Now, MicroscopicImages="Image" }
+            }.ToList();
+            return Ok(micbio);
+        }
+
     }
 }
