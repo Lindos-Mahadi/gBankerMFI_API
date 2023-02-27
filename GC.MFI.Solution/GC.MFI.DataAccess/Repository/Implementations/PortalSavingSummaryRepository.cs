@@ -5,6 +5,7 @@ using GC.MFI.Models.DbModels;
 using GC.MFI.Models.RequestModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Utility.Helpers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Buffers.Text;
 using System.Collections.Generic;
@@ -113,7 +114,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                  }).Where(t => t.SavingStatus == type && t.MemberID == memberId);
                            
             return savingSummary;
-
+        }
+        public override PortalSavingSummary GetById(long id)
+        {
+            var GetByid= DataContext.PortalSavingSummary.Where(t=> t.PortalSavingSummaryID == id).Include(t=> t.MemberNomines).FirstOrDefault();
+            return GetByid;
         }
 
     }

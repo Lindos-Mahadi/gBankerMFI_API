@@ -195,9 +195,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 
                 FileUploadTable[] savingSummaries = _uploadService.GetMany(t => t.EntityId == Id ).ToArray();
 
-                NomineeXPortalSavingSummary[] nominee = _nominee.GetMany(t => t.PortalSavingSummaryID == Id).ToArray();
-
-                var NomineeMap = mapper.Map<NomineeXPortalSavingSummaryViewModel[]>(nominee);
+                var NomineeMap = mapper.Map<NomineeXPortalSavingSummaryViewModel[]>(map.MemberNomines);
  
                for(int i = 0; i < NomineeMap.Length; i++)
                 {
