@@ -110,15 +110,16 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                               }
                               ).Where(filter.search)
                                .Where(x => x.MemberID == Id)
+                               .OrderByDescending(t=> t.PortalLoanSummaryID)
                                .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                .Take(filter.pageSize);
-
+            var totalPages = Convert.ToInt32(Math.Ceiling(((double)totalElems / (double)filter.pageSize)));
             return new PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>(
                 portalList,
                 filter.pageNum,
                 filter.pageSize,
                 totalElems,
-                totalElems / filter.pageSize);
+                totalPages);
             
         }
 
