@@ -33,7 +33,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                 select new SavingSummaryViewModel
                                 {
                                     PortalSavingSummaryID= pps.PortalSavingSummaryID,
-                                    SavingSummaryID = pps.SavingSummaryID,
                                     OfficeID=pps.OfficeID,
                                     MemberID=pps.MemberID,
                                     MemberName = m.FirstName,
