@@ -13,6 +13,7 @@ namespace GC.MFI.Models.ViewModels
     public class PortalSavingSummaryViewModel
     {
         public long PortalSavingSummaryID { get; set; }
+        public long SavingSummaryID { get; set; }
         public int OfficeID { get; set; }
         public long MemberID { get; set; }
         public short ProductID { get; set; }

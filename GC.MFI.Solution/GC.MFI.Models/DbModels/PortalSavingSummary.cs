@@ -15,6 +15,7 @@ namespace GC.MFI.Models.DbModels
         [Key]
         public long PortalSavingSummaryID { get; set; }
         [Required]
+        public long SavingSummaryID { get; set; }
         public int OfficeID { get; set; }
         [Required]
         public long MemberID { get; set; }

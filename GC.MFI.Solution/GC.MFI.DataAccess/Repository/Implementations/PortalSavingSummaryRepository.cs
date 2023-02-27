@@ -50,7 +50,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     MonthlyInterest = pps.MonthlyInterest,
                                     Penalty=pps.Penalty,
                                     OpeningDate=pps.OpeningDate,
-                                    MaturedDate=pps.MaturedDate,
+                                    MaturedDate= pps.MaturedDate,
                                     ClosingDate=pps.ClosingDate,
                                     TransType=pps.TransType,
                                     SavingStatus=pps.SavingStatus,
@@ -71,19 +71,17 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                 })
                                     .Where(filter.search)
                                     .Where(x => x.MemberID == Id)
+                                    .OrderByDescending(t => t.PortalSavingSummaryID)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                     .Take(filter.pageSize).ToList();
-            //for(int i=0;i<savingSummary.Count();i++)
-            //{
-            //    var nominee = DataContext.NomineeXPortalSavingSummary.Where(t => t.PortalSavingSummaryID == savingSummary[i].PortalSavingSummaryID);
-            //}
-
+            
+            var totalPages = Convert.ToInt32(Math.Ceiling(((double)TotalElement / (double)filter.pageSize)));
             return new PagedResponse<IEnumerable<SavingSummaryViewModel>>(
                 savingSummary,
                 filter.pageNum,
                 filter.pageSize,
                 TotalElement,
-                TotalElement / filter.pageSize);
+                totalPages);
         }
 
         public async Task<IEnumerable<SavingSummaryViewModel>> getBySavingStatus(byte type, long memberId)

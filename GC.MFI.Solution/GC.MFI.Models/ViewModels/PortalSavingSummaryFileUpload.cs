@@ -14,6 +14,7 @@ namespace GC.MFI.Models.ViewModels
     {
         [Key]
         public long PortalSavingSummaryID { get; set; }
+        public long SavingSummaryID { get; set; }
         [Required]
         public int OfficeID { get; set; }
         [Required]
