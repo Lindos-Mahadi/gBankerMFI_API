@@ -80,14 +80,22 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         [Route("GetHealthChartList")]
         public IActionResult GetHealthChartList()
         {
-            var healthChart = new[]
+            var healthChart = new
             {
-                new {HCSL =1, BloodPressureSystolic = 150, BloodPressureDiastolic=100,BloodGlucos = 100,BloodHemoglobin=15, PulseRate = 100, BMI=30, Waist = 100, WasteHipRatio = 0.75, Temperature = 125, BloodChlesterol = 200,UricAcid = 6, OxygenationOfBlood=125},
-                new {HCSL =2, BloodPressureSystolic = 150, BloodPressureDiastolic=100,BloodGlucos = 100,BloodHemoglobin=15, PulseRate = 100, BMI=30, Waist = 100, WasteHipRatio = 0.75, Temperature = 125, BloodChlesterol = 200,UricAcid = 6, OxygenationOfBlood=125},
-                new {HCSL =3, BloodPressureSystolic = 150, BloodPressureDiastolic=100,BloodGlucos = 100,BloodHemoglobin=15, PulseRate = 100, BMI=30, Waist = 100, WasteHipRatio = 0.75, Temperature = 125, BloodChlesterol = 200,UricAcid = 6, OxygenationOfBlood=125},
-                new {HCSL =4, BloodPressureSystolic = 150, BloodPressureDiastolic=100,BloodGlucos = 100,BloodHemoglobin=15, PulseRate = 100, BMI=30, Waist = 100, WasteHipRatio = 0.75, Temperature = 125, BloodChlesterol = 200,UricAcid = 6, OxygenationOfBlood=125},
-                new {HCSL =5, BloodPressureSystolic = 150, BloodPressureDiastolic=100,BloodGlucos = 100,BloodHemoglobin=15, PulseRate = 100, BMI=30, Waist = 100, WasteHipRatio = 0.75, Temperature = 125, BloodChlesterol = 200,UricAcid = 6, OxygenationOfBlood=125}
-            }.ToList();
+                bloodPressureSystolic = new[] { new { date = DateTime.UtcNow, Value = 120 } , new { date = DateTime.UtcNow, Value = 80 } },
+                bloodPressureDiastolic = new[] { new { date = DateTime.UtcNow, Value = 130 }, new { date = DateTime.UtcNow, Value = 90 } },
+                bloodGlucos = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                bloodHemoglobin = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                pulseRate = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                bmi = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                waist = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                wasteHipRatio = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                temperature = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                bloodChlesterol = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                uricAcid = new[] { new { date = DateTime.UtcNow, Value = 125 } },
+                oxygenationOfBlood = new[] { new { date = DateTime.UtcNow, Value = 125 } }
+
+            };
             return Ok(healthChart);
         }
         [HttpGet]
