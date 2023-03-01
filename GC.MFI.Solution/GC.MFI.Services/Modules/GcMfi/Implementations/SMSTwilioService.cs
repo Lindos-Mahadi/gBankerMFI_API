@@ -66,24 +66,24 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         }
 
 
-        public async Task<bool> ResponseSMSAync(string phoneNumber, string message)
+        public async Task<TwilioSMSModel> ResponseSMSAync(string phoneNumber, string message)
         {
             var responsSMS = sMSLogTableService.GetMany(t => t.MobileNo == phoneNumber);
 
             if (responsSMS == null)
             {
-                return false;
+                return new TwilioSMSModel { isSuccess = false };
             }
             else
             {
                 var getLast = responsSMS.OrderByDescending(t => t.SendDate).FirstOrDefault();
                 if (getLast.Message == message)
                 {
-                    return true;
+                    return new TwilioSMSModel { isSuccess = true };
                 }
                 else
                 {
-                    return false;
+                    return new TwilioSMSModel { isSuccess = false };
                 }
             }
         }

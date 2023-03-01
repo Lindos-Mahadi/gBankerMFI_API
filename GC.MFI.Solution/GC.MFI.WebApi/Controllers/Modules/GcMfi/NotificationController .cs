@@ -59,14 +59,14 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw ex;
             }
         }
-        [HttpPost("VarifyOtp")]
-        public async Task<IActionResult> VarifyOtp(string phoneNumber, string message)
+        [HttpPost("VerifyOtp")]
+        public async Task<IActionResult> VerifyOtp(string phoneNumber, string message)
         {
             try
             {
 
                 var getMessage = await sMSTwilioService.ResponseSMSAync(phoneNumber, message);
-                return Ok($"Message: {getMessage}");
+                return Ok(getMessage);
             }
             catch (Exception ex)
             {
