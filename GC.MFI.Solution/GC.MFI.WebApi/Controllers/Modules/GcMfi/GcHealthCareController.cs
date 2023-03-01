@@ -23,11 +23,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var serviceHistory = new[]
             {
-                new  {SL = 1, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
-                new  {SL = 2, ReferenceNo = "2", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
-                new  {SL = 2, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
-                new  {SL = 4, ReferenceNo = "2", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
-                new  {SL = 5, ReferenceNo = "1", Date = DateTime.Now, Total = 5000, Discount = 100, Payment=400},
+                new  {SL = 1, ReferenceNo = "121423", Date = DateTime.Now, Total = 58610, Discount = 610, Payment=5800},
+                new  {SL = 2, ReferenceNo = "223425", Date = DateTime.Now, Total = 90254, Discount = 500, Payment=9000},
+                new  {SL = 2, ReferenceNo = "343524", Date = DateTime.Now, Total = 78900, Discount = 700, Payment=8500},
+                new  {SL = 4, ReferenceNo = "452561", Date = DateTime.Now, Total = 90300, Discount = 300, Payment=9000},
+                new  {SL = 5, ReferenceNo = "543525", Date = DateTime.Now, Total = 78000, Discount = 100, Payment=4500},
             };
             return Ok(serviceHistory);
             //var ss = JsonConvert.SerializeObject(serviceHistory);
@@ -54,11 +54,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
             var basicCheckup = new[]
             {
-                new {SLNo = 1, Date = DateTime.Now, Height = 165, Wheight = 60, BMI=22.04, Waist=75, Hip=95, WH = 0.79, BTemp = 96.5, SpO2 = 99, BP="120/80", BG = "6(PBS)", BH=12, UG = "-", UP = "-", UU="+-", PR = 78, Arr = "Normal", Cho = 150, Uric=5},
-                new {SLNo = 2, Date = DateTime.Now, Height = 165, Wheight = 60, BMI=22.04, Waist=75, Hip=95, WH = 0.79, BTemp = 96.5, SpO2 = 99, BP="120/80", BG = "6(PBS)", BH=12, UG = "-", UP = "-", UU="+-", PR = 78, Arr = "Normal", Cho = 150, Uric=5},
-                new {SLNo = 3, Date = DateTime.Now, Height = 165, Wheight = 60, BMI=22.04, Waist=75, Hip=95, WH = 0.79, BTemp = 96.5, SpO2 = 99, BP="120/80", BG = "6(PBS)", BH=12, UG = "-", UP = "-", UU="+-", PR = 78, Arr = "Normal", Cho = 150, Uric=5},
-                new {SLNo = 4, Date = DateTime.Now, Height = 165, Wheight = 60, BMI=22.04, Waist=75, Hip=95, WH = 0.79, BTemp = 96.5, SpO2 = 99, BP="120/80", BG = "6(PBS)", BH=12, UG = "-", UP = "-", UU="+-", PR = 78, Arr = "Normal", Cho = 150, Uric=5},
-                new {SLNo = 5, Date = DateTime.Now, Height = 165, Wheight = 60, BMI=22.04, Waist=75, Hip=95, WH = 0.79, BTemp = 96.5, SpO2 = 99, BP="120/80", BG = "6(PBS)", BH=12, UG = "-", UP = "-", UU="+-", PR = 78, Arr = "Normal", Cho = 150, Uric=5}
+                new {SLNo = 1, Date = DateTime.Now, Height = 145, Wheight = 80, BMI=21.21, Waist=45, Hip=25, WH = 0.74, BTemp = 93.4, SpO2 = 69, BP="128/90", BG = "6(PBS)", BH=11, UG = "-", UP = "-", UU="+-", PR = 56, Arr = "Normal", Cho = 140, Uric=12},
+                new {SLNo = 2, Date = DateTime.Now, Height = 155, Wheight = 50, BMI=23.09, Waist=13, Hip=34, WH = 0.75, BTemp = 95.4, SpO2 = 79, BP="110/70", BG = "6(PBS)", BH=09, UG = "-", UP = "-", UU="+-", PR = 77, Arr = "Normal", Cho = 150, Uric=32},
+                new {SLNo = 3, Date = DateTime.Now, Height = 135, Wheight = 90, BMI=19.01, Waist=52, Hip=56, WH = 0.76, BTemp = 96.7, SpO2 = 87, BP="125/70", BG = "6(PBS)", BH=14, UG = "-", UP = "-", UU="+-", PR = 98, Arr = "Normal", Cho = 170, Uric=31},
+                new {SLNo = 4, Date = DateTime.Now, Height = 125, Wheight = 40, BMI=23.34, Waist=34, Hip=76, WH = 0.77, BTemp = 92.5, SpO2 = 56, BP="145/99", BG = "6(PBS)", BH=15, UG = "-", UP = "-", UU="+-", PR = 69, Arr = "Normal", Cho = 180, Uric=09},
+                new {SLNo = 5, Date = DateTime.Now, Height = 115, Wheight = 50, BMI=15.12, Waist=15, Hip=67, WH = 0.78, BTemp = 95.7, SpO2 = 89, BP="160/120", BG = "6(PBS)", BH=10, UG = "-", UP = "-", UU="+-", PR = 98, Arr = "Normal", Cho = 110, Uric=9}
             }.ToList();
             return Ok(basicCheckup);
         }
@@ -83,17 +83,17 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var healthChart = new
             {
                 bloodPressureSystolic = new[] { new { date = DateTime.UtcNow, Value = 120 } , new { date = DateTime.UtcNow, Value = 80 } },
-                bloodPressureDiastolic = new[] { new { date = DateTime.UtcNow, Value = 130 }, new { date = DateTime.UtcNow, Value = 90 } },
-                bloodGlucos = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                bloodHemoglobin = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                pulseRate = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                bmi = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                waist = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                wasteHipRatio = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                temperature = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                bloodChlesterol = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                uricAcid = new[] { new { date = DateTime.UtcNow, Value = 125 } },
-                oxygenationOfBlood = new[] { new { date = DateTime.UtcNow, Value = 125 } }
+                bloodPressureDiastolic = new[] { new { date = DateTime.UtcNow, Value = 70 }, new { date = DateTime.UtcNow, Value = 90 } },
+                bloodGlucos = new[] { new { date = DateTime.UtcNow, Value = 75 } },
+                bloodHemoglobin = new[] { new { date = DateTime.UtcNow, Value = 13 } },
+                pulseRate = new[] { new { date = DateTime.UtcNow, Value = 76 } },
+                bmi = new[] { new { date = DateTime.UtcNow, Value = 25 } },
+                waist = new[] { new { date = DateTime.UtcNow, Value = 71 } },
+                wasteHipRatio = new[] { new { date = DateTime.UtcNow, Value = 0.82 } },
+                temperature = new[] { new { date = DateTime.UtcNow, Value = 98.7 } },
+                bloodChlesterol = new[] { new { date = DateTime.UtcNow, Value = 110 } },
+                uricAcid = new[] { new { date = DateTime.UtcNow, Value = 4.7 } },
+                oxygenationOfBlood = new[] { new { date = DateTime.UtcNow, Value = 98 } }
 
             };
             return Ok(healthChart);
@@ -104,11 +104,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var pathology = new[]
             {
-                new {PSL =1, ReportID=12345, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
-                new {PSL =2, ReportID=12345, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
-                new {PSL =3, ReportID=12345, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
-                new {PSL =4, ReportID=12345, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
-                new {PSL =5, ReportID=12345, AnalysisDate = DateTime.Now, MicroscopicImages="Image" }
+                new {PSL =1, ReportID=121, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =2, ReportID=123, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =3, ReportID=124, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =4, ReportID=125, AnalysisDate = DateTime.Now, MicroscopicImages="Image" },
+                new {PSL =5, ReportID=126, AnalysisDate = DateTime.Now, MicroscopicImages="Image" }
             }.ToList();
             return Ok(pathology);
         }
