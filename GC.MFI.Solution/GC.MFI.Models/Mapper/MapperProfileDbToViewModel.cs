@@ -43,6 +43,10 @@ namespace GC.MFI.Models.Mapper
             CreateMap<NomineeXPortalSavingSummary, NomineeXPortalSavingSummaryFile>();
 
             CreateMap<PortalLoanSummary, PortalLoanSummaryFileUpload>();
+
+            CreateMap<Logger, LoggerViewModel>();
+
+            CreateMap<SMSLogTable, SMSLogTableViewModel>();
         }
     }
 }

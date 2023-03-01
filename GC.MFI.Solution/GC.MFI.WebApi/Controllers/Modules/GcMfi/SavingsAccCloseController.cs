@@ -4,6 +4,7 @@ using GC.MFI.Services.Modules.BntPos.Interfaces;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Utility.Helpers;
 using GC.MFI.WebApi.Controllers.Modules.Pos;
+using GC.MFI.WebApi.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,15 +21,16 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     [Route("api/gcmfi/SavingsAccClose")]
     public class SavingsAccCloseController : GcMfiMembePortalBaseController<SavingsAccCloseViewModel, SavingsAccClose>
     {
-        private readonly ILogger<SavingsAccCloseController> _logger;
+        private readonly ILogger<ValidationFilterAttribute> _logger;
         private readonly ISavingsAccCloseService _service;
-        public SavingsAccCloseController(ILogger<SavingsAccCloseController> logger, ISavingsAccCloseService service) : base(service)
+        public SavingsAccCloseController(ILogger<ValidationFilterAttribute> logger, ISavingsAccCloseService service) : base(service)
         {
             _logger = logger;
             _service = service;
         }
         [HttpPost]
         [Route("create")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public override SavingsAccCloseViewModel Create(SavingsAccCloseViewModel acc)
         {
             try
@@ -43,7 +45,8 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
             catch(Exception ex)
             {
-                throw ex;
+                _logger.Log(LogLevel.Error, ex.Message);
+                throw;
             }
         }
 
