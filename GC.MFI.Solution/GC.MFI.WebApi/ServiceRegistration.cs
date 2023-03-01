@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Polly;
 using Polly.Extensions.Http;
 using System.Text;
+using Twilio.Clients;
 
 namespace GC.MFI.WebApi
 {
@@ -59,6 +60,9 @@ namespace GC.MFI.WebApi
             var settings = new JWT();
             Configuration.Bind("JWT", settings);
             var key = Encoding.UTF8.GetBytes(settings.SecretKey);
+
+            // TWILIO SMS INTEGRATION
+            services.AddScoped<ISMSTwilioService, SMSTwilioService>();
 
             services.AddAuthentication(x =>
             {
@@ -180,6 +184,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<ILoggerRepository, LoggerRepository>();
             services.AddScoped<ILoggerService, LoggerService>();
 
+
+            //SMS Log Table dependancy
+            services.AddScoped<ISMSLogTableRepository, SMSLogTableRepository>();
+            services.AddScoped<ISMSLogTableService, SMSLogTableService>();
 
 
             // Dashbord dependancy

@@ -37,6 +37,7 @@ namespace GC.MFI.Models.Mapper
             CreateMap<FileUploadTableViewModel, FileUploadTable>();
 
             CreateMap<PortalLoanSummaryFileUpload, PortalLoanSummary>();
+            CreateMap<SMSLogTableViewModel, SMSLogTable>();
 
             CreateMap<LoggerViewModel, Logger>();
 
