@@ -83,17 +83,17 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var healthChart = new
             {
                 bloodPressureSystolic = new[] { new { date = DateTime.UtcNow, Value = 120 } , new { date = DateTime.UtcNow, Value = 80 } },
-                bloodPressureDiastolic = new[] { new { date = DateTime.UtcNow, Value = 130 }, new { date = DateTime.UtcNow, Value = 90 } },
-                bloodGlucos = new[] { new { date = DateTime.UtcNow, Value = 12 } },
-                bloodHemoglobin = new[] { new { date = DateTime.UtcNow, Value = 88 } },
-                pulseRate = new[] { new { date = DateTime.UtcNow, Value = 15 } },
+                bloodPressureDiastolic = new[] { new { date = DateTime.UtcNow, Value = 70 }, new { date = DateTime.UtcNow, Value = 90 } },
+                bloodGlucos = new[] { new { date = DateTime.UtcNow, Value = 75 } },
+                bloodHemoglobin = new[] { new { date = DateTime.UtcNow, Value = 13 } },
+                pulseRate = new[] { new { date = DateTime.UtcNow, Value = 76 } },
                 bmi = new[] { new { date = DateTime.UtcNow, Value = 25 } },
-                waist = new[] { new { date = DateTime.UtcNow, Value = 185 } },
-                wasteHipRatio = new[] { new { date = DateTime.UtcNow, Value = 175 } },
-                temperature = new[] { new { date = DateTime.UtcNow, Value = 245 } },
-                bloodChlesterol = new[] { new { date = DateTime.UtcNow, Value = 215 } },
-                uricAcid = new[] { new { date = DateTime.UtcNow, Value = 73 } },
-                oxygenationOfBlood = new[] { new { date = DateTime.UtcNow, Value = 17 } }
+                waist = new[] { new { date = DateTime.UtcNow, Value = 71 } },
+                wasteHipRatio = new[] { new { date = DateTime.UtcNow, Value = 0.82 } },
+                temperature = new[] { new { date = DateTime.UtcNow, Value = 98.7 } },
+                bloodChlesterol = new[] { new { date = DateTime.UtcNow, Value = 110 } },
+                uricAcid = new[] { new { date = DateTime.UtcNow, Value = 4.7 } },
+                oxygenationOfBlood = new[] { new { date = DateTime.UtcNow, Value = 98 } }
 
             };
             return Ok(healthChart);
