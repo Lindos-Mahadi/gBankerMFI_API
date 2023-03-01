@@ -43,7 +43,8 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
             catch(Exception ex)
             {
-                throw ex;
+                _logger.Log(LogLevel.Error, ex.Message);
+                throw;
             }
         }
 

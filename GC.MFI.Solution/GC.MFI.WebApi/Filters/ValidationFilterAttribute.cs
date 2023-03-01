@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GC.MFI.WebApi.Filters
 {
-    public class ValidationFilterAttribute : IActionFilter
+    public class ValidationFilterAttribute : ActionFilterAttribute, IExceptionFilter
     {
-        public void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (!context.ModelState.IsValid)
             {
@@ -13,6 +13,11 @@ namespace GC.MFI.WebApi.Filters
             }
         }
 
-        public void OnActionExecuted(ActionExecutedContext context) { }
+        public override void OnActionExecuted(ActionExecutedContext context) { }
+
+        public void OnException(ExceptionContext context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -176,6 +176,11 @@ namespace GC.MFI.WebApi
             services.AddScoped<ILoanAccRescheduleRepository, LoanAccRescheduleRepository>();
             services.AddScoped<ILoanAccRescheduleService, LoanAccRescheduleService>();
 
+            //Logger dependancy
+            services.AddScoped<ILoggerRepository, LoggerRepository>();
+            services.AddScoped<ILoggerService, LoggerService>();
+
+
 
             // Dashbord dependancy
             services.AddScoped<IDashboardService, DashboardService>();
