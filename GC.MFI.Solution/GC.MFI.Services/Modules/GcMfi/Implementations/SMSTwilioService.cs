@@ -93,7 +93,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     responsSMS.Status = "V";
                     sMSLogTableService.Update(responsSMS);
 
-                    return new TwilioSMSModel { isSuccess = true };
+                    return new TwilioSMSModel { isSuccess = true, Message = "Number Verified Successfully" };
                 }
                 else
                 {
