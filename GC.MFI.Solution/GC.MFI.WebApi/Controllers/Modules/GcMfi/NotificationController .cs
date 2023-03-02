@@ -47,11 +47,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpPost("SendOtp")]
-        public async Task<IActionResult> SendOtp(string phoneNumber)
+        public async Task<IActionResult> SendOtp(string mobileNo)
         {
             try
             {
-                var sendMessage= await sMSTwilioService.SendSMSAsync(phoneNumber);
+                var sendMessage= await sMSTwilioService.SendOtpAsync(mobileNo);
                 return Ok(sendMessage);
             }
             catch (Exception ex)
@@ -60,12 +60,12 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
         }
         [HttpPost("VerifyOtp")]
-        public async Task<IActionResult> VerifyOtp(string phoneNumber, string message)
+        public async Task<IActionResult> VerifyOtp(string mobileNo, string message)
         {
             try
             {
 
-                var getMessage = await sMSTwilioService.ResponseSMSAync(phoneNumber, message);
+                var getMessage = await sMSTwilioService.VerifyOtpAsync(mobileNo, message);
                 return Ok(getMessage);
             }
             catch (Exception ex)
