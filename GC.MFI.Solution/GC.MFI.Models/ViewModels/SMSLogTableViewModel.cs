@@ -16,5 +16,6 @@ namespace GC.MFI.Models.ViewModels
         public DateTime SendDate { get; set; }
         [Required]
         public string Message { get; set; }
+
     }
 }

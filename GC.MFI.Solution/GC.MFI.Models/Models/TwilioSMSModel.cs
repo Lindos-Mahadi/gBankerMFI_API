@@ -8,7 +8,7 @@ namespace GC.MFI.Models.Models
 {
     public class TwilioSMSModel
     {
-        public bool? isSuccess { get; set; }
-        //public bool? isFailure { get; set; }
+        public bool isSuccess { get; set; }
+        public string Message { get; set; }
     }
 }

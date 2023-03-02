@@ -79,6 +79,7 @@ namespace GC.MFI.DataAccess.InfrastructureBase
 
         public virtual void Update(TDbModel entity)
         {
+            _dataContext.ChangeTracker.Clear();
             _dbset.Attach(entity);
             _dataContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
