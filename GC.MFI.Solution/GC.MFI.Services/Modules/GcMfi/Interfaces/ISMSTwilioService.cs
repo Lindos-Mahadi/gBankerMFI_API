@@ -11,7 +11,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface ISMSTwilioService
     {
-        Task<TwilioSMSModel> SendSMSAsync(string phoneNumber);
-        Task<TwilioSMSModel> ResponseSMSAync(string phoneNumber, string message);
+        Task<TwilioSMSModel> SendOtpAsync(string mobileNo);
+        Task<TwilioSMSModel> VerifyOtpAsync(string mobileNo, string message);
     }
 }

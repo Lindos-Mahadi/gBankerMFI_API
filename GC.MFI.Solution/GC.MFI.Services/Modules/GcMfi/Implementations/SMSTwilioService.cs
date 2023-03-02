@@ -26,7 +26,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             this.sMSLogTableService = sMSLogTableService;
         }
 
-        public async Task<TwilioSMSModel> SendSMSAsync(string phoneNumber)
+        public async Task<TwilioSMSModel> SendOtpAsync(string mobileNo)
         {
             var smsSID = configuration["TwilioSMS:account_sid"];
             var smsAuth = configuration["TwilioSMS:auth_token"];
@@ -40,50 +40,64 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             Random _rdm = new Random();
             var smsCode = _rdm.Next(_min, _max).ToString();
 
-            string hashCode = BCrypt.Net.BCrypt.HashPassword(smsCode);
+            SMSLogTableViewModel smsLogVModel = new SMSLogTableViewModel
+            {
+                MobileNo = mobileNo,
+                Message = smsCode,
+                SendDate = DateTime.UtcNow,
+                Status = "P",
+                CreateDate = DateTime.UtcNow,
+                CreateUser = mobileNo,
+                UpdateDate = DateTime.UtcNow
+            };
+
+            var number = sMSLogTableService.GetMany(t => t.MobileNo == mobileNo).OrderByDescending(t=> t.SendDate).FirstOrDefault();
+            if (number != null && smsLogVModel.SendDate.AddMinutes(3) <= DateTime.UtcNow)
+            {
+                return  new TwilioSMSModel { isSuccess = false, Message = "pleas...wait until 3 minutes if you are not get a otp message." };
+            }
 
             TwilioClient.Init(smsSID, smsAuth);
 
             var message = MessageResource.Create(
                 body: "This is your otp varification code : " + smsCode,
                 from: smsPhone,
-                to: phoneNumber
+                to: mobileNo
                 );
 
-            SMSLogTableViewModel smsLogVModel = new SMSLogTableViewModel
-            {
-                MobileNo = phoneNumber,
-                Message = smsCode,
-                SendDate = DateTime.UtcNow,
-                Status = "P",
-                CreateDate = DateTime.UtcNow,
-                CreateUser = phoneNumber,
-                UpdateDate = DateTime.UtcNow
-            };
             sMSLogTableService.Create(smsLogVModel);
+            return new TwilioSMSModel { isSuccess = true, Message = "Code send successfully." };
 
-            return  new TwilioSMSModel { isSuccess = true };
+
         }
 
 
-        public async Task<TwilioSMSModel> ResponseSMSAync(string phoneNumber, string message)
+        public async Task<TwilioSMSModel> VerifyOtpAsync(string mobileNo, string message)
         {
-            var responsSMS = sMSLogTableService.GetMany(t => t.MobileNo == phoneNumber);
-
+            var responsSMS = sMSLogTableService.GetMany(s => s.MobileNo == mobileNo && s.Message == message).OrderByDescending(t =>t.SendDate).FirstOrDefault();
+           
             if (responsSMS == null)
             {
-                return new TwilioSMSModel { isSuccess = false };
+                return new TwilioSMSModel { Message = "Please Input a valid otp." };
+            }
+            if (responsSMS.Status.Trim() == "V")
+            {
+                return new TwilioSMSModel { Message = "This otp  is already verified!" };
             }
             else
             {
-                var getLast = responsSMS.OrderByDescending(t => t.SendDate).FirstOrDefault();
-                if (getLast.Message == message)
+                // check if send datetime is greater than(5 mins) datetime now // send response expired
+
+                if (responsSMS.SendDate.AddMinutes(3) >= DateTime.UtcNow)
                 {
+                    responsSMS.Status = "V";
+                    sMSLogTableService.Update(responsSMS);
+
                     return new TwilioSMSModel { isSuccess = true };
                 }
                 else
                 {
-                    return new TwilioSMSModel { isSuccess = false };
+                    return new TwilioSMSModel {isSuccess = false, Message = "Oops! Your Otp's time expired. Please send otp again..." };
                 }
             }
         }
