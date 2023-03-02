@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface IHttpService
+    public interface IHttpService<T> where T : class
     {
-        Task<string> GetRequest(string url);
-        Task<string> PostRequest(string url, Dictionary<string, string> postData);
+        Task<List<T>> GetListRequest(string url);
+        Task<T> GetRequest(string url);
+        Task<T> PostRequest(string url, Dictionary<string, string> postData);
     }
 }
