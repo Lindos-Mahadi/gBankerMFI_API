@@ -8,6 +8,8 @@ using GC.MFI.Security.Models;
 using AutoMapper;
 using GC.MFI.Models.Mapper;
 using GC.MFI.WebApi.Filters;
+using GC.MFI.WebApi.Middleware;
+using Microsoft.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "CorsPolicy";
@@ -30,6 +32,15 @@ builder.Services.Configure<JWT>(
     builder.Configuration.GetSection("JWT"));
 builder.Services.AddSingleton<IJWT>(serviceProvider =>
         serviceProvider.GetRequiredService<IOptions<JWT>>().Value);
+
+ static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+    WebHost.CreateDefaultBuilder(args)
+        .UseStartup<ServiceRegistration>()
+        .ConfigureLogging((ctx, logging) =>
+        {
+            logging.AddConfiguration(ctx.Configuration.GetSection("Logging"));
+           
+        });
 
 // Added for model validation
 builder.Services.AddScoped<ValidationFilterAttribute>();
@@ -83,9 +94,10 @@ if (!string.IsNullOrEmpty(misSetting?.CORSEnabledUrl))
 }
 ServiceRegistration.RegisterService(builder.Services, builder.Configuration);
 var app = builder.Build();
+app.UseMiddleware<LoggingMiddleware>();
 
 // Configure the HTTP request pipeline.
- 
+
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseSession();

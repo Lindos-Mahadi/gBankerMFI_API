@@ -24,14 +24,6 @@ namespace GC.MFI.WebApi.Filters
 
         public override void OnActionExecuted(ActionExecutedContext context) 
         {
-            var ActionName = context.ActionDescriptor.DisplayName;
-            var ControllerName = context.Controller.GetType().Name;
-            LoggerViewModel log = new LoggerViewModel
-            {
-                ControllerName = ControllerName,
-                MethodName = ActionName,
-            };
-            _service.Create(log);
 
         }
 
