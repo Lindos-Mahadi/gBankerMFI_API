@@ -193,6 +193,9 @@ namespace GC.MFI.WebApi
             // Dashbord dependancy
             services.AddScoped<IDashboardService, DashboardService>();
 
+            // g healther dependacy
+            services.AddScoped<IGHealthSecurityService, GHealthSecurityService>();
+
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IMailService, MailService>();
