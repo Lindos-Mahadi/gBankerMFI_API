@@ -32,7 +32,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 
                     var response = await httpClient.PostAsync(configuration["GHealthApiKeys:url"], content);
                     var responseString = await response.Content.ReadAsStringAsync();
-                    
+                    if(responseString.Contains("message"))
+                    {
+                        return null;
+                    }
                     var verificationResponse = JsonConvert.DeserializeObject<List<GHealthPatientViewModel>>(responseString);
                     
                     return verificationResponse;

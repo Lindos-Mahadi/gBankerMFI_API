@@ -19,7 +19,9 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         public async Task<IActionResult> Authentication([FromQuery]string mobile)
         {
             var verified = await _healthSecurityService.IsGHealthLoggedIn(mobile);
-            return Ok(verified);
+            if(verified != null)
+                return Ok(verified);
+            return NotFound();
         }
     }
 }
