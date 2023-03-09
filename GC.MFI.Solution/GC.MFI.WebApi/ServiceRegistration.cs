@@ -193,8 +193,13 @@ namespace GC.MFI.WebApi
             // Dashbord dependancy
             services.AddScoped<IDashboardService, DashboardService>();
 
+
             // g healther dependacy
             services.AddScoped<IGHealthSecurityService, GHealthSecurityService>();
+
+
+            services.AddScoped<IMemberToPHCMappingRepository, MemberToPHCMappingRepository>();
+            services.AddScoped<IMemberToPHCMappingService, MemberToPHCMappingService>();
 
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));

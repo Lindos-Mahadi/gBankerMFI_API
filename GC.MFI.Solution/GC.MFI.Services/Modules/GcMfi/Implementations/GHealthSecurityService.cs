@@ -1,4 +1,5 @@
-﻿using GC.MFI.Models.Models;
+﻿using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Utility.Helpers;
@@ -17,9 +18,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
     public class GHealthSecurityService : IGHealthSecurityService
     {
         private readonly IConfiguration configuration;
-        public GHealthSecurityService(IConfiguration configuration)
+        private readonly IMemberToPHCMappingService memberToPHCMappingService;
+        public GHealthSecurityService(IConfiguration configuration, IMemberToPHCMappingService memberToPHCMappingService)
         {
             this.configuration = configuration;
+            this.memberToPHCMappingService = memberToPHCMappingService;
         }
 
         public async Task<GHealthSignViewModel> Authenticate(string username, string password)
@@ -76,6 +79,36 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             }catch(Exception ex)
             {
                 throw ex;
+            }
+        }
+        public async Task<SignUpResponse> SignUp(GHealthSignUpViewModel entity)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var values = new Dictionary<string, string> {
+                        { "api_key", configuration["GHealthApiKeys:apikey"]},
+                        { "fullname", entity.fullname },
+                        { "gender", entity.gender },
+                        { "email", entity.email },
+                        { "mobile", entity.mobile },
+                        { "password", entity.password },
+                        { "dob", entity.dob },
+                        { "blood_group", entity.blood_group }};
+                var content = new FormUrlEncodedContent(values);
+
+                httpClient.DefaultRequestHeaders.Add("Authorization", "Basic QW5kcm9pZDo0bmRyMGlkQXBwcw==");
+                var response = await httpClient.PostAsync(configuration["GHealthApiKeys:signup"], content);
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (responseString.Contains("Wrong API Key"))
+                {
+                    return null;
+                }
+
+                var verificationResponse = JsonConvert.DeserializeObject<SignUpResponse>(responseString);
+                var map = new MemberToPHCMapping();
+                map.Barcode = verificationResponse.barcode;
+                memberToPHCMappingService.Create(map);
+                return verificationResponse;
             }
         }
     }

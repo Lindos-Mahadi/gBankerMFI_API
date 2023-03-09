@@ -27,7 +27,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Country> Country { get; set; }
-       
+        public virtual DbSet<MemberToPHCMapping> MemberToPHCMapping { get; set; }
         public virtual DbSet<Upozilla> Upozillas { get; set; }
         public virtual DbSet<District> District { get; set; }
         public virtual DbSet<Division> Division { get; set; }

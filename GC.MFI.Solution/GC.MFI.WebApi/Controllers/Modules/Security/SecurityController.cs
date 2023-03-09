@@ -51,7 +51,7 @@ namespace GC.MFI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("signup")]
-        public async Task<SignUpResponse> SignUp(SignUpModel model)
+        public async Task<Models.Modules.Security.SignUpResponse> SignUp(SignUpModel model)
         {
             try
             {

@@ -12,5 +12,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<GHealthPatientViewModel>> IsGHealthLoggedIn(string mobile);
 
         Task<GHealthSignViewModel> Authenticate(string username, string password);
+        Task<SignUpResponse> SignUp(GHealthSignUpViewModel entity);
     }
 }
