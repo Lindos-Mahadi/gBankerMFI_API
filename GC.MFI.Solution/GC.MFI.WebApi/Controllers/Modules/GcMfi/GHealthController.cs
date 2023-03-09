@@ -38,7 +38,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         public async Task<IActionResult> SignUp(GHealthSignUpViewModel entity)
         {
             var registraton = await _healthSecurityService.SignUp(entity);
+            if(registraton != null)
+            {
                 return Ok(registraton);
+            }
+            return NotFound();
         }
     }
 }

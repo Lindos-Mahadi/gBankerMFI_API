@@ -94,10 +94,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                         { "password", entity.password },
                         { "dob", entity.dob },
                         { "blood_group", entity.blood_group }};
-                var content = new FormUrlEncodedContent(values);
-
+                var content = JsonConvert.SerializeObject(values);
+                httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Add("Authorization", "Basic QW5kcm9pZDo0bmRyMGlkQXBwcw==");
-                var response = await httpClient.PostAsync(configuration["GHealthApiKeys:signup"], content);
+                StringContent httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+                var response = await httpClient.PostAsync(configuration["GHealthApiKeys:signup"], httpContent);
                 var responseString = await response.Content.ReadAsStringAsync();
                 if (responseString.Contains("Wrong API Key"))
                 {
