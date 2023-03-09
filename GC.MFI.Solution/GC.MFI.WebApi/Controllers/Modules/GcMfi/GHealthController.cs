@@ -1,10 +1,14 @@
 ﻿using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
+    [Authorize]
     [Route("api/ghealth/")]
     [ApiController]
     public class GHealthController : ControllerBase
@@ -34,9 +38,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
         [HttpPost]
         [Route("signup")]
-
         public async Task<IActionResult> SignUp(GHealthSignUpViewModel entity)
         {
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+            var tokenDecode = JwtTokenDecode.GetDetailsFromToken(header);
+            entity.MemberId = long.Parse(tokenDecode.MemberID);
             var registraton = await _healthSecurityService.SignUp(entity);
             if(registraton != null)
             {

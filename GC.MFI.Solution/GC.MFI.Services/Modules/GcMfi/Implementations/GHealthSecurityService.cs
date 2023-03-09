@@ -109,6 +109,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 var verificationResponse = JsonConvert.DeserializeObject<SignUpResponse>(responseString);
                 var map = new MemberToPHCMapping();
                 map.Barcode = verificationResponse.barcode;
+                map.MemberId = entity.MemberId;
                 memberToPHCMappingService.Create(map);
                 return verificationResponse;
             }

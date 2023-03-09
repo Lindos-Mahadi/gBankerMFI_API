@@ -17,6 +17,7 @@ namespace GC.MFI.Models.ViewModels
         public string password { get; set; }
         public string dob { get; set; }
         public string blood_group { get; set; }
+        public long MemberId { get; set; }
 
     }
 }
