@@ -14,7 +14,6 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GC.MFI.Services.Modules.Security.Implementations
 {
@@ -45,7 +44,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             return identity;
         }
 
-        public async Task<Models.Modules.Security.SignUpResponse> Create(SignUpModel model)
+        public async Task<SignUpResponse> Create(SignUpModel model)
         {
 
             var identity = new ApplicationUser();
@@ -58,7 +57,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 Base64File PNID = ImageHelper.GetFileDetails(model.NidPic);
                 Base64File memImage = ImageHelper.GetFileDetails(model.Image);
 
-
+                
                 if (imageTypes.Contains(PNID.MimeType))
                 {
                     var fileCreate = new FileUploadTable
@@ -106,16 +105,16 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 if(result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "PortalMember");
-                    return new Models.Modules.Security.SignUpResponse { isSuccess = true, message = "Member Create Success" };
+                    return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
                 }else
                 {
 
-                    return new Models.Modules.Security.SignUpResponse { isSuccess = false, message = "Member Create Failed" };
+                    return new SignUpResponse { isSuccess = false, message = "Member Create Failed" };
                 }
             }else
             {
 
-                return new Models.Modules.Security.SignUpResponse { isSuccess = false , message= $"{identity.UserName} already exist"};
+                return new SignUpResponse { isSuccess = false , message= $"{identity.UserName} already exist"};
             }
 
         }

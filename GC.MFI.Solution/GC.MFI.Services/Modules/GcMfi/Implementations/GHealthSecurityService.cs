@@ -80,7 +80,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 throw ex;
             }
         }
-        public async Task<SignUpResponse> SignUp(GHealthSignUpViewModel entity)
+        public async Task<GHealthSignUpResponse> SignUp(GHealthSignUpViewModel entity)
         {
             using (var httpClient = new HttpClient())
             {
@@ -109,7 +109,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     return null;
                 }
 
-                var verificationResponse = JsonConvert.DeserializeObject<SignUpResponse>(responseString);
+                var verificationResponse = JsonConvert.DeserializeObject<GHealthSignUpResponse>(responseString);
                 var map = new MemberToPHCMapping();
                 map.Barcode = verificationResponse.barcode;
                 map.MemberId = entity.MemberId;

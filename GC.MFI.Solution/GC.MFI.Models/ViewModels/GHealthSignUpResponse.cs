@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Models.ViewModels
 {
-    public class SignUpResponse
+    public class GHealthSignUpResponse
     {
         public int success { get; set; }
         public string message { get; set; }
