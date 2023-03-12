@@ -105,6 +105,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 {
                     return null;
                 }
+                if (responseString.Contains("The user already exists"))
+                {
+                    return null;
+                }
 
                 var verificationResponse = JsonConvert.DeserializeObject<SignUpResponse>(responseString);
                 var map = new MemberToPHCMapping();

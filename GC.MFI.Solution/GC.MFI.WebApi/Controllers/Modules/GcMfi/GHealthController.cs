@@ -48,7 +48,8 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             {
                 return Ok(registraton);
             }
-            return NotFound();
+            object msg = "Data Alredy Exists";
+            return Ok(msg);
         }
     }
 }
