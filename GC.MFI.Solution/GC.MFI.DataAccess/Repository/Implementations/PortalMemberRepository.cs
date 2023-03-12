@@ -96,21 +96,16 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                }).Where(t=>  t.PortalMemberId == Id ).FirstOrDefault();
             return portalMember;
         }
-        public void CreatePortalMemberNID(long portalMemberId, long portalMemberFId)
+
+
+        public void CreatePortalMemberNIDandImage(long portalMemberId, long portalMemberFId, long portalMemberIId)
         {
-            BeginTransaction();
             var memberId = DataContext.PortalMember.Where(t=> t.Id == portalMemberId).FirstOrDefault();
             memberId.MemberNID= portalMemberFId;
-            CommitTransaction();
-        }
-
-        public void CreatePortalMemberImage(long portalMemberId, long portalMemberIId)
-        {
-            BeginTransaction();
-            var memberId = DataContext.PortalMember.Where(t => t.Id == portalMemberId).FirstOrDefault();
             memberId.Image = portalMemberIId;
             DataContext.SaveChanges();
-            CommitTransaction();
         }
+
+        
     }
 }

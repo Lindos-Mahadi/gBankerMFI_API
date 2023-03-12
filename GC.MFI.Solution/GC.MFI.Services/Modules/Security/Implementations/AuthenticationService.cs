@@ -57,10 +57,10 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 Base64File PNID = ImageHelper.GetFileDetails(model.NidPic);
                 Base64File memImage = ImageHelper.GetFileDetails(model.Image);
 
-                
+                FileUploadTable[] file = new FileUploadTable[2]; 
                 if (imageTypes.Contains(PNID.MimeType))
                 {
-                    var fileCreate = new FileUploadTable
+                    file[0] = new FileUploadTable
                     {
                         EntityName = "PortalMember",
                         EntityId = PortalMember.Id,
@@ -69,13 +69,12 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
                         Type = PNID.MimeType,
                     };
-                   var nidUpload = _fileService.Create(fileCreate);
-                    _repository.CreatePortalMemberNID(PortalMember.Id, nidUpload.FileUploadId);
+                    
                 }
 
                 if (imageTypes.Contains(memImage.MimeType))
                 {
-                    var fileCreate = new FileUploadTable
+                    file[1] = new FileUploadTable
                     {
                         EntityName = "PortalMember",
                         EntityId = PortalMember.Id,
@@ -84,9 +83,10 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                         FileName = $"{PortalMember.FirstName} - {PortalMember.Id}",
                         Type = memImage.MimeType,
                     };
-                   var imageUpload = _fileService.Create(fileCreate);
-                    _repository.CreatePortalMemberImage(PortalMember.Id, imageUpload.FileUploadId);
                 }
+                var InsertFiles = _fileService.BulkCreate(file);
+
+                _repository.CreatePortalMemberNIDandImage(PortalMember.Id, InsertFiles[0].FileUploadId, InsertFiles[1].FileUploadId);
 
                 var user = new ApplicationUser() { 
                     UserName = model.UserName,
