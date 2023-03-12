@@ -37,8 +37,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                         { "user_name", user_name},
                         { "password", pass }};
                     var content = new FormUrlEncodedContent(values);
-
-                    var response = await httpClient.PostAsync("http://ghealth.gramweb.net/api/sign_in", content);
+                    var response = await httpClient.PostAsync(configuration["GHealthApiKeys:signin"], content);
                     var responseString = await response.Content.ReadAsStringAsync();
                     if (responseString.Contains("message"))
                     {
