@@ -29,12 +29,12 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
         [HttpPost]
         [Route("authenticate")]
-        public async Task<IActionResult> Authenticate( string password)
+        public async Task<IActionResult> Authenticate(GHealthSignInViewModel model)
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
             var tokenDecode = JwtTokenDecode.GetDetailsFromToken(header);
             string username = tokenDecode.UserEmail;
-            var verified = await _healthSecurityService.Authenticate(username,password);
+            var verified = await _healthSecurityService.Authenticate(username,model.Password);
             if (verified != null)
                 return Ok(verified);
             return Unauthorized();
