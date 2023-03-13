@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         {
             _repository = repository;
             this._mapper = _mapper;
+        }
+
+        public PagedResponse<IQueryable<LoanSummaryViewModel>> GetAllPortalLoanSummaryPaged(PaginationFilter<LoanSummaryViewModel> filter, long Id)
+        {
+            var response = _repository.GetAllPortalLoanSummaryPaged(filter, Id);
+            return response;
         }
     }
 }
