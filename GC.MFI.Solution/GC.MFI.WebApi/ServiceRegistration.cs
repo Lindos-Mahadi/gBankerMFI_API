@@ -184,6 +184,12 @@ namespace GC.MFI.WebApi
             services.AddScoped<ILoggerRepository, LoggerRepository>();
             services.AddScoped<ILoggerService, LoggerService>();
 
+            // saving summary dependancy
+
+            // Portal Loan Summary Dependancy
+            services.AddScoped<ILoanSummaryRepository, LoanSummaryRepository>();
+            services.AddScoped<ILoanSummaryService, LoanSummaryService>();
+
 
             //SMS Log Table dependancy
             services.AddScoped<ISMSLogTableRepository, SMSLogTableRepository>();
