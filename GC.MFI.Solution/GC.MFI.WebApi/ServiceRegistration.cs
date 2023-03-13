@@ -185,6 +185,8 @@ namespace GC.MFI.WebApi
             services.AddScoped<ILoggerService, LoggerService>();
 
             // saving summary dependancy
+            services.AddScoped<ISavingSummaryRepository, SavingSummaryRepository>();
+            services.AddScoped<ISavingSummaryService, SavingSummaryService>();
 
             // Portal Loan Summary Dependancy
             services.AddScoped<ILoanSummaryRepository, LoanSummaryRepository>();

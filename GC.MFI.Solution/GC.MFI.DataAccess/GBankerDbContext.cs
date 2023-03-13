@@ -46,6 +46,8 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<MemberPassBookRegister> MemberPassBookRegister { get; set; }
         public virtual DbSet<NomineeXPortalSavingSummary> NomineeXPortalSavingSummary { get; set; }
 
+        public virtual DbSet<SavingSummary> SavingSummary { get; set; }
+        public virtual DbSet<NomineeXSavingSummary> NomineeXSavingSummary { get; set; }
         public virtual DbSet<Investor> Investor { get; set; }
 
         public virtual DbSet<RepaymentScheduleReportAE> RepaymentScheduleReportAE { get; set; }
@@ -197,7 +199,12 @@ namespace GC.MFI.DataAccess
                 .HasOne(O => O.PortalSavingSummary)
                 .WithMany(M => M.MemberNomines);
 
-      
+
+          //  modelBuilder.Entity<NomineeXSavingSummary>().HasNoKey();
+            modelBuilder.Entity<NomineeXSavingSummary>()
+                .HasOne(O => O.SavingSummary)
+                .WithMany(O => O.MemberNomines);
+
 
             modelBuilder.Entity<Upozilla>()
                 .Property(e => e.CreateUser)

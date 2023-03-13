@@ -1,4 +1,4 @@
-﻿using GC.MFI.Models.DbModels.BaseModels;
+﻿using GC.MFI.Models.DbModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -8,18 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GC.MFI.Models.DbModels
+namespace GC.MFI.Models.ViewModels
 {
-    public class SavingSummary : LegacyDbModelBase, ILegacyDbModelBase
+    public class SavingsSummaryViewModel
     {
         [Key]
         public long SavingSummaryID { get; set; }
         public int OfficeID { get; set; }
-        [Required]
-        public long MemberID { get; set; }
-        [Required]
-        public short ProductID { get; set; }
 
+        public long MemberID { get; set; }
+        public string MemberName { get; set; }
+
+        public short ProductID { get; set; }
+        public string ProductName { get; set; }
         public int? CenterID { get; set; }
 
         public int? NoOfAccount { get; set; }
@@ -87,10 +88,24 @@ namespace GC.MFI.Models.DbModels
 
         public string SavingAccountNo { get; set; }
         public int? Ref_EmployeeID { get; set; }
-      //  public bool? ApprovalStatus { get; set; }
-        public string SupportingDocumentsId { get; set; }
 
-        [NotMapped]
-        public virtual List<NomineeXSavingSummary> MemberNomines { get; set; }
+        public decimal? MinLimit { get; set; }
+        public decimal? MaxLimit { get; set; }
+
+        public string StatusDesc
+        {
+            get
+            {
+                return
+                    SavingStatus == 1 ? "Pending" :
+                    SavingStatus == 2 ? "Approved" :
+                    SavingStatus == 3 ? "Running" :
+                    SavingStatus == 4 ? "Close Requested" :
+                    SavingStatus == 5 ? "Closed" : "UnApproved";
+            }
+        }
+
+
+        public virtual List<NomineeXPortalSavingSummary> MemberNomines { get; set; }
     }
 }
