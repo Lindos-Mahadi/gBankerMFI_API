@@ -169,7 +169,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             try
             {
-                return await _storedProcedureService.getLoanLedger(officeId, loanee1, loanee2, productId, qType);
+                return await _storedProcedureService.GetLoanLedger(officeId, loanee1, loanee2, productId, qType);
             }
             catch (Exception ex)
             {
