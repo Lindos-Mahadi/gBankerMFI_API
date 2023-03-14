@@ -26,5 +26,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
         Task<List<UpozillaList>> GetUpozillaByDistrict(string districtId);
         Task<List<VillageList>> GetVillageListByUnion(string SearchByCode);
         Task<List<UnionList>> GetUnionListByUpozilla(string SearchByCode);
+        Task<List<LoanLedger>> getLoanLedger(string officeId, string loanee1, string loanee2, string productId, string qType);
     }
 }

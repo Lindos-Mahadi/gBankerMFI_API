@@ -265,5 +265,27 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 throw;
             }
         }
+
+        public async Task<List<LoanLedger>> getLoanLedger(string officeId, string loanee1, string loanee2, string productId, string qType)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@OfficeID", officeId));
+                parameter.Add(new SqlParameter("@LoaneeNo1", loanee1));
+                parameter.Add(new SqlParameter("@LoaneeNo2", loanee2));
+                parameter.Add(new SqlParameter("@ProductID", productId));
+                parameter.Add(new SqlParameter("@Qtype", qType));
+
+                var result = await Task.Run(() => _context.LoanLedger
+               .FromSqlRaw(@"exec Proc_GetRpt_LoanLedger @OfficeID, @LoaneeNo1, @LoaneeNo2, @ProductID, @Qtype", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

@@ -61,6 +61,8 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<SavingsAccClose> SavingsAccClose { get; set; }
         public virtual DbSet<LoanAccReschedule> LoanAccReschedule { get; set; }
         public virtual DbSet<SMSLogTable> SMSLogTable { get; set; }
+        public virtual DbSet<LoanLedger> LoanLedger { get; set; }
+        public virtual DbSet<SavingLedger> SavingLedger { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -225,6 +227,8 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<VillageList>().HasNoKey();
             modelBuilder.Entity<UnionList>().HasNoKey();
             modelBuilder.Entity<ProductListForSavingSummary>().HasNoKey();
+            modelBuilder.Entity<LoanLedger>().HasNoKey();
+            modelBuilder.Entity<SavingLedger>().HasNoKey();
           // modelBuilder.Entity<NIDLogging>().0();
 
             OnModelCreatingPartial(modelBuilder);

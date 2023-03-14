@@ -159,6 +159,25 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpGet]
+        [Route("GetLoanRepaymentScheduleAE")]
+        public async Task<List<LoanLedger>> GetLoanLedger(
+           string officeId, 
+           string loanee1, 
+           string loanee2, 
+           string productId, 
+           string qType)
+        {
+            try
+            {
+                return await _storedProcedureService.getLoanLedger(officeId, loanee1, loanee2, productId, qType);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
         [Route("GetAllPurposeByName")]
         public async Task<IEnumerable<Purpose>> GetAllPurposeByName(string? search)
         {
