@@ -31,7 +31,7 @@ namespace GC.MFI.Models.Models
         public decimal IntCharge { get; set; }
         public decimal TotalInterestPaid { get; set; }
         public decimal IntDue { get; set; }
-        public decimal InstallmentDate { get; set; }
+        public DateTime InstallmentDate { get; set; }
         public string EmpName { get; set; }
         public decimal RunningLoanBalance { get; set; }
         public decimal RunningInterestBalance { get; set; }

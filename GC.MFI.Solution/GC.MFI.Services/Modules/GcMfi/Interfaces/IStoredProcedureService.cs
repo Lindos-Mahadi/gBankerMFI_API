@@ -25,6 +25,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<VillageList>> GetVillageListByUnion(string SearchByCode);
         Task<List<UnionList>> GetUnionListByUpozilla(string SearchByCode);
        Task<IEnumerable<DistrictList>> GetAllDistrict();
-        Task<List<LoanLedger>> getLoanLedger(string officeId, string loanee1, string loanee2, string productId, string qType);
+        Task<List<LoanLedger>> GetLoanLedger(string officeId, string loanee1, string loanee2, string productId, string qType);
+        Task<List<SavingLedger>> GetSavingLedger(string officeId, string loanee1, string loanee2, string productId, string qType);
     }
 }

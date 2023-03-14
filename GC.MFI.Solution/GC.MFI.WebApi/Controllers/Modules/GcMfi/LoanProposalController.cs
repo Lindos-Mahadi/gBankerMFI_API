@@ -159,7 +159,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpGet]
-        [Route("GetLoanRepaymentScheduleAE")]
+        [Route("GetLoanLedger")]
         public async Task<List<LoanLedger>> GetLoanLedger(
            string officeId, 
            string loanee1, 
