@@ -85,9 +85,13 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return await storedProcedureRepository.GetAllDistrict();
         }
 
-        public async Task<List<LoanLedger>> getLoanLedger(string officeId, string loanee1, string loanee2, string productId, string qType)
+        public async Task<List<LoanLedger>> GetLoanLedger(string officeId, string loanee1, string loanee2, string productId, string qType)
         {
-            return await storedProcedureRepository.getLoanLedger(officeId, loanee1, loanee2, productId, qType);
+            return await storedProcedureRepository.GetLoanLedger(officeId, loanee1, loanee2, productId, qType);
+        }
+        public async Task<List<SavingLedger>> GetSavingLedger(string officeId, string loanee1, string loanee2, string productId, string qType)
+        {
+            return await storedProcedureRepository.GetSavingLedger(officeId, loanee1, loanee2, productId, qType);
         }
     }
 }
