@@ -58,7 +58,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                      CreateUser = pps.CreateUser,
                                      OrgID = pps.OrgID,
                                      SavingAccountNo = pps.SavingAccountNo,
-                                     Ref_EmployeeID = pps.Ref_EmployeeID,
                                      MinLimit = pl.MinLimit,
                                      MaxLimit = pl.MaxLimit
                                  })

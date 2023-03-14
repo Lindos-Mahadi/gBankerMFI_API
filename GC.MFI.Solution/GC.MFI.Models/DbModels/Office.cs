@@ -49,8 +49,8 @@ namespace GC.MFI.Models.DbModels
         public DateTime CreateDate { get; set; }
         public int OrgID { get; set; }
 
-        public int? InvestorID { get; set; }
+        public Byte? InvestorID { get; set; }
 
-        public int? UnionID { get; set; }
+        public int? RegionId { get; set; }
     }
 }

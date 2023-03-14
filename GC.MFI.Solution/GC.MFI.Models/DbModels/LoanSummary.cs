@@ -94,7 +94,7 @@ namespace GC.MFI.Models.DbModels
         [Column(TypeName = "date")]
         public DateTime? OverdueDate { get; set; }
 
-        public short EmployeeId { get; set; }
+        public long EmployeeId { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal ExcessPay { get; set; }
@@ -133,7 +133,7 @@ namespace GC.MFI.Models.DbModels
         [StringLength(50)]
         public string BankName { get; set; }
 
-        public string Remarks { get; set; }
+      //  public string Remarks { get; set; }
 
         [StringLength(50)]
         public string ChequeNo { get; set; }

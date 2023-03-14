@@ -65,7 +65,7 @@ namespace GC.MFI.Models.DbModels
 
         public byte? SavingStatus { get; set; }
 
-        public short? EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
 
         public byte? MemberCategoryID { get; set; }
 
@@ -86,7 +86,7 @@ namespace GC.MFI.Models.DbModels
         public int? OrgID { get; set; }
 
         public string SavingAccountNo { get; set; }
-        public int? Ref_EmployeeID { get; set; }
+      //  public int? Ref_EmployeeID { get; set; }
       //  public bool? ApprovalStatus { get; set; }
         public string SupportingDocumentsId { get; set; }
 

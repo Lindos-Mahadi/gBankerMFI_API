@@ -66,7 +66,7 @@ namespace GC.MFI.Models.ViewModels
 
         public byte? SavingStatus { get; set; }
 
-        public short? EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
 
         public byte? MemberCategoryID { get; set; }
 
@@ -87,7 +87,7 @@ namespace GC.MFI.Models.ViewModels
         public int? OrgID { get; set; }
 
         public string SavingAccountNo { get; set; }
-        public int? Ref_EmployeeID { get; set; }
+   //     public int? Ref_EmployeeID { get; set; }
 
         public decimal? MinLimit { get; set; }
         public decimal? MaxLimit { get; set; }

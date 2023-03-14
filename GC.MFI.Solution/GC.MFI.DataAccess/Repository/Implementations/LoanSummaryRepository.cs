@@ -92,24 +92,20 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   SecurityBankName = pls.SecurityBankName,
                                   SecurityBankBranchName = pls.SecurityBankBranchName,
                                   SecurityBankCheckNo = pls.SecurityBankCheckNo,
-                                  Remarks = pls.Remarks,
                               }
                               ).Where(x => x.MemberID == Id)
                                .Where(filter.search)
                                .OrderByDescending(t => t.LoanSummaryID)
                                .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                .Take(filter.pageSize);
-            var totalPages = ((double)totalElems / (double)filter.pageSize);
-            if (filter.pageSize < 0)
-            {
-                totalPages = ((double)totalElems / (double)totalElems);
-            }
+
+            var totalPages = Convert.ToInt32(Math.Ceiling(((double)totalElems / (double)filter.pageSize)));
             return new PagedResponse<IQueryable<LoanSummaryViewModel>>(
                 portalList,
                 filter.pageNum,
                 filter.pageSize,
                 totalElems,
-                (int)totalPages);
+                totalPages);
         }
     }
 }

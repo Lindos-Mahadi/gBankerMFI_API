@@ -93,7 +93,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     EmployeeID = 1,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    RoleId = 14,
+                    RoleId = 15,
                     Email = model.Email, 
                     DateCreated = DateTime.Now, 
                     Activated = false,

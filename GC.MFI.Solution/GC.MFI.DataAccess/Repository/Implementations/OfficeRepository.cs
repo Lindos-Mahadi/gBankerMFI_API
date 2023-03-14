@@ -30,7 +30,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public async Task<IEnumerable<Office>> GetOfficeByUnionId(int unionId)
         {
-            var getOffice = _context.Office.Where(t => t.UnionID == unionId);
+            var getOffice = _context.Office.Where(t => t.RegionId == unionId);
             return getOffice;
         }
     }
