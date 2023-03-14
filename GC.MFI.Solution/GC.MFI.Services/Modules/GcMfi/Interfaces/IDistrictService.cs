@@ -1,4 +1,5 @@
 ﻿using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

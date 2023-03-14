@@ -1,6 +1,7 @@
 ﻿using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -40,6 +40,22 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
         }
 
+        public async Task<IEnumerable<DistrictList>> GetAllDistrict()
+        {
+            try
+            {
+
+                var result = await Task.Run(() => _context.DistrictList
+               .FromSqlRaw(@"exec Proc_GetAllDistricts"));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<DistrictList>> GetDistrictByDivision(string divisionId)
         {
             try

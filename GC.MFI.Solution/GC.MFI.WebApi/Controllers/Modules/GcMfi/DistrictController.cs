@@ -31,5 +31,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var districts = await _storedProcedureService.GetDistrictByDivision(divisionId);
             return districts;
         }
+        [HttpGet]
+        [Route("GetAllDistricts")]
+        public async  Task<IEnumerable<DistrictList>> GetAllDistricts()
+        {
+            return await _storedProcedureService.GetAllDistrict();
+        }
     }
 }

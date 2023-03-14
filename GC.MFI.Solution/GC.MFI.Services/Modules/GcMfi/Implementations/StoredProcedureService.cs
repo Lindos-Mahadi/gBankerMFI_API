@@ -80,6 +80,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return await storedProcedureRepository.GetUnionListByUpozilla(SearchByCode);
         }
 
+        public async Task<IEnumerable<DistrictList>> GetAllDistrict()
+        {
+            return await storedProcedureRepository.GetAllDistrict();
+        }
+
         public async Task<List<LoanLedger>> getLoanLedger(string officeId, string loanee1, string loanee2, string productId, string qType)
         {
             return await storedProcedureRepository.getLoanLedger(officeId, loanee1, loanee2, productId, qType);
