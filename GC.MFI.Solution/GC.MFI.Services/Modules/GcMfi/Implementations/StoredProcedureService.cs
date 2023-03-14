@@ -79,5 +79,10 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         {
             return await storedProcedureRepository.GetUnionListByUpozilla(SearchByCode);
         }
+
+        public async Task<IEnumerable<DistrictList>> GetAllDistrict()
+        {
+            return await storedProcedureRepository.GetAllDistrict();
+        }
     }
 }

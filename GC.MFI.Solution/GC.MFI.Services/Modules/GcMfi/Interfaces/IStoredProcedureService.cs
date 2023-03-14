@@ -24,5 +24,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<UpozillaList>> GetUpozillaByDistrict(string districtId);
         Task<List<VillageList>> GetVillageListByUnion(string SearchByCode);
         Task<List<UnionList>> GetUnionListByUpozilla(string SearchByCode);
+       Task<IEnumerable<DistrictList>> GetAllDistrict();
     }
 }

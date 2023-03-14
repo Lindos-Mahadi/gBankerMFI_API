@@ -2,6 +2,7 @@
 using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System;
 using System.Collections.Generic;
