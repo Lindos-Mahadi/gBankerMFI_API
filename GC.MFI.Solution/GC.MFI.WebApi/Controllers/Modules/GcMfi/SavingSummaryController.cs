@@ -1,5 +1,6 @@
 ﻿using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Utility.Helpers;
@@ -17,11 +18,16 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
     {
         private readonly ILogger<SavingSummaryController> _logger;
         private readonly ISavingSummaryService _service;
+        private readonly IStoredProcedureService _storedProcedureService;
 
-        public SavingSummaryController(ILogger<SavingSummaryController> logger, ISavingSummaryService service) : base(service)
+        public SavingSummaryController(
+            ILogger<SavingSummaryController> logger, 
+            ISavingSummaryService service,
+            IStoredProcedureService storedProcedureService) : base(service)
         {
             this._logger = logger;
             this._service = service;
+            this._storedProcedureService = storedProcedureService;
         }
 
         [HttpGet]
@@ -43,6 +49,20 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             //    var nominee = _nService.GetMany(t => t.PortalSavingSummaryID == savingSummary.Data.ToList()[i].PortalSavingSummaryID);
             //}
             return savingSummary;
+        }
+
+        [HttpGet]
+        [Route("getsavingsledger")]
+        public async Task<List<SavingLedger>> GetSavingsLedger(string officeId, string loanee1, string loanee2, string productId, string qType)
+        {
+            try
+            {
+                return await _storedProcedureService.GetSavingLedger(officeId,loanee1,loanee2,productId, qType);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
