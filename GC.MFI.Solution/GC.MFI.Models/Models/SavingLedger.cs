@@ -21,7 +21,7 @@ namespace GC.MFI.Models.Models
         public string MemberName { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
-        public int NoOfAccountl { get; set; }
+        public int NoOfAccount { get; set; }
         public DateTime TransactionDate { get; set; }
         public decimal Penalty { get; set; }
         public decimal Deposit { get; set; }

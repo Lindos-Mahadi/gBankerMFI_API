@@ -316,7 +316,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 parameter.Add(new SqlParameter("@Qtype", qType));
 
                 var result = await Task.Run(() => _context.SavingLedger
-               .FromSqlRaw(@"exec Proc_GetRpt_LoanLedger @OfficeID, @LoaneeNo1, @LoaneeNo2, @ProductID, @Qtype", parameter.ToArray()));
+               .FromSqlRaw(@"exec Proc_GetRpt_SavingsLedger  @OfficeID, @LoaneeNo1, @LoaneeNo2, @ProductID, @Qtype", parameter.ToArray()));
 
                 return result.ToList();
             }
