@@ -19,7 +19,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public PagedResponse<IQueryable<LoanSummaryViewModel>> GetAllPortalLoanSummaryPaged(PaginationFilter<LoanSummaryViewModel> filter, long Id)
         {
-            var totalElems = DataContext.LoanSummary.Count(x => x.MemberID == Id);
+            var totalElems = GetCount(x => x.MemberID == Id);
             var portalList = (from pls in DataContext.LoanSummary
                               join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
                               join prpse in DataContext.Purpose on pls.PurposeID equals prpse.PurposeID
