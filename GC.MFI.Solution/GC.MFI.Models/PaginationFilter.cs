@@ -20,14 +20,14 @@ namespace GC.MFI.Models
         }
         public PaginationFilter(int page, int per_page)
         {
-            this.pageNum = page < 1 ? 1 : page;
-            this.pageSize = per_page > 10 ? 10 : per_page;
+            this.pageNum = page ;
+            this.pageSize = per_page ;
             search = (x => true);
         }
         public PaginationFilter(int page, int per_page, Expression<Func<T, bool>> search)
         {
-            this.pageNum = page < 1 ? 1 : page;
-            this.pageSize = per_page > 10 ? 10 : per_page;
+            this.pageNum = page ;
+            this.pageSize = per_page ;
             this.search = search;
         }
     }

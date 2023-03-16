@@ -97,15 +97,20 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                .Where(filter.search)
                                .OrderByDescending(t => t.LoanSummaryID)
                                .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
-                               .Take(filter.pageSize);
+                               .Take(filter.pageSize > 0 ? filter.pageSize : totalElems);
 
-            var totalPages = Convert.ToInt32(Math.Ceiling(((double)totalElems / (double)filter.pageSize)));
+            var totalPages = ((double)totalElems / (double)filter.pageSize);
+            if (filter.pageSize < 0)
+            {
+                totalPages = ((double)totalElems / (double)totalElems);
+            }
+            int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
             return new PagedResponse<IQueryable<LoanSummaryViewModel>>(
                 portalList,
                 filter.pageNum,
                 filter.pageSize,
                 totalElems,
-                totalPages);
+                roundedTotalPages);
         }
     }
 }
