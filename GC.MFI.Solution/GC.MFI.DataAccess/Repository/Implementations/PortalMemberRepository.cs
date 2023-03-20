@@ -17,59 +17,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
         }
 
-        public async Task<PortalMember> CreatePortalMember(SignUpModel signUp)
-        {
-
-            int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-            int dob = int.Parse(signUp.DOB.ToString("yyyyMMdd"));
-            int age = (now - dob) / 10000;
-            var portalMember = new PortalMember()
-            {
-                OfficeID = signUp.OfficeID,
-                CenterID = signUp.CenterID,
-                GroupID = signUp.GroupID,
-                JoinDate = DateTime.Now,
-                Gender = signUp.Gender,
-                MemberCategoryID = 1,
-                MemberStatus = "AC",
-                OrgID = signUp.OrgID,
-                FirstName = signUp.FirstName,
-                LastName = signUp.LastName,
-                FatherName = signUp.FatherName,
-                MotherName = signUp.MotherName,
-                Email = signUp.Email,
-                Occupation = signUp.Occupation,
-                Address = signUp.Address,
-                Photo = "",
-                Phone = signUp.PhoneNumber,
-               EducationQualification = signUp.EducationQualification,
-                ApprovalStatus = false,
-                DOB= signUp.DOB,
-                MemberAge = age,
-                CountryID = signUp.CountryID,
-                DistrictCode = signUp.DistrictCode,
-                DivisionCode= signUp.DivisionCode,
-                UpozillaCode = signUp.UpozillaCode,
-                PostCode = signUp.PostCode,
-                UnionCode = signUp.UnionCode,
-                VillageCode = signUp.VillageCode,
-                CreateDate= DateTime.Now,
-                UpdateDate= DateTime.Now,
-                Status = "A",
-                NationalID = signUp.NationalID,
-                PlaceOfBirth = signUp.PlaceOfBirth,
-                Cityzenship = signUp.Cityzenship,
-                MaritalStatus = signUp.MaritalStatus,
-                HomeType = signUp.HomeType,
-                SpouseName = signUp.SpouseName,
-                SpouseNameBN = signUp.SpouseNameBN
-
-
-            };
-            DataContext.Add(portalMember);
-            DataContext.SaveChanges();
-            return portalMember;
-        }
+       
         public async Task<MemberProfile> GetMemberById(long Id)
         {
             var portalMember =(from m in DataContext.PortalMember
@@ -100,7 +48,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public void CreatePortalMemberNIDandImage(long portalMemberId, long portalMemberFId, long portalMemberIId)
         {
-            var memberId = DataContext.PortalMember.Where(t=> t.Id == portalMemberId).FirstOrDefault();
+            var memberId = DataContext.PortalMember.Find(portalMemberId);
             memberId.MemberNID= portalMemberFId;
             memberId.Image = portalMemberIId;
             DataContext.SaveChanges();

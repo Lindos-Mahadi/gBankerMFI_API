@@ -20,7 +20,7 @@ namespace GC.MFI.Models.DbModels
         public string MotherName { get; set; }
         [Required]
         public string Occupation { get; set; }
-        public string PhoneNumber { get; set; }
+        public string Phone { get; set; }
 
         [Required]
         public string Address { get; set; }
@@ -48,7 +48,7 @@ namespace GC.MFI.Models.DbModels
         public string VillageCode { get; set; }
         public int CountryID { get; set; }
         public string EducationQualification { get; set; }
-        public string Image { get; set; }
+        public string Img { get; set; }
         public string NationalID { get; set; }
         public string PlaceOfBirth { get; set; }
         public string Cityzenship { get; set; }
