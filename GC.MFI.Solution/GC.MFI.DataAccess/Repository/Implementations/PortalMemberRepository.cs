@@ -41,7 +41,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Occupation = signUp.Occupation,
                 Address = signUp.Address,
                 Photo = "",
-                Phone = signUp.PhoneNumber,
+                Phone = signUp.Phone,
                EducationQualification = signUp.EducationQualification,
                 ApprovalStatus = false,
                 DOB= signUp.DOB,

@@ -47,6 +47,7 @@ namespace GC.MFI.Models.Mapper
             CreateMap<Logger, LoggerViewModel>();
 
             CreateMap<SMSLogTable, SMSLogTableViewModel>();
+            CreateMap<PortalMember, SignUpModel>();
         }
     }
 }
