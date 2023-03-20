@@ -269,6 +269,9 @@ namespace GC.MFI.Models.DbModels
         public string AsOnDateAge { get; set; }
         public string FamilyContactNo { get; set; }
         public DateTime? CardIssueDate { get; set; }
+
+        public long? MemberNID { get; set; }
+        public long? Image { get; set; }
         public long? PortalMemberId { get; set; }
 
 

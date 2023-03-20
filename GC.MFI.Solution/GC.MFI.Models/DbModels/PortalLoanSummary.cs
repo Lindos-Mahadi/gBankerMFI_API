@@ -91,7 +91,7 @@ namespace GC.MFI.Models.DbModels
         [Column(TypeName = "date")]
         public DateTime? OverdueDate { get; set; }
       
-        public short? EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
 
         public byte? InvestorID { get; set; }
     
@@ -135,7 +135,6 @@ namespace GC.MFI.Models.DbModels
         public string ChequeNo { get; set; }
 
         public bool? IsApproved { get; set; }
-        [Required]
         [StringLength(50)]
         public string CoApplicantName { get; set; }
 
