@@ -42,8 +42,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public async Task<string> GetImageByMemberID(long memberId)
         {
             Member getMember = GetById(memberId);
-            var PortalMemberID = getMember.PortalMemberId;
-            FileUploadTable Image = DataContext.FileUploadTable.Where(t => t.EntityId == PortalMemberID && t.EntityName == "PortalMember" && t.PropertyName == "Image").FirstOrDefault();
+            FileUploadTable Image = DataContext.FileUploadTable.Find(getMember.Image);
             string ToBase64 = FileDecodeHelper.Base64(Image.Type , Image.File);
             return ToBase64;
         }
