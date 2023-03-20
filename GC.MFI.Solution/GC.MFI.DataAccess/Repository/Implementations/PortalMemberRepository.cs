@@ -41,7 +41,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 Occupation = signUp.Occupation,
                 Address = signUp.Address,
                 Photo = "",
-                Phone = signUp.PhoneNumber,
+                Phone = signUp.Phone,
                EducationQualification = signUp.EducationQualification,
                 ApprovalStatus = false,
                 DOB= signUp.DOB,
@@ -100,7 +100,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public void CreatePortalMemberNIDandImage(long portalMemberId, long portalMemberFId, long portalMemberIId)
         {
-            var memberId = DataContext.PortalMember.Where(t=> t.Id == portalMemberId).FirstOrDefault();
+            var memberId = DataContext.PortalMember.Find(portalMemberId);
             memberId.MemberNID= portalMemberFId;
             memberId.Image = portalMemberIId;
             DataContext.SaveChanges();
