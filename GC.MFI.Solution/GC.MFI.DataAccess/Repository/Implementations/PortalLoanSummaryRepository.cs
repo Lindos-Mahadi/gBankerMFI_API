@@ -81,7 +81,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   BankName = pls.BankName,
                                   ChequeNo = pls.ChequeNo,
                                   IsApproved = pls.IsApproved,
-                                  CoApplicantName = pls.CoApplicantName,
+                                  CoApplicantName = string.IsNullOrEmpty(pls.CoApplicantName) ? pls.CoApplicantName : "",
                                   Guarantor = pls.Guarantor,
                                   MemberPassBookRegisterID = pls.MemberPassBookRegisterID,
                                   ChequeIssueDate = pls.ChequeIssueDate,

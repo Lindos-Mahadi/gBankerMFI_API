@@ -94,7 +94,7 @@ namespace GC.MFI.Models.ViewModels
         [Column(TypeName = "date")]
         public DateTime? OverdueDate { get; set; }
 
-        public short? EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
 
         public byte? InvestorID { get; set; }
 
