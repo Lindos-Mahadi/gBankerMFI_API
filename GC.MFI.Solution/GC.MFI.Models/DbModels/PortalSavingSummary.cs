@@ -67,7 +67,7 @@ namespace GC.MFI.Models.DbModels
 
         public byte? SavingStatus { get; set; }
 
-        public short? EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
 
         public byte? MemberCategoryID { get; set; }
 
