@@ -82,14 +82,17 @@ namespace GC.MFI.Security.Jwt
                     }else
                     {
                         claims.Add(new Claim(ClaimTypes.Role, "UnActive"));
+                        claims.Add(new Claim("memberStatus", "0"));
                     }
                 }else
                 {
                     claims.Add(new Claim(ClaimTypes.Role, "UnActive"));
+                    claims.Add(new Claim("memberStatus", "0"));
                 }
             }else
             {
                 claims.Add(new Claim(ClaimTypes.Role, "UnActive"));
+                claims.Add(new Claim("memberStatus", "0"));
             }
 
 
