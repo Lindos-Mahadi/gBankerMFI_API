@@ -213,6 +213,8 @@ namespace GC.MFI.WebApi
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IMailService, MailService>();
 
+            // signal r service
+            services.AddSignalR();
 
             // Register for model Validation
             services.AddControllers(
