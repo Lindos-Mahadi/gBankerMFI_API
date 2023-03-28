@@ -20,12 +20,14 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         public async Task<MemberProfile> GetMemberById(long Id)
         {
             var portalMember =(from m in DataContext.PortalMember
+                              where m.Id == Id
                                select new MemberProfile
                                {
                                    PortalMemberId = m.Id,
                                    Gender = m.Gender,
                                    FirstName = m.FirstName,
                                    LastName = m.LastName,
+                                   FatherName = m.FatherName,
                                    MotherName = m.MotherName,
                                    Email = m.Email,
                                    Occupation = m.Occupation,
@@ -40,7 +42,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                    countryID = m.CountryID,
                                    DOB = m.DOB,
                                    postCode = m.PostCode
-                               }).Where(t=>  t.PortalMemberId == Id ).FirstOrDefault();
+                               }).FirstOrDefault();
             return portalMember;
         }
 

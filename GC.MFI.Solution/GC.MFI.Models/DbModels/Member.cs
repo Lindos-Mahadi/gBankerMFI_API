@@ -270,7 +270,8 @@ namespace GC.MFI.Models.DbModels
         public string FamilyContactNo { get; set; }
         public DateTime? CardIssueDate { get; set; }
         public long? PortalMemberId { get; set; }
-
+        public long? MemberNID { get; set; }
+        public long? Image { get; set; }
 
         //public virtual Organization Organization { get; set; }
         //public virtual Center Center { get; set; }

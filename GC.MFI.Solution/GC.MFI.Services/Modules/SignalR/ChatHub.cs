@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
 
 public class ChatHub : Hub
