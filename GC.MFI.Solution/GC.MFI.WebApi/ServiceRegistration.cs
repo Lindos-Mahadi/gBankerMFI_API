@@ -209,6 +209,11 @@ namespace GC.MFI.WebApi
             services.AddScoped<IMemberToPHCMappingRepository, MemberToPHCMappingRepository>();
             services.AddScoped<IMemberToPHCMappingService, MemberToPHCMappingService>();
 
+            // Email log dependancy
+            services.AddScoped<IEmailLogTableRepository, EmailLogTableRepository>();
+            services.AddScoped<IEmailLogTableService, EmailLogTableService>();
+
+
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IMailService, MailService>();
