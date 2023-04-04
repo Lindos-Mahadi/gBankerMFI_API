@@ -212,6 +212,7 @@ namespace GC.MFI.WebApi
             // Email log dependancy
             services.AddScoped<IEmailLogTableRepository, EmailLogTableRepository>();
             services.AddScoped<IEmailLogTableService, EmailLogTableService>();
+            services.AddScoped<IEmailService , EmailService>();
 
 
             // Email Notification dependancy

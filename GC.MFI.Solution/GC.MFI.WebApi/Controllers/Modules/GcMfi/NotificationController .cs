@@ -23,11 +23,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         private readonly IMailService mailService;
         private readonly ISMSTwilioService sMSTwilioService;
         private readonly ISMSLogTableService sMSLogTableService;
-        public NotificationController(IMailService mailService, ISMSTwilioService sMSTwilioService, ISMSLogTableService sMSLogTableService)
+        private readonly IEmailService emailService;
+        public NotificationController(IMailService mailService, IEmailService emailService, ISMSTwilioService sMSTwilioService, ISMSLogTableService sMSLogTableService)
         {
             this.mailService = mailService;
             this.sMSTwilioService = sMSTwilioService;
             this.sMSLogTableService = sMSLogTableService;
+            this.emailService = emailService;
         }
 
         [HttpPost("Send")]
@@ -66,6 +68,36 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             {
 
                 var getMessage = await sMSTwilioService.VerifyOtpAsync(mobileNo, message);
+                return Ok(getMessage);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        [HttpPost("SendEmailOtp")]
+        public async Task<IActionResult> SendEmailOtp(string email)
+        {
+            try
+            {
+                var sendMessage = await emailService.SendOtp(email);
+                return Ok(sendMessage);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("VerifyEmailOtp")]
+        public async Task<IActionResult> VerifyEmailOtp(string email, string message)
+        {
+            try
+            {
+
+                var getMessage = await emailService.VerifyEmailOtpAsync(email, message);
                 return Ok(getMessage);
             }
             catch (Exception ex)
