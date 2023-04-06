@@ -113,6 +113,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     RoleId = 14,
+                    IsTemporaryPassword = false,
                     Email = model.Email,
                     DateCreated = DateTime.Now, 
                     Activated = false,
