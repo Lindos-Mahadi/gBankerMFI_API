@@ -87,8 +87,8 @@ if (!string.IsNullOrEmpty(misSetting?.CORSEnabledUrl))
             {
                 builder.WithOrigins(urls)
                 .AllowAnyHeader()
-                .AllowAnyMethod();
-
+                .AllowAnyMethod()
+                .AllowCredentials();
             });
     });
 }
@@ -97,6 +97,13 @@ var app = builder.Build();
 app.UseMiddleware<LoggingMiddleware>();
 
 // Configure the HTTP request pipeline.
+app.UseRouting();
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllers();
+//    endpoints.MapHub<ChatHub>("/chathub"); // Add this line to map your SignalR hub
+//});
 
 app.UseSwagger();
 app.UseSwaggerUI();

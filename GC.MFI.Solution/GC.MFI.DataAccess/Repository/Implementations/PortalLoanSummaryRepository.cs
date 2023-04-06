@@ -28,6 +28,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var portalList = (from pls in DataContext.PortalLoanSummary
                               join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
                               join prpse in DataContext.Purpose on pls.PurposeID equals prpse.PurposeID
+                              where pls.MemberID == Id
                               select new PortalLoanSummaryViewModel
                               {
                                   PortalLoanSummaryID = pls.PortalLoanSummaryID,
@@ -109,7 +110,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   ApprovalStatus = pls.ApprovalStatus
                               }
                               ).Where(filter.search)
-                               .Where(x => x.MemberID == Id)
                                .OrderByDescending(t=> t.PortalLoanSummaryID)
                                .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                .Take(filter.pageSize);
@@ -125,8 +125,9 @@ namespace GC.MFI.DataAccess.Repository.Implementations
 
         public async Task<IEnumerable<PortalLoanSummaryViewModel>> getByLoanStatus(byte type, long memberId)
         {
-            var portalLoanList = (from pls in DataContext.PortalLoanSummary
+            var portalLoanList =from pls in DataContext.PortalLoanSummary
                               join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
+                              where pls.LoanStatus == type && pls.MemberID == memberId
                               select new PortalLoanSummaryViewModel
                               {
                                   PortalLoanSummaryID = pls.PortalLoanSummaryID,
@@ -166,8 +167,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   IsApproved = pls.IsApproved,
                                  
                                   ApprovalStatus = pls.ApprovalStatus
-                              }
-                              ).Where(t => t.LoanStatus == type && t.MemberID == memberId);
+                              };
 
             return portalLoanList;
         }

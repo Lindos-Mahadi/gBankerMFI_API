@@ -209,10 +209,18 @@ namespace GC.MFI.WebApi
             services.AddScoped<IMemberToPHCMappingRepository, MemberToPHCMappingRepository>();
             services.AddScoped<IMemberToPHCMappingService, MemberToPHCMappingService>();
 
+            // Email log dependancy
+            services.AddScoped<IEmailLogTableRepository, EmailLogTableRepository>();
+            services.AddScoped<IEmailLogTableService, EmailLogTableService>();
+            services.AddScoped<IEmailService , EmailService>();
+
+
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IMailService, MailService>();
 
+            // signal r service
+            services.AddSignalR();
 
             // Register for model Validation
             services.AddControllers(
