@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
-    [Route("api/pos/product")]
+    [Route("api/gcmfi/product")]
     public class ProductController : GCMcfinaLegacyBaseController<Product>
     {
         private readonly ILogger<ProductController> _logger;
