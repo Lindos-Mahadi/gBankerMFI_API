@@ -154,7 +154,8 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             if (result.Succeeded) 
             {
                 user.IsTemporaryPassword = false;
-                unitOfWork.Commit();
+                var updateResult = _userManager.UpdateAsync(user);
+                if (!updateResult.Result.Succeeded) return new ResponseStatus { IsSuccess = false, Message = "Failed to update user" };
                 return new ResponseStatus { IsSuccess = true , Message = "Password Change Successfully" };
             }else
             {
