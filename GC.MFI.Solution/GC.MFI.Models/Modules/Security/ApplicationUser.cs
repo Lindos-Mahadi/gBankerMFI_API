@@ -19,7 +19,7 @@ namespace GC.MFI.Models.Modules.Distributions.Security
         public DateTime? LastLoginTime { get; set; }
         public bool Activated { get; set; }
         public int RoleId { get; set; }
-        //public bool? IsTemporaryPassword { get; set; }
+        public bool? IsTemporaryPassword { get; set; }
         public Int16? EmployeeID { get; set; }
         public long? PortalMemberID { get; set; }
         //public string DisplayName
