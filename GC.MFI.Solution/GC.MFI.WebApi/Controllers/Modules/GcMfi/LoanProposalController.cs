@@ -173,7 +173,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
