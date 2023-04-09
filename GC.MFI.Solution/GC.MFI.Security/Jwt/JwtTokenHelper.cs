@@ -55,7 +55,7 @@ namespace GC.MFI.Security.Jwt
             claims.Add(new Claim("userName", userModel.UserName));
             claims.Add(new Claim("id", userModel.Id));
             claims.Add(new Claim("fullName", userModel.FirstName +" " +( userModel.LastName != null ? userModel.LastName : "" ) ));
-            claims.Add(new Claim("IsTemporaryPassword", userModel.IsTemporaryPassword != null ? userModel.IsTemporaryPassword.ToString() : "false")); 
+            claims.Add(new Claim("IsTemporaryPassword", userModel.IsTemporaryPassword.ToString())); 
             if(userModel.PortalMemberID != null)
             {
                 long id = (long)userModel.PortalMemberID;
