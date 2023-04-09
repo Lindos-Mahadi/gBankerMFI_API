@@ -89,7 +89,7 @@ namespace GC.MFI.Models.DbModels
         public DateTime CreateDate { get; set; }
         public byte? DurationOverCollection { get; set; }
         public byte? IsDisbursement { get; set; }
-        public byte? NextDisbursementDuration { get; set; }
+      //  public byte? NextDisbursementDuration { get; set; }
 
     }
 }
