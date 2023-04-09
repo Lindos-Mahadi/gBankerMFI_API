@@ -153,6 +153,8 @@ namespace GC.MFI.Services.Modules.Security.Implementations
             var result = await _userManager.ChangePasswordAsync(user, CPM.OldPassword, CPM.NewPassword);
             if (result.Succeeded) 
             {
+                user.IsTemporaryPassword = false;
+                unitOfWork.Commit();
                 return new ResponseStatus { IsSuccess = true , Message = "Password Change Successfully" };
             }else
             {

@@ -15,17 +15,20 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         private readonly ILogger<LoanProposalController> _logger;
         private readonly IStoredProcedureService _storedProcedureService;
         private readonly IPurposeService _purposeService;
+        private readonly IProductService _productService;
 
 
         public LoanProposalController(
             ILogger<LoanProposalController> logger,
             IStoredProcedureService storedProcedureService,
-            IPurposeService purposeService
+            IPurposeService purposeService,
+            IProductService productService
             )
         {
             _logger= logger;
             _storedProcedureService = storedProcedureService; 
             _purposeService= purposeService;
+            _productService= productService;
         }
         
         [HttpGet]
@@ -151,6 +154,24 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             try
             {
                 return await _storedProcedureService.GetRepaymentScheduleD(officeId, memberId, productId, loanTerm);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("GetLoanRepaymentScheduleF")]
+        public async Task<List<RepaymentScheduleReportF>> GetLoanRepaymentScheduleF(
+          int officeId,
+          int memberId,
+          int productId,
+          int loanTerm)
+        {
+            try
+            {
+                return await _storedProcedureService.GetRepaymentScheduleF(officeId, memberId, productId, loanTerm);
             }
             catch (Exception ex)
             {

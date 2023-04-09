@@ -19,6 +19,7 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
         Task<List<SubMainProduct>> GetSubMainProdutList(string MainProductCode, string freq);
         Task<List<RepaymentScheduleReportAE>> GetRepaymentScheduleAE(int officeID, int memberId, int productId, int loanTerm);
         Task<List<RepaymentScheduleReportD>> GetRepaymentScheduleD(int officeID, int memberId, int productId, int loanTerm);
+        Task<List<RepaymentScheduleReportF>> GetRepaymentScheduleF(int officeID, int memberId, int productId, int loanTerm);
         //Task<List<ProductList>> GetProductList(string MainProductCode, string freq, int officeId);
         Task<List<ProductList>> GetProductList(string freq, int officeId);
         Task<List<ProductListForSavingSummary>> GetProductListForSavingAccount(int porductType,int orgId, string itemType,int officeId);

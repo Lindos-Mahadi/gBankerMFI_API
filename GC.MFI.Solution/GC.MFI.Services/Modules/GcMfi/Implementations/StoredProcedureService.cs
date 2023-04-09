@@ -70,6 +70,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return await storedProcedureRepository.GetRepaymentScheduleD(officeId, memberId, productId, loanTerm);
         }
 
+        public async Task<List<RepaymentScheduleReportF>> GetRepaymentScheduleF(int officeId, int memberId, int productId, int loanTerm)
+        {
+            return await storedProcedureRepository.GetRepaymentScheduleF(officeId, memberId, productId, loanTerm);
+        }
+
         public async Task<List<VillageList>> GetVillageListByUnion(string SearchByCode)
         {
             return await storedProcedureRepository.GetVillageListByUnion(SearchByCode);

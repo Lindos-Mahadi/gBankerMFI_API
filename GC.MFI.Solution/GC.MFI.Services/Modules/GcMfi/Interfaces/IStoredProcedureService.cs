@@ -20,6 +20,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
         Task<List<ProductListForSavingSummary>> GetProductListForSavingAccount(int porductType, int orgId, string itemType, int officeId);
         Task<List<RepaymentScheduleReportAE>> GetRepaymentScheduleAE(int officeID, int memberId, int productId, int loanTerm);
         Task<List<RepaymentScheduleReportD>> GetRepaymentScheduleD(int officeID, int memberId, int productId, int loanTerm);
+        Task<List<RepaymentScheduleReportF>> GetRepaymentScheduleF(int officeID, int memberId, int productId, int loanTerm);
         Task<List<DistrictList>> GetDistrictByDivision(string divisionId);
         Task<List<UpozillaList>> GetUpozillaByDistrict(string districtId);
         Task<List<VillageList>> GetVillageListByUnion(string SearchByCode);

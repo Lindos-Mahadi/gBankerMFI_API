@@ -242,6 +242,27 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             }
         }
 
+        public async Task<List<RepaymentScheduleReportF>> GetRepaymentScheduleF(int officeID, int memberId, int productId, int loanTerm)
+        {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@OfficeId", officeID));
+                parameter.Add(new SqlParameter("@MemberID", memberId));
+                parameter.Add(new SqlParameter("@ProductID", productId));
+                parameter.Add(new SqlParameter("@Loanterm", loanTerm));
+
+                var result = await Task.Run(() => _context.RepaymentScheduleReportF
+                .FromSqlRaw(@"exec getRepaymentScheduleReportHistory @OfficeId, @MemberID, @ProductID, @loanTerm", parameter.ToArray()));
+
+                return result.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<VillageList>> GetVillageListByUnion(string SearchByCode)
         {
             try
