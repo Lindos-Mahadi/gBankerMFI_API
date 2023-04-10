@@ -52,90 +52,99 @@ namespace GC.MFI.Services.Modules.Security.Implementations
 
         public async Task<SignUpResponse> Create(SignUpModel model)
         {
-
-            var identity = new ApplicationUser();
-            identity = _userManager.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
-            string[] imageTypes = { "image/jpg", "image/png", "image/jpeg" , "image/gif", "image/bmp", "image/tif", "image/tiff", "application/pdf" };
-            if (model != null && identity == null)
+            try
             {
-                var portalMember = mapper.Map<PortalMember>(model);
-                portalMember.MemberCategoryID = 1;
-                portalMember.MemberStatus = "AC";
-                portalMember.Photo = "";
-                portalMember.ApprovalStatus = false;
-                portalMember.CreateDate = DateTime.Now;
-                portalMember.UpdateDate = DateTime.Now;
-                portalMember.Status = "A";
-                int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-                int dob = int.Parse(model.DOB.ToString("yyyyMMdd"));
-                int age = (now - dob) / 10000;
-                portalMember.MemberAge = age;
-                _repository.Add(portalMember);
-                unitOfWork.Commit();
-                
-                Base64File PNID = ImageHelper.GetFileDetails(model.NidPic);
-                Base64File memImage = ImageHelper.GetFileDetails(model.Img);
-
-                FileUploadTable[] file = new FileUploadTable[2]; 
-                if (imageTypes.Contains(PNID.MimeType))
+                var identity = new ApplicationUser();
+                identity = _userManager.Users.Where(u => u.UserName == model.UserName).FirstOrDefault();
+                string[] imageTypes = { "image/jpg", "image/png", "image/jpeg", "image/gif", "image/bmp", "image/tif", "image/tiff", "application/pdf" };
+                if (model != null && identity == null)
                 {
-                    file[0] = new FileUploadTable
+                    var portalMember = mapper.Map<PortalMember>(model);
+                    portalMember.MemberCategoryID = 1;
+                    portalMember.MemberStatus = "AC";
+                    portalMember.Photo = "";
+                    portalMember.ApprovalStatus = false;
+                    portalMember.CreateDate = DateTime.Now;
+                    portalMember.UpdateDate = DateTime.Now;
+                    portalMember.Status = "A";
+                    int now = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+                    int dob = int.Parse(model.DOB.ToString("yyyyMMdd"));
+                    int age = (now - dob) / 10000;
+                    portalMember.MemberAge = age;
+                    _repository.Add(portalMember);
+                    unitOfWork.Commit();
+
+                    Base64File PNID = ImageHelper.GetFileDetails(model.NidPic);
+                    Base64File memImage = ImageHelper.GetFileDetails(model.Img);
+
+                    FileUploadTable[] file = new FileUploadTable[2];
+                    if (imageTypes.Contains(PNID.MimeType))
                     {
-                        EntityName = "PortalMember",
-                        EntityId = portalMember.Id,
-                        PropertyName = "MemberNID",
-                        File = PNID.DataBytes,
-                        FileName = $"{portalMember.FirstName} - {portalMember.Id}",
-                        Type = PNID.MimeType,
-                    };
-                    
-                }
+                        file[0] = new FileUploadTable
+                        {
+                            EntityName = "PortalMember",
+                            EntityId = portalMember.Id,
+                            PropertyName = "MemberNID",
+                            File = PNID.DataBytes,
+                            FileName = $"{portalMember.FirstName} - {portalMember.Id}",
+                            Type = PNID.MimeType,
+                        };
 
-                if (imageTypes.Contains(memImage.MimeType))
-                {
-                    file[1] = new FileUploadTable
+                    }
+
+                    if (imageTypes.Contains(memImage.MimeType))
                     {
-                        EntityName = "PortalMember",
-                        EntityId = portalMember.Id,
-                        PropertyName = "Image",
-                        File = memImage.DataBytes,
-                        FileName = $"{portalMember.FirstName} - {portalMember.Id}",
-                        Type = memImage.MimeType,
+                        file[1] = new FileUploadTable
+                        {
+                            EntityName = "PortalMember",
+                            EntityId = portalMember.Id,
+                            PropertyName = "Image",
+                            File = memImage.DataBytes,
+                            FileName = $"{portalMember.FirstName} - {portalMember.Id}",
+                            Type = memImage.MimeType,
+                        };
+                    }
+                    var InsertFiles = _fileService.BulkCreate(file);
+
+                    _repository.CreatePortalMemberNIDandImage(portalMember.Id, InsertFiles[0].FileUploadId, InsertFiles[1].FileUploadId);
+
+                    var user = new ApplicationUser()
+                    {
+                        UserName = model.UserName,
+                        EmployeeID = 1,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        RoleId = 24,
+                        IsTemporaryPassword = false,
+                        Email = model.Email,
+                        DateCreated = DateTime.Now,
+                        Activated = false,
+                        PhoneNumber = model.Phone,
+                        PortalMemberID = portalMember.Id
                     };
+
+                    var result = await _userManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user, "PortalMember");
+                        return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
+                    }
+                    else
+                    {
+
+                        return new SignUpResponse { isSuccess = false, message = "Member Create Failed" };
+                    }
                 }
-                var InsertFiles = _fileService.BulkCreate(file);
-
-                _repository.CreatePortalMemberNIDandImage(portalMember.Id, InsertFiles[0].FileUploadId, InsertFiles[1].FileUploadId);
-
-                var user = new ApplicationUser() { 
-                    UserName = model.UserName,
-                    EmployeeID = 1,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    RoleId = 24,
-                    //IsTemporaryPassword = false,
-                    Email = model.Email,
-                    DateCreated = DateTime.Now, 
-                    Activated = false,
-                    PhoneNumber = model.Phone,
-                    PortalMemberID = portalMember.Id
-                };
-
-                var result = await _userManager.CreateAsync( user, model.Password);
-                if(result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "PortalMember");
-                    return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
-                }else
+                else
                 {
 
-                    return new SignUpResponse { isSuccess = false, message = "Member Create Failed" };
+                    return new SignUpResponse { isSuccess = false, message = $"{identity.UserName} already exist" };
                 }
-            }else
+            }catch (Exception ex)
             {
-
-                return new SignUpResponse { isSuccess = false , message= $"{identity.UserName} already exist"};
+                throw ex;
             }
+            
 
         }
         public async Task<bool> CheckUserName(string username)
