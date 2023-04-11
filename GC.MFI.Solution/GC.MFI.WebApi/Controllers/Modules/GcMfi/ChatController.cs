@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 [ApiController]
 [Route("[controller]")]
@@ -15,7 +16,7 @@ public class ChatController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SendMessage(string user, string message)
     {
-        await _hubContext.Clients.All.SendMessage( user, message);
-        return Ok();
+        return Ok(_hubContext.Clients.All.SendAsync( user, message));
+      //  return Ok();
     }
 }

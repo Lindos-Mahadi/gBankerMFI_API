@@ -99,11 +99,9 @@ app.UseMiddleware<LoggingMiddleware>();
 // Configure the HTTP request pipeline.
 app.UseRouting();
 
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllers();
-//    endpoints.MapHub<ChatHub>("/chathub"); // Add this line to map your SignalR hub
-//});
+
+app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
 
 app.UseSwagger();
 app.UseSwaggerUI();
