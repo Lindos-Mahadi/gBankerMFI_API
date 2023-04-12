@@ -65,6 +65,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<LoanLedger> LoanLedger { get; set; }
         public virtual DbSet<SavingLedger> SavingLedger { get; set; }
         public virtual DbSet<EmailLogTable> EmailLogTable { get; set; }
+        public virtual DbSet<NotificationTable> NotificationTable { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>

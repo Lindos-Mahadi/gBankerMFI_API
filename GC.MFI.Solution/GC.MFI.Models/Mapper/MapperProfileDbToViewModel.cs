@@ -49,6 +49,7 @@ namespace GC.MFI.Models.Mapper
             CreateMap<SMSLogTable, SMSLogTableViewModel>();
             CreateMap<EmailLogTable, EmailLogTableViewModel>();
             CreateMap<PortalMember, SignUpModel>();
+            CreateMap<NotificationTable, NotificationTableViewModel>();
         }
     }
 }

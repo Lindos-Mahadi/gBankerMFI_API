@@ -43,6 +43,7 @@ namespace GC.MFI.Models.Mapper
             CreateMap<LoggerViewModel, Logger>();
 
             CreateMap<SignUpModel, PortalMember>();
+            CreateMap<NotificationTableViewModel, NotificationTable>();
 
         }
     }

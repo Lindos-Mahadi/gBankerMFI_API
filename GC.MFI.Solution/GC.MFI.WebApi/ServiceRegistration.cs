@@ -215,6 +215,11 @@ namespace GC.MFI.WebApi
             services.AddScoped<IEmailService , EmailService>();
 
 
+            // Notification dependancy
+
+            services.AddScoped<INotificationTableRepository, NotificationTableRepository>();
+            services.AddScoped<INotificationTableService, NotificationTableService>();
+
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IMailService, MailService>();
