@@ -91,6 +91,8 @@ if (!string.IsNullOrEmpty(misSetting?.CORSEnabledUrl))
                 .AllowCredentials();
             });
     });
+
+
 }
 ServiceRegistration.RegisterService(builder.Services, builder.Configuration);
 var app = builder.Build();
@@ -100,14 +102,20 @@ app.UseMiddleware<LoggingMiddleware>();
 app.UseRouting();
 
 
-app.MapControllers();
-app.MapHub<ChatHub>("/chathub");
+
 
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseSession();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
+
+app.UseEndpoints(e =>
+{
+    e.MapControllers();
+    e.MapHub<ChatHub>("/chathub");
+});
+
 
 app.UseAuthentication();
 app.UseAuthorization();
