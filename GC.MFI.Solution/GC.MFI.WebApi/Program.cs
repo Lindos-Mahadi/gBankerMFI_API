@@ -110,11 +110,8 @@ app.UseSession();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
-app.UseEndpoints(e =>
-{
-    e.MapControllers();
-    e.MapHub<ChatHub>("/chathub");
-});
+app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
 
 
 app.UseAuthentication();
