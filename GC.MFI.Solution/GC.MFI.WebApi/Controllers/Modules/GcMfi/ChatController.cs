@@ -16,7 +16,7 @@ public class ChatController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SendMessage(string user, string message)
     {
-      await _hubContext.Clients.All.SendAsync( user, message);
+      await _hubContext.Clients.All.SendAsync("ReceiveMessage", user, message);
       return Ok();
     }
 }
