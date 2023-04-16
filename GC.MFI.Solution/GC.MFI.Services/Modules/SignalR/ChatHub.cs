@@ -12,7 +12,7 @@ public class ChatHub : Hub
 
     public async Task NotificationUpdated(List<NotificationTable> Notification)
     {
-        await Clients.All.SendAsync("Notification", Notification);
+        await Clients.User(Context.ConnectionId).SendAsync("Notification", Notification);
     }
 
 }
