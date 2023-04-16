@@ -10,6 +10,7 @@ using GC.MFI.Models.Models;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Security.Jwt;
 using GC.MFI.Security.Models;
+using GC.MFI.Services;
 using GC.MFI.Services.Modules.BntPos.Implementations;
 using GC.MFI.Services.Modules.BntPos.Interfaces;
 using GC.MFI.Services.Modules.Email.Implementations;
@@ -226,6 +227,7 @@ namespace GC.MFI.WebApi
 
             // signal r service
             services.AddSignalR();
+            services.AddHostedService<DatabaseChangeNotificationService>();
 
             // Register for model Validation
             services.AddControllers(

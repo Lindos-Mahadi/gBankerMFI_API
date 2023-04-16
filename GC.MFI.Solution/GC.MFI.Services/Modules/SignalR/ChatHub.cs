@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using GC.MFI.Models.DbModels;
 using Microsoft.AspNetCore.SignalR;
 
 public class ChatHub : Hub
@@ -7,4 +9,10 @@ public class ChatHub : Hub
     {
         await Clients.All.SendAsync("ReceiveMessage", user, message);
     }
+
+    public async Task NotificationUpdated(List<NotificationTable> Notification)
+    {
+        await Clients.All.SendAsync("Notification", Notification);
+    }
+
 }
