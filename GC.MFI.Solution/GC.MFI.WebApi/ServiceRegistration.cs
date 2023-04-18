@@ -221,6 +221,11 @@ namespace GC.MFI.WebApi
             services.AddScoped<INotificationTableRepository, NotificationTableRepository>();
             services.AddScoped<INotificationTableService, NotificationTableService>();
 
+
+            // singlar conn table
+            services.AddScoped<ISingalRConnectionTableRepository, SingalRConnectionTableRepository>();
+            services.AddScoped<ISingalRConnectionTableService, SingalRConnectionTableService>();
+
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IMailService, MailService>();
