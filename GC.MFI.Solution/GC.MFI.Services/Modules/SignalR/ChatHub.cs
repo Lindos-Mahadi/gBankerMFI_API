@@ -1,27 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Caching.Memory;
 
 public class ChatHub : Hub
 {
     private readonly ISingalRConnectionTableService service;
-    public ChatHub(ISingalRConnectionTableService service)
+    private readonly IMemoryCache memoryCache;
+    public ChatHub(ISingalRConnectionTableService service, IMemoryCache memoryCache)
     {
         this.service = service;
+        this.memoryCache = memoryCache;
     }
 
     public override async Task OnConnectedAsync()
     {
         var connectionId = Context.ConnectionId;
-        SingalRConnectionTable singalRConnectionTable = new SingalRConnectionTable
+
+        var token = memoryCache.Get("useridentifier");
+        var memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
+
+        SingalRConnectionTable getbyId = service.Get(t => t.MemberID == memberId);
+        if (getbyId == null)
         {
-            MemberID = 1234,
-            ConnID = connectionId
-        };
-        service.Create(singalRConnectionTable);
-        await Clients.User(connectionId).SendAsync("Notification", "king");
+            SingalRConnectionTable singalRConnectionTable = new SingalRConnectionTable
+            {
+                MemberID = Convert.ToInt64(memberId),
+                ConnID = connectionId
+            };
+            service.Create(singalRConnectionTable);
+        }
+        else
+        {
+            getbyId.ConnID = connectionId;
+            service.Update(getbyId);
+        }
+        
+      //  await Clients.User(connectionId).SendAsync("Notification", "king");
 
         await base.OnConnectedAsync();
     }

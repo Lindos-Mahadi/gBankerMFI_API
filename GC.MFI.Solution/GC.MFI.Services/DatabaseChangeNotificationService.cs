@@ -1,7 +1,11 @@
 ﻿
 using GC.MFI.Models.DbModels;
+using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -13,15 +17,18 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services
 {
-    public class DatabaseChangeNotificationService : IHostedService
+    public class DatabaseChangeNotificationService :  IHostedService
     {
         private readonly string _connectionString;
         private readonly IHubContext<ChatHub> _hubContext;
-        public DatabaseChangeNotificationService(IConfiguration configuration, IHubContext<ChatHub> hubContext)
+        private readonly IMemoryCache memoryCache;
+        public DatabaseChangeNotificationService(IConfiguration configuration,  IMemoryCache memoryCache,  IHubContext<ChatHub> hubContext)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
             _hubContext = hubContext;
+            this.memoryCache = memoryCache;
         }
+        
         public Task StartAsync(CancellationToken cancellationToken)
         {
             SqlDependency.Start(_connectionString);
@@ -53,13 +60,15 @@ namespace GC.MFI.Services
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-
+                    var token = memoryCache.Get("useridentifier");
+                    long memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
                     using (var command = new SqlCommand(@"SELECT [Id] ,[Message] ,[SenderType] ,[SenderID] ,[ReceiverType],[ReceiverID],[Email]
                                                     ,[SMS] ,[Push] ,[Status] ,[CreateDate] ,[CreateUser] ,[UpdateDate],[UpdateUser] 
-                                                    FROM [dbo].[NotificationTable]", connection))
+                                                    FROM [dbo].[NotificationTable] WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
                     {
-                        command.Notification = null;
 
+                        command.Parameters.AddWithValue("@memberId", memberId);
+                        command.Notification = null;
                         SqlDependency dependency = new SqlDependency(command);
 
                         dependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
@@ -86,11 +95,33 @@ namespace GC.MFI.Services
                                 Notification.Add(notify);
                             }
                         }
+                        using (var command2 = new SqlCommand(@"SELECT [Id] ,[MemberID] ,[ConnID] 
+                                                    FROM [dbo].[SingalRConnectionTable] WHERE [MemberID] = @memberId ", connection))
+                        {
+                            command2.Parameters.AddWithValue("@memberId", memberId);
+                            using (var reader = command2.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    // Get the connection ID from the SqlDataReader
+                                    string connId = reader.GetString(2);
 
-                        _hubContext.Clients.All.SendAsync("Notification", Notification);
+                                    // Use the connection ID here
+                                    // ...
+
+                                    // Send the notification to the client
+                                     _hubContext.Clients.Client(connId).SendAsync("Notification", Notification);
+                                }
+                                else
+                                {
+                                    // No rows were returned
+                                    // Handle the error here
+                                }
+                            }
+                        }
+
                     }
                 }
-               // _hubContext.Clients.All.SendAsync("ReceiveMessage", "Database change notification received.");
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)

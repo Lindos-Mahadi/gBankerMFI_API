@@ -13,6 +13,7 @@ using GC.MFI.Models.Modules.Distributions.Security;
 using Microsoft.AspNetCore.Identity;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System.Data;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace GC.MFI.Security.Jwt
 {
@@ -22,13 +23,15 @@ namespace GC.MFI.Security.Jwt
         private readonly IAuthenticationService _authenticationService;
         private UserManager<ApplicationUser> _userManager;
         private readonly IMemberService memberService;
+        private readonly IMemoryCache memoryCache;
 
-        public JwtTokenHelper(IJWT jwt, IAuthenticationService authenticationService, IMemberService memberService, UserManager<ApplicationUser> userManager)
+        public JwtTokenHelper(IJWT jwt, IAuthenticationService authenticationService, IMemoryCache memoryCache, IMemberService memberService, UserManager<ApplicationUser> userManager)
         {
             this.jwt = jwt;
             this._authenticationService = authenticationService;
             this._userManager = userManager;
             this.memberService = memberService;
+            this.memoryCache = memoryCache;
             
         }
         public Tokens GenerateRefreshToken(string userName)
@@ -102,6 +105,8 @@ namespace GC.MFI.Security.Jwt
 
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
+            var acctoken = tokenHandler.WriteToken(token);
+            memoryCache.Set("useridentifier", acctoken);
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };
         }
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
