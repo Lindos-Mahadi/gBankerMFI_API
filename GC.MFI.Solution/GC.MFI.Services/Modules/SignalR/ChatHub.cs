@@ -9,9 +9,9 @@ using Microsoft.Extensions.Caching.Memory;
 
 public class ChatHub : Hub
 {
-    private readonly ISingalRConnectionTableService service;
+    private readonly ISignalRConnectionTableService service;
     private readonly IMemoryCache memoryCache;
-    public ChatHub(ISingalRConnectionTableService service, IMemoryCache memoryCache)
+    public ChatHub(ISignalRConnectionTableService service, IMemoryCache memoryCache)
     {
         this.service = service;
         this.memoryCache = memoryCache;
@@ -24,10 +24,10 @@ public class ChatHub : Hub
         var token = memoryCache.Get("useridentifier");
         var memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
 
-        SingalRConnectionTable getbyId = service.Get(t => t.MemberID == memberId);
+        SignalRConnectionTable getbyId = service.Get(t => t.MemberID == memberId);
         if (getbyId == null)
         {
-            SingalRConnectionTable singalRConnectionTable = new SingalRConnectionTable
+            SignalRConnectionTable singalRConnectionTable = new SignalRConnectionTable
             {
                 MemberID = Convert.ToInt64(memberId),
                 ConnID = connectionId

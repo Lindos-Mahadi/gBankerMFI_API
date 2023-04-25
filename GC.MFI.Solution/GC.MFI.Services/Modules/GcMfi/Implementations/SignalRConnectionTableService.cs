@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
-    public class SingalRConnectionTableService : LegacyServiceBase<SingalRConnectionTable> , ISingalRConnectionTableService
+    public class SignalRConnectionTableService : LegacyServiceBase<SignalRConnectionTable> , ISignalRConnectionTableService
     {
-        private readonly ISingalRConnectionTableRepository _repository;
+        private readonly ISignalRConnectionTableRepository _repository;
         private readonly IMapper _mapper;
-        public SingalRConnectionTableService(ISingalRConnectionTableRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
+        public SignalRConnectionTableService(ISignalRConnectionTableRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             _repository = repository;
             this._mapper = _mapper;

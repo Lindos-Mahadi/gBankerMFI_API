@@ -96,7 +96,7 @@ namespace GC.MFI.Services
                             }
                         }
                         using (var command2 = new SqlCommand(@"SELECT [Id] ,[MemberID] ,[ConnID] 
-                                                    FROM [dbo].[SingalRConnectionTable] WHERE [MemberID] = @memberId ", connection))
+                                                    FROM [dbo].[SignalRConnectionTable] WHERE [MemberID] = @memberId ", connection))
                         {
                             command2.Parameters.AddWithValue("@memberId", memberId);
                             using (var reader = command2.ExecuteReader())

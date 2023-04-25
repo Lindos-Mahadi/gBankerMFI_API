@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Models.DbModels
 {
-    public class SingalRConnectionTable : LegacyDbModelBase, ILegacyDbModelBase
+    public class SignalRConnectionTable : LegacyDbModelBase, ILegacyDbModelBase
     {
         public long Id { get; set; }
         public long MemberID { get; set; }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.DataAccess.Repository.Implementations
 {
-    public class SingalRConnectionTableRepository : LegacyRepositoryBase<SingalRConnectionTable>, ISingalRConnectionTableRepository
+    public class SignalRConnectionTableRepository : LegacyRepositoryBase<SignalRConnectionTable>, ISignalRConnectionTableRepository
     {
-        public SingalRConnectionTableRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
+        public SignalRConnectionTableRepository(IDatabaseFactory databaseFactory) : base(databaseFactory)
         {
         }
     }

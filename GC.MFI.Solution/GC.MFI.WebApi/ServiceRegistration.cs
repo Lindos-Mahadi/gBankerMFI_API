@@ -223,8 +223,8 @@ namespace GC.MFI.WebApi
 
 
             // singlar conn table
-            services.AddScoped<ISingalRConnectionTableRepository, SingalRConnectionTableRepository>();
-            services.AddScoped<ISingalRConnectionTableService, SingalRConnectionTableService>();
+            services.AddScoped<ISignalRConnectionTableRepository, SignalRConnectionTableRepository>();
+            services.AddScoped<ISignalRConnectionTableService, SignalRConnectionTableService>();
 
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));

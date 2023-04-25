@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.DataAccess.Repository.Interfaces
 {
-    public interface ISingalRConnectionTableRepository : ILegacyRepository<SingalRConnectionTable>
+    public interface ISignalRConnectionTableRepository : ILegacyRepository<SignalRConnectionTable>
     {
     }
 }

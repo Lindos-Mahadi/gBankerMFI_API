@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
     [Route("api/gcmfi/SingalRConnectionTable")]
-    public class SingalRConnectionTableController : GCMcfinaLegacyBaseController<SingalRConnectionTable>
+    public class SignalRConnectionTableController : GCMcfinaLegacyBaseController<SignalRConnectionTable>
     {
-        private readonly ILogger<SingalRConnectionTableController> _logger;
-        private readonly ISingalRConnectionTableService _service;
+        private readonly ILogger<SignalRConnectionTableController> _logger;
+        private readonly ISignalRConnectionTableService _service;
 
-        public SingalRConnectionTableController(ILogger<SingalRConnectionTableController> logger, ISingalRConnectionTableService service) : base(service)
+        public SignalRConnectionTableController(ILogger<SignalRConnectionTableController> logger, ISignalRConnectionTableService service) : base(service)
         {
             _logger = logger;
             _service = service;
@@ -20,7 +20,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 
         [HttpPost]
         [Route("create")]
-        public SingalRConnectionTable Create(SingalRConnectionTable singalRConnectionTable) 
+        public SignalRConnectionTable Create(SignalRConnectionTable singalRConnectionTable) 
         {
             _service.Create(singalRConnectionTable);
             return singalRConnectionTable;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface ISingalRConnectionTableService : ILegacyServiceBase<SingalRConnectionTable>
+    public interface ISignalRConnectionTableService : ILegacyServiceBase<SignalRConnectionTable>
     {
     }
 }
