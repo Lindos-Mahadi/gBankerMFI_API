@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
@@ -10,11 +11,13 @@ using Microsoft.Extensions.Caching.Memory;
 public class ChatHub : Hub
 {
     private readonly ISignalRConnectionTableService service;
+    private readonly INotificationTableService notificationTableService;
     private readonly IMemoryCache memoryCache;
-    public ChatHub(ISignalRConnectionTableService service, IMemoryCache memoryCache)
+    public ChatHub(ISignalRConnectionTableService service, INotificationTableService notificationTableService, IMemoryCache memoryCache)
     {
         this.service = service;
         this.memoryCache = memoryCache;
+        this.notificationTableService = notificationTableService;
     }
 
     public override async Task OnConnectedAsync()
@@ -39,9 +42,18 @@ public class ChatHub : Hub
             getbyId.ConnID = connectionId;
             service.Update(getbyId);
         }
+        var getNotification = notificationTableService.GetMany(t => t.Push == false && t.ReceiverID == memberId).OrderByDescending(t => t.UpdateDate);
         
-      //  await Clients.User(connectionId).SendAsync("Notification", "king");
-
+        await Clients.Client(connectionId).SendAsync("OLD", getNotification);
+        var getnewNotification = notificationTableService.GetMany(t=> t.Push == true && t.ReceiverID == memberId).OrderByDescending(t => t.UpdateDate);
+        if(getnewNotification != null) 
+        {
+            foreach(var notification in getnewNotification)
+            {
+                notification.Status = "P";
+                notificationTableService.Update(notification);
+            }
+        }
         await base.OnConnectedAsync();
     }
     public async Task SendMessage(string user, string message)

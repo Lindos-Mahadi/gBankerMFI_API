@@ -57,17 +57,19 @@ namespace GC.MFI.Services
         {
             if (e.Type == SqlNotificationType.Change)
             {
-                using (var connection = new SqlConnection(_connectionString))
+                var token = memoryCache.Get("useridentifier");
+                if (token != null)
+                {
+                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var token = memoryCache.Get("useridentifier");
+                    
                     long memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
                     using (var command = new SqlCommand(@"SELECT [Id] ,[Message] ,[SenderType] ,[SenderID] ,[ReceiverType],[ReceiverID],[Email]
                                                     ,[SMS] ,[Push] ,[Status] ,[CreateDate] ,[CreateUser] ,[UpdateDate],[UpdateUser] 
                                                     FROM [dbo].[NotificationTable] WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
                     {
-
-                        command.Parameters.AddWithValue("@memberId", memberId);
+                            command.Parameters.AddWithValue("@memberId", memberId);
                         command.Notification = null;
                         SqlDependency dependency = new SqlDependency(command);
 
@@ -110,7 +112,19 @@ namespace GC.MFI.Services
                                     // ...
 
                                     // Send the notification to the client
-                                     _hubContext.Clients.Client(connId).SendAsync("Notification", Notification);
+                                     _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
+
+                                    using (var command3 = new SqlCommand(@"UPDATE [dbo].[NotificationTable] 
+                                     SET [Push] = 'False',
+                                      [Status] = 'A'
+                                     WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
+                                    {
+                                        command3.Parameters.AddWithValue("@memberId", memberId);
+                                        using (var reader2 = command3.ExecuteReader())
+                                        {
+                                            dependency.OnChange -= OnDependencyChange;
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -122,6 +136,8 @@ namespace GC.MFI.Services
 
                     }
                 }
+                }
+                
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)
