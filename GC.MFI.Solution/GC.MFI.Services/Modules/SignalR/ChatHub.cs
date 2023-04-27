@@ -48,9 +48,11 @@ public class ChatHub : Hub
         var getnewNotification = notificationTableService.GetMany(t=> t.Push == true && t.ReceiverID == memberId).OrderByDescending(t => t.UpdateDate);
         if(getnewNotification != null) 
         {
+            await Clients.Client(connectionId).SendAsync("NEW", getnewNotification);
             foreach(var notification in getnewNotification)
             {
-                notification.Status = "P";
+                notification.UpdateDate = DateTime.UtcNow;
+                notification.Push = false;
                 notificationTableService.Update(notification);
             }
         }
