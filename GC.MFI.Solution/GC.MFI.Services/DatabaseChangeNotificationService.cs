@@ -115,18 +115,19 @@ namespace GC.MFI.Services
                                     if(Notification.Count > 0)
                                     {
                                      _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
-                                    }
-
-                                using (var command3 = new SqlCommand(@"UPDATE [dbo].[NotificationTable] 
+                                            using (var command3 = new SqlCommand(@"UPDATE [dbo].[NotificationTable] 
                                      SET [Push] = 'False'
                                      WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
-                                        {
-                                            command3.Parameters.AddWithValue("@memberId", memberId);
-                                            using (var reader2 = command3.ExecuteReader())
                                             {
+                                                command3.Parameters.AddWithValue("@memberId", memberId);
+                                                using (var reader2 = command3.ExecuteReader())
+                                                {
+                                                }
                                             }
                                         }
-                                    }
+
+                                
+                                 }
                                 else
                                 {
                                     // No rows were returned

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
@@ -20,6 +21,25 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             _repository = repository;
             this._mapper = _mapper;
 
+        }
+
+        public async Task UpdateConnectionTable(SignalRConnectionTable signal)
+        {
+            var getbyid= _repository.Get(t=> t.MemberID == signal.MemberID);
+            if (getbyid != null)
+            {
+                getbyid.ConnID = signal.ConnID;
+            }
+            else
+            {
+                SignalRConnectionTable singalRConnectionTable = new SignalRConnectionTable
+                {
+                    MemberID = signal.MemberID,
+                    ConnID = signal.ConnID
+                };
+                _repository.Add(singalRConnectionTable);
+            }
+            Save();
         }
     }
 }
