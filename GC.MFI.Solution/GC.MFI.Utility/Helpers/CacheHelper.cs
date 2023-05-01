@@ -22,10 +22,14 @@ namespace GC.MFI.Helpers
         }
         public static void SetCacheWithExpiration(IMemoryCache memoryCache, string key, string value)
         {
-            var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(20));
+            var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
             // Save data in cache.
             // memoryCache.Set(CacheKeys.Dynamics365Token, cacheEntry, cacheEntryOptions);
             memoryCache.Set(key, value, cacheEntryOptions);
+        }
+        public static void ClearCache(IMemoryCache memoryCache, string key)
+        {
+            memoryCache.Remove(key);
         }
     }
 

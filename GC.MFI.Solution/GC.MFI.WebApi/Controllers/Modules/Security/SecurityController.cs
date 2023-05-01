@@ -1,4 +1,5 @@
-﻿using GC.MFI.Models;
+﻿using GC.MFI.Helpers;
+using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Modules.Distributions.Security;
 using GC.MFI.Models.Modules.Security;
@@ -10,6 +11,7 @@ using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Configuration;
 using System.Net.Http.Headers;
 
@@ -22,11 +24,13 @@ namespace GC.MFI.Controllers
         private IJwtTokenHelper authenticationHelper { get; }
         private IAuthenticationService authenticationService { get; }
         private readonly ILogger<SecurityController> _logger;
-        public SecurityController( IJwtTokenHelper _authenticationHelper, ILogger<SecurityController> logger, IAuthenticationService authenticationService)
+        private readonly IMemoryCache memoryCache;
+        public SecurityController( IJwtTokenHelper _authenticationHelper,IMemoryCache memoryCache, ILogger<SecurityController> logger, IAuthenticationService authenticationService)
         {
             this.authenticationHelper = _authenticationHelper;
             this.authenticationService = authenticationService;
             this._logger = logger;
+            this.memoryCache = memoryCache;
         }
         
         [HttpPost]
@@ -113,6 +117,16 @@ namespace GC.MFI.Controllers
             
 
         }
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            
+            CacheHelper.ClearCache(memoryCache,"useridentifier");
+            string message = "Log out successfully";
+            return Ok(message);
+        }
+
 
 
     }

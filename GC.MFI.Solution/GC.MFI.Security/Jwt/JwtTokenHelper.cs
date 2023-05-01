@@ -106,7 +106,8 @@ namespace GC.MFI.Security.Jwt
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var acctoken = tokenHandler.WriteToken(token);
-            memoryCache.Set("useridentifier", acctoken);
+            var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
+            memoryCache.Set("useridentifier", acctoken, cacheEntryOptions);
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };
         }
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
