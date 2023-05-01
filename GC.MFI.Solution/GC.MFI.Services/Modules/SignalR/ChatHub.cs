@@ -30,22 +30,6 @@ public class ChatHub : Hub
 
         var token = memoryCache.Get("useridentifier");
         var memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
-
-        //SignalRConnectionTable getbyId = service.Get(t => t.MemberID == memberId);
-        //if (getbyId == null)
-        //{
-        //    SignalRConnectionTable singalRConnectionTable = new SignalRConnectionTable
-        //    {
-        //        MemberID = Convert.ToInt64(memberId),
-        //        ConnID = connectionId
-        //    };
-        //    service.Create(singalRConnectionTable);
-        //}
-        //else
-        //{
-        //    getbyId.ConnID = connectionId;
-        //    service.Update(getbyId);
-        //}
         SignalRConnectionTable singalRConnectionTable = new SignalRConnectionTable
         {
             MemberID = Convert.ToInt64(memberId),
