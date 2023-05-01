@@ -20,8 +20,9 @@ namespace GC.MFI.Utility.Helpers
             var email = jwtSecurityToken.Claims.First(t => t.Type == "email").Value;
             var memberID = jwtSecurityToken.Claims.First(t => t.Type == "memberId").Value;
             var officeID = jwtSecurityToken.Claims.First(t => t.Type == "officeId").Value;
+            var PortalMemberId = long.Parse(jwtSecurityToken.Claims.First(t => t.Type == "PortalMemberId")?.Value);
             
-            return new JwtTokenModel { UserName = userName, UserId = userId, UserEmail = email , MemberID = memberID, OfficeId = officeID };
+            return new JwtTokenModel { UserName = userName, UserId = userId, UserEmail = email, PortalMemberId = PortalMemberId, MemberID = memberID, OfficeId = officeID };
         }
     }
 }

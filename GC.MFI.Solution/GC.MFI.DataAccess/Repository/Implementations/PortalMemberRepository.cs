@@ -17,34 +17,33 @@ namespace GC.MFI.DataAccess.Repository.Implementations
         {
         }
 
-        public async Task<MemberProfile> GetMemberById(long Id)
-        {
-            var portalMember =(from m in DataContext.PortalMember
-                              where m.Id == Id
-                               select new MemberProfile
-                               {
-                                   PortalMemberId = m.Id,
-                                   Gender = m.Gender,
-                                   FirstName = m.FirstName,
-                                   LastName = m.LastName,
-                                   FatherName = m.FatherName,
-                                   MotherName = m.MotherName,
-                                   Email = m.Email,
-                                   Occupation = m.Occupation,
-                                   Address = m.Address,
-                                   Photo = m.Photo,
-                                   Phone = m.Phone,
-                                   MemberAge = m.MemberAge,
-                                   EducationQualification = m.EducationQualification,
-                                   DistrictCode = m.DistrictCode,
-                                   DivisionCode = m.DivisionCode,
-                                   UpozillaCode = m.UpozillaCode,
-                                   countryID = m.CountryID,
-                                   DOB = m.DOB,
-                                   postCode = m.PostCode
-                               }).FirstOrDefault();
-            return portalMember;
-        }
+        //public async Task<MemberProfile> GetMemberById(long Id)
+        //{
+        //    var portalMember =(from m in DataContext.PortalMember
+        //                      where m.Id == Id
+        //                       select new MemberProfile
+        //                       {
+        //                           PortalMemberId = m.Id,
+        //                           Gender = m.Gender,
+        //                           FirstName = m.FirstName,
+        //                           LastName = m.LastName,
+        //                           FatherName = m.FatherName,
+        //                           MotherName = m.MotherName,
+        //                           Email = m.Email,
+        //                           Occupation = m.Occupation,
+        //                           Address = m.Address,
+        //                           Photo = m.Photo,
+        //                           Phone = m.Phone,
+        //                           MemberAge = (int)(m.MemberAge != null ? m.MemberAge : 0),
+        //                           EducationQualification = m.EducationQualification,
+        //                           DistrictCode = m.DistrictCode,
+        //                           DivisionCode = m.DivisionCode,
+        //                           UpozillaCode = m.UpozillaCode,
+        //                           countryID = m.CountryID,
+        //                           postCode = m.PostCode
+        //                       }).FirstOrDefault();
+        //    return portalMember;
+        //}
 
 
         public void CreatePortalMemberNIDandImage(long portalMemberId, long portalMemberFId, long portalMemberIId)

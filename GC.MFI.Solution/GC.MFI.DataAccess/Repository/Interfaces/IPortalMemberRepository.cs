@@ -9,6 +9,6 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
     {
         void CreatePortalMemberNIDandImage(long portalMemberId, long portalMemberFId,long portalMemberIId);
   
-        Task<MemberProfile> GetMemberById(long Id);
+       // Task<MemberProfile> GetMemberById(long Id);
     }
 }

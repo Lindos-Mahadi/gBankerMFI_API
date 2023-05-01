@@ -16,15 +16,19 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
     public class PortalMemberService : ServiceBase<PortalMemberViewModel, PortalMember>, IPortalMemberService
     {
         private readonly IPortalMemberRepository _repository;
+        private readonly IMapper mapper;
         public PortalMemberService(IPortalMemberRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             this._repository = repository;
+            this.mapper = _mapper;
         }
 
         public async Task<MemberProfile> GetMemberById(long Id)
         {
-            var member = await _repository.GetMemberById(Id);
-            return member;
+            var member = _repository.GetById(Id);
+            var map = mapper.Map<MemberProfile>(member);
+            map.PortalMemberId = Id;
+            return map;
         }
     }
 }

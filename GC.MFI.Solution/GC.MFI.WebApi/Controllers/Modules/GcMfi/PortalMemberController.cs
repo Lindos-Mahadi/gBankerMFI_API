@@ -2,12 +2,15 @@
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.BntPos.Interfaces;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
 using GC.MFI.WebApi.Controllers.Modules.Pos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 using System.Text.Json.Nodes;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -25,13 +28,23 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             _logger = logger;
             _service = service;
         }
-
+        [Authorize]
         [HttpGet]
         [Route("portalmemberprofile")]
-        public async Task<MemberProfile> GetMemberById(long Id)
+        public async Task<MemberProfile> GetMemberById()
         {
-            var member = await _service.GetMemberById(Id);
-            return member;
+            try
+            {
+                var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+                var tokenInfo = JwtTokenDecode.GetDetailsFromToken(header);
+                var member = await _service.GetMemberById(tokenInfo.PortalMemberId);
+                return member;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         [HttpGet]

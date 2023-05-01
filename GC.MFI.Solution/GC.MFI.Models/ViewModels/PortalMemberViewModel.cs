@@ -39,5 +39,6 @@ namespace GC.MFI.Models.ViewModels
         public string PostCode { get; set; }
         public string SpouseName { get; set; }
         public string SpouseNameBN { get; set; }
+        public long? MemberId { get; set; }
     }
 }
