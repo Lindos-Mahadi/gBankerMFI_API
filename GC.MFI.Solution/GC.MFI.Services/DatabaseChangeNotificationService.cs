@@ -53,7 +53,7 @@ namespace GC.MFI.Services
 
             return Task.CompletedTask;
         }
-        private void OnDependencyChange(object sender, SqlNotificationEventArgs e)
+        private async void OnDependencyChange(object sender, SqlNotificationEventArgs e)
         {
             if (e.Type == SqlNotificationType.Change)
             {
@@ -114,7 +114,7 @@ namespace GC.MFI.Services
                                     // Send the notification to the client
                                     if(Notification.Count > 0)
                                     {
-                                     _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
+                                    await _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
                                             using (var command3 = new SqlCommand(@"UPDATE [dbo].[NotificationTable] 
                                      SET [Push] = 'False'
                                      WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
