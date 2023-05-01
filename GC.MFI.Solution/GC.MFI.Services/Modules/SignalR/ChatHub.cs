@@ -6,15 +6,19 @@ using GC.MFI.Models.DbModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 
 public class ChatHub : Hub
 {
     private readonly ISignalRConnectionTableService service;
     private readonly INotificationTableService notificationTableService;
     private readonly IMemoryCache memoryCache;
-    public ChatHub(ISignalRConnectionTableService service, INotificationTableService notificationTableService, IMemoryCache memoryCache)
+    private readonly string _connectionString;
+    public ChatHub(IConfiguration configuration,ISignalRConnectionTableService service, INotificationTableService notificationTableService, IMemoryCache memoryCache)
     {
+        this._connectionString = configuration.GetConnectionString("DefaultConnection");
         this.service = service;
         this.memoryCache = memoryCache;
         this.notificationTableService = notificationTableService;
@@ -63,7 +67,13 @@ public class ChatHub : Hub
                 notificationTableService.Update(notification);
             }
         }
+        SqlDependency.Start(_connectionString);
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+        }
         await base.OnConnectedAsync();
+
     }
     public async Task SendMessage(string user, string message)
     {
