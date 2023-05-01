@@ -15,10 +15,8 @@ public class ChatHub : Hub
     private readonly ISignalRConnectionTableService service;
     private readonly INotificationTableService notificationTableService;
     private readonly IMemoryCache memoryCache;
-    private readonly string _connectionString;
-    public ChatHub(IConfiguration configuration,ISignalRConnectionTableService service, INotificationTableService notificationTableService, IMemoryCache memoryCache)
+    public ChatHub(ISignalRConnectionTableService service, INotificationTableService notificationTableService, IMemoryCache memoryCache)
     {
-        this._connectionString = configuration.GetConnectionString("DefaultConnection");
         this.service = service;
         this.memoryCache = memoryCache;
         this.notificationTableService = notificationTableService;
@@ -50,11 +48,6 @@ public class ChatHub : Hub
                 notification.Push = false;
                 notificationTableService.Update(notification);
             }
-        }
-        SqlDependency.Start(_connectionString);
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
         }
         await base.OnConnectedAsync();
 
