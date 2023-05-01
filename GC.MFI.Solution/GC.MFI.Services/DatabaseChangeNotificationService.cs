@@ -69,7 +69,7 @@ namespace GC.MFI.Services
                                                     ,[SMS] ,[Push] ,[Status] ,[CreateDate] ,[CreateUser] ,[UpdateDate],[UpdateUser] 
                                                     FROM [dbo].[NotificationTable] WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
                     {
-                            command.Parameters.AddWithValue("@memberId", memberId);
+                        command.Parameters.AddWithValue("@memberId", memberId);
                         command.Notification = null;
                         SqlDependency dependency = new SqlDependency(command);
 
@@ -97,48 +97,48 @@ namespace GC.MFI.Services
                                 Notification.Add(notify);
                             }
                         }
-                        using (var command2 = new SqlCommand(@"SELECT [Id] ,[MemberID] ,[ConnID] 
-                                                    FROM [dbo].[SignalRConnectionTable] WHERE [MemberID] = @memberId ", connection))
-                        {
-                            command2.Parameters.AddWithValue("@memberId", memberId);
-                            using (var reader = command2.ExecuteReader())
+                            if (Notification.Count > 0)
                             {
-                                if (reader.Read())
+                                using (var command2 = new SqlCommand(@"SELECT [Id] ,[MemberID] ,[ConnID] 
+                                                    FROM [dbo].[SignalRConnectionTable] WHERE [MemberID] = @memberId ", connection))
                                 {
-                                    // Get the connection ID from the SqlDataReader
-                                    string connId = reader.GetString(2);
-
-                                    // Use the connection ID here
-                                    // ...
-
-                                    // Send the notification to the client
-                                    if(Notification.Count > 0)
+                                    command2.Parameters.AddWithValue("@memberId", memberId);
+                                    using (var reader = command2.ExecuteReader())
                                     {
-                                    await _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
+                                        if (reader.Read())
+                                        {
+                                            // Get the connection ID from the SqlDataReader
+                                            string connId = reader.GetString(2);
+
+                                            // Use the connection ID here
+                                            // ...
+
+                                            // Send the notification to the client
+
+                                            await _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
                                             using (var command3 = new SqlCommand(@"UPDATE [dbo].[NotificationTable] 
-                                     SET [Push] = 'False'
-                                     WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
+                                            SET [Push] = 'False'
+                                            WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
                                             {
                                                 command3.Parameters.AddWithValue("@memberId", memberId);
                                                 using (var reader2 = command3.ExecuteReader())
                                                 {
                                                 }
                                             }
-                                        }
 
-                                
-                                 }
-                                else
-                                {
-                                    // No rows were returned
-                                    // Handle the error here
+                                        }
+                                        else
+                                        {
+                                            // No rows were returned
+                                            // Handle the error here
+                                        }
+                                    }
                                 }
                             }
-                        }
 
                     }
                 }
-                }
+             }
                 
             }
         }
