@@ -53,7 +53,7 @@ namespace GC.MFI.Services
 
             return Task.CompletedTask;
         }
-        private async void OnDependencyChange(object sender, SqlNotificationEventArgs e)
+        private  void OnDependencyChange(object sender, SqlNotificationEventArgs e)
         {
             if (e.Type == SqlNotificationType.Change)
             {
@@ -115,7 +115,7 @@ namespace GC.MFI.Services
 
                                             // Send the notification to the client
 
-                                            await _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
+                                             _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
 
                                         }
                                         else
