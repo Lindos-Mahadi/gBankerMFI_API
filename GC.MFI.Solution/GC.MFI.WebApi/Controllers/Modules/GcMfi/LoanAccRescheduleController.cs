@@ -29,7 +29,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
                 var decodedToken = JwtTokenDecode.GetDetailsFromToken(header);
                 acc.CreateUser = decodedToken.UserName;
-                acc.MemberID = long.Parse(decodedToken.MemberID);
+                acc.MemberID = decodedToken.MemberID;
                 acc.OfficeID = long.Parse(decodedToken.OfficeId);
                 var createLoanRes = _service.Create(acc);
                 return createLoanRes;

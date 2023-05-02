@@ -42,12 +42,12 @@ public class ChatHub : Hub
         if(getnewNotification.Count() > 0) 
         {
             await Clients.Client(connectionId).SendAsync("NEW", getnewNotification);
-            foreach(var notification in getnewNotification)
-            {
-                notification.UpdateDate = DateTime.UtcNow;
-                notification.Push = false;
-                notificationTableService.Update(notification);
-            }
+            //foreach(var notification in getnewNotification)
+            //{
+            //    notification.UpdateDate = DateTime.UtcNow;
+            //    notification.Push = false;
+            //    notificationTableService.Update(notification);
+            //}
         }
         await base.OnConnectedAsync();
 

@@ -116,15 +116,6 @@ namespace GC.MFI.Services
                                             // Send the notification to the client
 
                                             await _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
-                                            using (var command3 = new SqlCommand(@"UPDATE [dbo].[NotificationTable] 
-                                            SET [Push] = 'False'
-                                            WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
-                                            {
-                                                command3.Parameters.AddWithValue("@memberId", memberId);
-                                                using (var reader2 = command3.ExecuteReader())
-                                                {
-                                                }
-                                            }
 
                                         }
                                         else

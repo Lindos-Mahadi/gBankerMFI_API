@@ -1,10 +1,14 @@
 ﻿using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
+    [Authorize]
     [Route("api/gcmfi/dashboard")]
     [ApiController]
     public class DashboardController : ControllerBase
@@ -18,9 +22,11 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
         [HttpGet]
         [Route("getdashboard")]
-        public async Task<DashboardModel> GetDashboard(long MemberId)
+        public async Task<DashboardModel> GetDashboard()
         {
-           var result = await _service.GetDashboardInfo(MemberId);
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+            var tokeninfo = JwtTokenDecode.GetDetailsFromToken(header);
+            var result = await _service.GetDashboardInfo(tokeninfo.MemberID);
             return result;
         }
     }

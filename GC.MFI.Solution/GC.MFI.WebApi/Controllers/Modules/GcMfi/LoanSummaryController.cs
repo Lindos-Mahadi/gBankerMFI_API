@@ -38,7 +38,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                     filter.pageSize,
                     t => t.ProductName.Trim().Replace(" ", "").ToUpper()!.Contains(filter.search.Trim().Replace(" ", "").ToUpper()));
             }
-            var response = _service.GetAllPortalLoanSummaryPaged(filt, long.Parse(info.MemberID));
+            var response = _service.GetAllPortalLoanSummaryPaged(filt, info.MemberID);
             return Ok(response);
         }
     }

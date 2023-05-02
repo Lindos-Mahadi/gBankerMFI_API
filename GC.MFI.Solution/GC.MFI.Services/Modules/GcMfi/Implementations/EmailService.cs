@@ -27,7 +27,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var _max = 9999;
             Random _rdm = new Random();
             var otpCode = _rdm.Next(_min, _max).ToString();
-            string mailBody = $"Dear Sir,<br><br>Thank you for using our service. Your one-time OTP is: <b> {otpCode}</b>.<br><br>Please enter this OTP to verify your account.<br><br>This OTP is valid for 3 minutes only. If you did not request this OTP, please ignore this email.<br><br>Thank you,<br>Grameen Communication";
+            string mailBody = $"Dear Sir,<br><br>Thank you for registration our GcMFI. Your one-time OTP is: <b> {otpCode}</b>.<br><br>Please enter this OTP to verify your email.<br><br>This OTP is valid for 3 minutes only. If you did not request this OTP, please ignore this email.<br><br>Thank you,<br>Grameen Communication";
             EmailLogTableViewModel emailLogVModel = new EmailLogTableViewModel
             {
                 Email = email,

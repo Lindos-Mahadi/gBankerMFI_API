@@ -6,5 +6,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface INotificationTableService : IServiceBase<NotificationTableViewModel, NotificationTable>
     {
+        Task ViewStatus(long MemberId);
     }
 }

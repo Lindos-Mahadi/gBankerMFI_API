@@ -43,7 +43,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 filt = new PaginationFilter<SavingsSummaryViewModel>(filter.pageNum, filter.pageSize, t => t.ProductName.Trim().Replace(" ", "").ToUpper()!.Contains(filter.search.Trim().Replace(" ", "").ToUpper()));
             }
 
-            var savingSummary =  _service.GetAllPortalSavingSummaryPaged(filt, long.Parse(info.MemberID));
+            var savingSummary =  _service.GetAllPortalSavingSummaryPaged(filt, info.MemberID);
             //for (int i = 0; i < savingSummary.Data.Count(); i++)
             //{
             //    var nominee = _nService.GetMany(t => t.PortalSavingSummaryID == savingSummary.Data.ToList()[i].PortalSavingSummaryID);
