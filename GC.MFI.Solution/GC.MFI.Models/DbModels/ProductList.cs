@@ -11,6 +11,8 @@ namespace GC.MFI.Models.DbModels
         public short ProductID { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
+        public string ProductFullNameEng { get; set; }
+        public string ProductFullNameBng { get; set; }
         public decimal? MinLimit { get; set; }
         public decimal? MaxLimit { get; set; }
     }
@@ -20,6 +22,8 @@ namespace GC.MFI.Models.DbModels
         public short ProductID { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
+        public string ProductFullNameEng { get; set; }
+        public string ProductFullNameBng { get; set; }
         public decimal? MinLimit { get; set; }
         public decimal? MaxLimit { get; set; }
     }
