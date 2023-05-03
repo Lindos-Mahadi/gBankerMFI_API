@@ -16,6 +16,8 @@ using System.Data;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
 
 namespace GC.MFI.Security.Jwt
 {
@@ -27,8 +29,9 @@ namespace GC.MFI.Security.Jwt
         private readonly IMemberService memberService;
         private readonly IMemoryCache memoryCache;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly string _connectionString;
 
-        public JwtTokenHelper(IJWT jwt, IHttpContextAccessor httpContextAccessor, IAuthenticationService authenticationService, IMemoryCache memoryCache, IMemberService memberService, UserManager<ApplicationUser> userManager)
+        public JwtTokenHelper(IJWT jwt, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IAuthenticationService authenticationService, IMemoryCache memoryCache, IMemberService memberService, UserManager<ApplicationUser> userManager)
         {
             this.jwt = jwt;
             this._authenticationService = authenticationService;
@@ -36,7 +39,8 @@ namespace GC.MFI.Security.Jwt
             this.memberService = memberService;
             this.memoryCache = memoryCache;
             this.httpContextAccessor = httpContextAccessor;
-            
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
+
         }
         public Tokens GenerateRefreshToken(string userName)
         {
@@ -113,7 +117,8 @@ namespace GC.MFI.Security.Jwt
             var acctoken = tokenHandler.WriteToken(token);
             var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
             memoryCache.Set("useridentifier", acctoken, cacheEntryOptions);
-            
+            SqlDependency.Start(_connectionString);
+
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };
         }
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
