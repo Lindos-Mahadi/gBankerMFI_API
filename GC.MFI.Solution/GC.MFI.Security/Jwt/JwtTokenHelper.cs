@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using System.Data;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace GC.MFI.Security.Jwt
 {
@@ -24,14 +26,16 @@ namespace GC.MFI.Security.Jwt
         private UserManager<ApplicationUser> _userManager;
         private readonly IMemberService memberService;
         private readonly IMemoryCache memoryCache;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public JwtTokenHelper(IJWT jwt, IAuthenticationService authenticationService, IMemoryCache memoryCache, IMemberService memberService, UserManager<ApplicationUser> userManager)
+        public JwtTokenHelper(IJWT jwt, IHttpContextAccessor httpContextAccessor, IAuthenticationService authenticationService, IMemoryCache memoryCache, IMemberService memberService, UserManager<ApplicationUser> userManager)
         {
             this.jwt = jwt;
             this._authenticationService = authenticationService;
             this._userManager = userManager;
             this.memberService = memberService;
             this.memoryCache = memoryCache;
+            this.httpContextAccessor = httpContextAccessor;
             
         }
         public Tokens GenerateRefreshToken(string userName)
@@ -71,6 +75,7 @@ namespace GC.MFI.Security.Jwt
                     claims.Add(new Claim("orgId", Member.OrgID.ToString()));
                     claims.Add(new Claim("officeId", Member.OfficeID.ToString()));
                     claims.Add(new Claim("memberStatus", Member.MemberStatus.ToString()));
+                    claims.Add(new Claim("BanglaName", Member.BanglaName != null ? Member.BanglaName : ""));
                     int status = Int32.Parse(Member.MemberStatus);
                     if (status > 0)
                     {
@@ -108,6 +113,7 @@ namespace GC.MFI.Security.Jwt
             var acctoken = tokenHandler.WriteToken(token);
             var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
             memoryCache.Set("useridentifier", acctoken, cacheEntryOptions);
+            
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };
         }
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
