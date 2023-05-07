@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Utility.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
@@ -15,20 +17,23 @@ public class ChatHub : Hub
     private readonly ISignalRConnectionTableService service;
     private readonly INotificationTableService notificationTableService;
     private readonly IMemoryCache memoryCache;
-    public ChatHub(ISignalRConnectionTableService service, INotificationTableService notificationTableService, IMemoryCache memoryCache)
+    private readonly IHttpContextAccessor httpContextAccessor;
+    public ChatHub(ISignalRConnectionTableService service, IHttpContextAccessor httpContextAccessor, INotificationTableService notificationTableService, IMemoryCache memoryCache)
     {
         this.service = service;
         this.memoryCache = memoryCache;
         this.notificationTableService = notificationTableService;
+        this.httpContextAccessor = httpContextAccessor;
     }
 
     public override async Task OnConnectedAsync()
     {
         var connectionId = Context.ConnectionId;
-
         var token = memoryCache.Get("useridentifier");
+       
         if (token != null)
         {
+             var userName = httpContextAccessor.HttpContext.User.Identity.Name;
             var memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
             SignalRConnectionTable singalRConnectionTable = new SignalRConnectionTable
             {
