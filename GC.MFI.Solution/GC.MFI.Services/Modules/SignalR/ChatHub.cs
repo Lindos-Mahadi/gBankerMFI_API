@@ -27,28 +27,26 @@ public class ChatHub : Hub
         var connectionId = Context.ConnectionId;
 
         var token = memoryCache.Get("useridentifier");
-        var memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
-        SignalRConnectionTable singalRConnectionTable = new SignalRConnectionTable
+        if (token != null)
         {
-            MemberID = Convert.ToInt64(memberId),
-            ConnID = connectionId
-        };
-        await service.UpdateConnectionTable(singalRConnectionTable);
+            var memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
+            SignalRConnectionTable singalRConnectionTable = new SignalRConnectionTable
+            {
+                MemberID = Convert.ToInt64(memberId),
+                ConnID = connectionId
+            };
+            await service.UpdateConnectionTable(singalRConnectionTable);
 
-        var getNotification = notificationTableService.GetMany(t => t.Push == false && t.ReceiverID == memberId).OrderByDescending(t => t.UpdateDate);
-        
-        await Clients.Client(connectionId).SendAsync("OLD", getNotification);
-        var getnewNotification = notificationTableService.GetMany(t=> t.Push == true && t.ReceiverID == memberId).OrderByDescending(t => t.UpdateDate);
-        if(getnewNotification.Count() > 0) 
-        {
-            await Clients.Client(connectionId).SendAsync("NEW", getnewNotification);
-            //foreach(var notification in getnewNotification)
-            //{
-            //    notification.UpdateDate = DateTime.UtcNow;
-            //    notification.Push = false;
-            //    notificationTableService.Update(notification);
-            //}
+            var getNotification = notificationTableService.GetMany(t => t.Push == false && t.ReceiverID == memberId).OrderByDescending(t => t.UpdateDate);
+
+            await Clients.Client(connectionId).SendAsync("OLD", getNotification);
+            var getnewNotification = notificationTableService.GetMany(t => t.Push == true && t.ReceiverID == memberId).OrderByDescending(t => t.UpdateDate);
+            if (getnewNotification.Count() > 0)
+            {
+                await Clients.Client(connectionId).SendAsync("NEW", getnewNotification);
+            }
         }
+       
         await base.OnConnectedAsync();
 
     }

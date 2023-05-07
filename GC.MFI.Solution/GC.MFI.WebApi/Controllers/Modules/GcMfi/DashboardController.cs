@@ -26,7 +26,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
             var tokeninfo = JwtTokenDecode.GetDetailsFromToken(header);
-            var result = await _service.GetDashboardInfo(tokeninfo.MemberID);
+            var result = await _service.GetDashboardInfo(long.Parse(tokeninfo.MemberID));
             return result;
         }
     }

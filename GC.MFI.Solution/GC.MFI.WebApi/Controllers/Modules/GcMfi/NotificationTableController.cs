@@ -36,7 +36,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             if (push == false) return null;
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
             var tokenifo = JwtTokenDecode.GetDetailsFromToken(header);
-            await _service.ViewStatus(tokenifo.MemberID);
+            await _service.ViewStatus(long.Parse(tokenifo.MemberID));
             return Ok();
         }
 
