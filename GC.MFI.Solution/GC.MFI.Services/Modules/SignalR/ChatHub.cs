@@ -29,7 +29,7 @@ public class ChatHub : Hub
     public override async Task OnConnectedAsync()
     {
         var connectionId = Context.ConnectionId;
-        var token = memoryCache.Get("useridentifier");
+        var token = httpContextAccessor.HttpContext.Request.Query["access_token"].ToString().Substring(7);
        
         if (token != null)
         {

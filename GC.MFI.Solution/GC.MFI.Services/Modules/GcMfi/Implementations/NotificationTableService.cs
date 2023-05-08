@@ -17,7 +17,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace GC.MFI.Services.Modules.GcMfi.Implementations
 {
-    public class NotificationTableService : ServiceBase<NotificationTableViewModel, NotificationTable>, INotificationTableService
+    public class NotificationTableService : ServiceBase<NotificationTableViewModel, Models.DbModels.NotificationTable>, INotificationTableService
     {
         private readonly INotificationTableRepository _repository;
         private readonly string _connectionString;  
@@ -38,7 +38,8 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     connection.Open();
 
                     using (var command3 = new SqlCommand(@"UPDATE [dbo].[NotificationTable] 
-                                            SET [Push] = 'False'
+                                            SET [Push] = 'False',
+                                            [Status] = 'A'
                                             WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
                     {
                         command3.Parameters.AddWithValue("@memberId", MemberId);

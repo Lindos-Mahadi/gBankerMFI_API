@@ -1,8 +1,10 @@
 ﻿
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
@@ -21,12 +23,10 @@ namespace GC.MFI.Services
     {
         private readonly string _connectionString;
         private readonly IHubContext<ChatHub> _hubContext;
-        private readonly IMemoryCache memoryCache;
-        public DatabaseChangeNotificationService(IConfiguration configuration,  IMemoryCache memoryCache,  IHubContext<ChatHub> hubContext)
+        public DatabaseChangeNotificationService(IConfiguration configuration, IHubContext<ChatHub> hubContext)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
             _hubContext = hubContext;
-            this.memoryCache = memoryCache;
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
@@ -57,31 +57,43 @@ namespace GC.MFI.Services
         {
             if (e.Type == SqlNotificationType.Change)
             {
-                var token = memoryCache.Get("useridentifier");
-                if (token != null)
-                {
+               
                  using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     
-                    long memberId = Convert.ToInt64(JwtTokenDecode.GetDetailsFromToken(token.ToString()).MemberID);
-                    using (var command = new SqlCommand(@"SELECT [Id] ,[Message] ,[SenderType] ,[SenderID] ,[ReceiverType],[ReceiverID],[Email]
-                                                    ,[SMS] ,[Push] ,[Status] ,[CreateDate] ,[CreateUser] ,[UpdateDate],[UpdateUser] 
-                                                    FROM [dbo].[NotificationTable] WHERE [Push] = 'True' AND [ReceiverID] = @memberId ", connection))
+                    using (var command = new SqlCommand(@"SELECT    N.[Id],
+        N.[Message],
+        N.[SenderType],
+        N.[SenderID],
+        N.[ReceiverType],
+        N.[ReceiverID],
+        N.[Email],
+        N.[SMS],
+        N.[Push],
+        N.[Status],
+		S.[ConnID],
+        N.[CreateDate],
+        N.[CreateUser],
+        N.[UpdateDate],
+        N.[UpdateUser]
+    FROM [dbo].[NotificationTable] N
+	INNER JOIN [dbo].[SignalRConnectionTable] S
+	ON N.[ReceiverID] = S.[MemberID]
+    WHERE N.[Status] = 'P'", connection))
                     {
-                        command.Parameters.AddWithValue("@memberId", memberId);
                         command.Notification = null;
                         SqlDependency dependency = new SqlDependency(command);
 
                         dependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
 
-                        var Notification = new List<NotificationTable>();
+                        var Notification = new List<GetNotificationByStatus>();
 
                         using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var notify = new NotificationTable
+                                var notify = new GetNotificationByStatus
                                 {
                                     Id = reader.GetInt64(0),
                                     Message = reader.GetString(1),
@@ -91,7 +103,9 @@ namespace GC.MFI.Services
                                     ReceiverID = reader.IsDBNull(5) ? null : (long?)reader.GetInt64(5),
                                     Email = reader.GetBoolean(6),
                                     Sms = reader.GetBoolean(7),
-                                    Push = reader.GetBoolean(8)
+                                    Push = reader.GetBoolean(8),
+                                    Status = reader.GetString(9),
+                                    ConnID = reader.GetString(10)
                                 };
 
                                 Notification.Add(notify);
@@ -99,37 +113,24 @@ namespace GC.MFI.Services
                         }
                             if (Notification.Count > 0)
                             {
-                                using (var command2 = new SqlCommand(@"SELECT [Id] ,[MemberID] ,[ConnID] 
-                                                    FROM [dbo].[SignalRConnectionTable] WHERE [MemberID] = @memberId ", connection))
+                            foreach(var n in Notification)
+                            {
+                                _hubContext.Clients.Client(n.ConnID).SendAsync("NEW", n);
+                            }
+                            string joined = string.Join(",", Notification.Select(x => x.Id));
+                            using (var command2 = new SqlCommand(@"Update [dbo].[NotificationTable] SET [Status]='A' WHERE [Status] = 'P' ", connection))
+                            {
+                                // command2.Parameters.AddWithValue("@memberId", memberId);
+                                using (var reader = command2.ExecuteReader())
                                 {
-                                    command2.Parameters.AddWithValue("@memberId", memberId);
-                                    using (var reader = command2.ExecuteReader())
-                                    {
-                                        if (reader.Read())
-                                        {
-                                            // Get the connection ID from the SqlDataReader
-                                            string connId = reader.GetString(2);
 
-                                            // Use the connection ID here
-                                            // ...
-
-                                            // Send the notification to the client
-
-                                             _hubContext.Clients.Client(connId).SendAsync("NEW", Notification);
-
-                                        }
-                                        else
-                                        {
-                                            // No rows were returned
-                                            // Handle the error here
-                                        }
-                                    }
                                 }
                             }
+                        }
 
                     }
                 }
-             }
+            // }
                 
             }
         }

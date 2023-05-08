@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
-    public interface INotificationTableService : IServiceBase<NotificationTableViewModel, NotificationTable>
+    public interface INotificationTableService : IServiceBase<NotificationTableViewModel, Models.DbModels.NotificationTable>
     {
         Task ViewStatus(long MemberId);
     }
