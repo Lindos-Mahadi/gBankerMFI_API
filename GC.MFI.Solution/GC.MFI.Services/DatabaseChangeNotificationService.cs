@@ -62,25 +62,11 @@ namespace GC.MFI.Services
                 {
                     connection.Open();
                     
-                    using (var command = new SqlCommand(@"SELECT    N.[Id],
-        N.[Message],
-        N.[SenderType],
-        N.[SenderID],
-        N.[ReceiverType],
-        N.[ReceiverID],
-        N.[Email],
-        N.[SMS],
-        N.[Push],
-        N.[Status],
-		S.[ConnID],
-        N.[CreateDate],
-        N.[CreateUser],
-        N.[UpdateDate],
-        N.[UpdateUser]
-    FROM [dbo].[NotificationTable] N
-	INNER JOIN [dbo].[SignalRConnectionTable] S
-	ON N.[ReceiverID] = S.[MemberID]
-    WHERE N.[Status] = 'P'", connection))
+                    using (var command = new SqlCommand(@"SELECT N.[Id],  N.[Message],  N.[SenderType], N.[SenderID], N.[ReceiverType],  N.[ReceiverID], N.[Email], N.[SMS], N.[Push],
+                                                         N.[Status], S.[ConnID], N.[CreateDate], N.[CreateUser], N.[UpdateDate], N.[UpdateUser]  FROM [dbo].[NotificationTable] N
+	                                                    INNER JOIN [dbo].[SignalRConnectionTable] S
+	                                                    ON N.[ReceiverID] = S.[MemberID]
+                                                         WHERE N.[Status] = 'P'", connection))
                     {
                         command.Notification = null;
                         SqlDependency dependency = new SqlDependency(command);
@@ -117,8 +103,8 @@ namespace GC.MFI.Services
                             {
                                 _hubContext.Clients.Client(n.ConnID).SendAsync("NEW", n);
                             }
-                            string joined = string.Join(",", Notification.Select(x => x.Id));
-                            using (var command2 = new SqlCommand(@"Update [dbo].[NotificationTable] SET [Status]='A' WHERE [Status] = 'P' ", connection))
+                            string idList = string.Join(",", Notification.Select(x => x.Id));
+                            using (var command2 = new SqlCommand(@"Update [dbo].[NotificationTable] SET [Status]='A' WHERE [Id] IN (" + idList + ")  ", connection))
                             {
                                 // command2.Parameters.AddWithValue("@memberId", memberId);
                                 using (var reader = command2.ExecuteReader())
