@@ -101,22 +101,20 @@ namespace GC.MFI.Services
                             {
                             foreach(var n in Notification)
                             {
-                                _hubContext.Clients.Client(n.ConnID).SendAsync("NEW", n);
+                                _hubContext.Clients.Client(n.ConnID).SendAsync("INSTANT", n);
                             }
-                            //string idList = string.Join(",", Notification.Select(x => x.Id));
-                            //using (var command2 = new SqlCommand(@"Update [dbo].[NotificationTable] SET [Status]='A' WHERE [Id] IN (" + idList + ")  ", connection))
-                            //{
-                            //    // command2.Parameters.AddWithValue("@memberId", memberId);
-                            //    using (var reader = command2.ExecuteReader())
-                            //    {
+                            string idList = string.Join(",", Notification.Select(x => x.Id));
+                            using (var command2 = new SqlCommand(@"Update [dbo].[NotificationTable] SET [Status]='A' WHERE [Id] IN (" + idList + ")  ", connection))
+                            {
+                                using (var reader = command2.ExecuteReader())
+                                {
 
-                            //    }
-                            //}
+                                }
+                            }
                         }
 
                     }
                 }
-            // }
                 
             }
         }
