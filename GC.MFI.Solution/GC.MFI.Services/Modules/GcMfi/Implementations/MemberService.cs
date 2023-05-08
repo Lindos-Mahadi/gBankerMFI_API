@@ -56,6 +56,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 dbMember.FServiceName = memberProfile.FServiceName;
                 dbMember.FinServiceChoiceId = memberProfile.FinServiceChoiceId;
                 dbMember.TransactionChoiceId = memberProfile.TransactionChoiceId;
+                dbMember.IsAnyFS = memberProfile.IsAnyFS;
                 //dbMember.UpdateUser = DateTime.Now.ToString();
 
             Update(dbMember);
