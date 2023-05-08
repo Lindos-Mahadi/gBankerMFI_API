@@ -117,6 +117,17 @@ namespace GC.MFI.Security.Jwt
             var acctoken = tokenHandler.WriteToken(token);
             var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
             memoryCache.Set("useridentifier", acctoken, cacheEntryOptions);
+            var identity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, userModel.UserName),
+                new Claim(ClaimTypes.Email, userModel.Email)
+            });
+
+            // Create a ClaimsPrincipal with the user's identity
+            var principal = new ClaimsPrincipal(identity);
+
+            // Set the ClaimsPrincipal as the current user
+            httpContextAccessor.HttpContext.User= principal;
             SqlDependency.Start(_connectionString);
 
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };

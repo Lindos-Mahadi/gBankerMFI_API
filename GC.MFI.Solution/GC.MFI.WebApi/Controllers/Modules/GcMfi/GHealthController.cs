@@ -45,7 +45,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
             var tokenDecode = JwtTokenDecode.GetDetailsFromToken(header);
-            entity.MemberId = tokenDecode.MemberID;
+            entity.MemberId = long.Parse(tokenDecode.MemberID);
             var registraton = await _healthSecurityService.SignUp(entity);
             if(registraton != null)
             {
