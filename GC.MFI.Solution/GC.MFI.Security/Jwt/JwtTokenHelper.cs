@@ -111,12 +111,8 @@ namespace GC.MFI.Security.Jwt
             Expires = DateTime.UtcNow.AddMinutes(60),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
-
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var acctoken = tokenHandler.WriteToken(token);
-            var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
-            memoryCache.Set("useridentifier", acctoken, cacheEntryOptions);
             SqlDependency.Start(_connectionString);
 
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };

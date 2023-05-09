@@ -121,9 +121,7 @@ namespace GC.MFI.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> LogOut()
         {
-            var token = CacheHelper.GetCache(memoryCache, "useridentifier");
-            if (token == null) return Unauthorized();
-            CacheHelper.ClearCache(memoryCache,"useridentifier");
+            
             string message = "Log out successfully";
             return Ok(message);
         }
