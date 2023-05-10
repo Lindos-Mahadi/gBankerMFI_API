@@ -62,13 +62,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 }
             string GImgUrl = GetGuaranntorImage != null? FileDecodeHelper.Base64(GetGuaranntorImage.Type, GetGuaranntorImage.File) : null;
             string GNidUrl = GetGuranntorNId != null ? FileDecodeHelper.Base64(GetGuranntorNId.Type, GetGuranntorNId.File) : null;
-            return new LoanSummaryViewModel
-            {
-                LoanSummaryID = GetLoan.LoanSummaryID,
-                ImageUrl = GImgUrl,
-                NidUrl = GNidUrl,
-                FileUploads = list,
-            };
+
+            var map = _mapper.Map<LoanSummaryViewModel>(GetLoan);
+            map.ImageUrl = GImgUrl;
+            map.NidUrl = GNidUrl;
+            map.FileUploads = list;
+            return map;
 
         }
     }
