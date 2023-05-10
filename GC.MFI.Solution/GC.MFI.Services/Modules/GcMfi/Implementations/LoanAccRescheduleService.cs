@@ -16,13 +16,13 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
     public class LoanAccRescheduleService : ServiceBase<LoanAccRescheduleViewModel, LoanAccReschedule>, ILoanAccRescheduleService
     {
         private readonly ILoanAccRescheduleRepository _repository;
-        private readonly IPortalLoanSummaryRepository _portalLoanSummaryRepository;
+        private readonly ILoanSummaryRepository _loanSummaryRepository;
         private readonly IMapper _mapper;
-        public LoanAccRescheduleService(ILoanAccRescheduleRepository repository, IPortalLoanSummaryRepository _portalLoanSummaryRepository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
+        public LoanAccRescheduleService(ILoanAccRescheduleRepository repository, ILoanSummaryRepository _loanSummaryRepository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             this._repository = repository;
             this._mapper = _mapper;
-            this._portalLoanSummaryRepository = _portalLoanSummaryRepository;   
+            this._loanSummaryRepository = _loanSummaryRepository;   
         }
 
 
@@ -34,7 +34,8 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             objectToCreate.Status = "P";
             objectToCreate.CreateDate = DateTime.UtcNow;
             objectToCreate.UpdateDate = DateTime.UtcNow;
-            var RStatus = _portalLoanSummaryRepository.GetById(objectToCreate.LoanID);
+            var RStatus = _loanSummaryRepository.GetById(objectToCreate.LoanID);
+            if (RStatus == null) return null;
             RStatus.LoanStatus = 4;
             return base.Create(objectToCreate);
         }
