@@ -36,11 +36,15 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var GetLoan = _repository.GetById(id);
             var GetGuaranntorImage = _fileService.GetById(GetLoan.GuarantorImg ?? 0);
             var GetGuranntorNId = _fileService.GetById(GetLoan.GuarantorNID ?? 0);
-            if(!String.IsNullOrEmpty(GetLoan.SupportingDocumentsId))
+           string[] numbers = !String.IsNullOrEmpty(GetLoan.SupportingDocumentsId) ? GetLoan.SupportingDocumentsId.Split(',') : null;
+            
+            long[] ids = null;
+            if (numbers != null)
             {
-                string[] numbers = GetLoan.SupportingDocumentsId.Split(',');
-                long[] ids = Array.ConvertAll(numbers, s => long.Parse(s));
-                var supportingdocument = _fileService.GetByMultipleId(ids);
+               ids = Array.ConvertAll(numbers, s => long.Parse(s));
+            }
+            long[] ids2 = {0};
+            var supportingdocument = _fileService.GetByMultipleId(ids != null ? ids : ids2);
                 FileUploadTableViewModel[] list = new FileUploadTableViewModel[supportingdocument.Count()];
                 for (int i = 0; i < supportingdocument.Count(); i++)
                 {
@@ -56,18 +60,16 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
 
                     };
                 }
-                string GImgUrl = FileDecodeHelper.Base64(GetGuaranntorImage.Type, GetGuaranntorImage.File);
-                string GNidUrl = FileDecodeHelper.Base64(GetGuranntorNId.Type, GetGuranntorNId.File);
-                return new LoanSummaryViewModel
-                {
-                    LoanSummaryID = GetLoan.LoanSummaryID,
-                    ImageUrl = GImgUrl,
-                    NidUrl = GNidUrl,
-                    FileUploads = list,
-                };
-            }
-            return null;
-           
+            string GImgUrl = GetGuaranntorImage != null? FileDecodeHelper.Base64(GetGuaranntorImage.Type, GetGuaranntorImage.File) : null;
+            string GNidUrl = GetGuranntorNId != null ? FileDecodeHelper.Base64(GetGuranntorNId.Type, GetGuranntorNId.File) : null;
+            return new LoanSummaryViewModel
+            {
+                LoanSummaryID = GetLoan.LoanSummaryID,
+                ImageUrl = GImgUrl,
+                NidUrl = GNidUrl,
+                FileUploads = list,
+            };
+
         }
     }
 }
