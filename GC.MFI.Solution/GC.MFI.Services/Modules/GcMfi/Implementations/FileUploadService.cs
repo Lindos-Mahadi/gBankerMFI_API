@@ -24,6 +24,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             var fModel = await _repository.CreateFileUpload(fileCreate);
             return fModel;
         }
+        public FileUploadTable[] GetByMultipleId(long[] ids)
+        {
+            var getFiles = _repository.GetMany(t => ids.Contains(t.FileUploadId)).ToArray();
+            return getFiles;
+        }
     }
 }
 

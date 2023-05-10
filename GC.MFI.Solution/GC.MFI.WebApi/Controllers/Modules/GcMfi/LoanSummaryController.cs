@@ -41,5 +41,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var response = _service.GetAllPortalLoanSummaryPaged(filt, long.Parse(info.MemberID));
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("ApproveloanSummarydetails")]
+        public LoanSummaryViewModel GetLoanSummary(long Id)
+        {
+            var getLoan = _service.GetById(Id);
+            return getLoan;
+        }
     }
 }

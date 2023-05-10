@@ -12,5 +12,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     public interface ILoanSummaryService : ILegacyServiceBase<LoanSummary>
     {
         PagedResponse<IQueryable<LoanSummaryViewModel>> GetAllPortalLoanSummaryPaged(PaginationFilter<LoanSummaryViewModel> filter, long Id);
+        LoanSummaryViewModel GetById(long id);
     }
 }

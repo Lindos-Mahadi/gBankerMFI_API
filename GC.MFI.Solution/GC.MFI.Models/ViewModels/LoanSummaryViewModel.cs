@@ -209,6 +209,11 @@ namespace GC.MFI.Models.ViewModels
         public string Remarks { get; set; }
         public string ImageUrl { get; set; }
         public string NidUrl { get; set; }
+
+        public long? PortalLoanSummaryID { get; set; }
+        public long? GuarantorNID { get; set; }
+        public long? GuarantorImg { get; set; }
+        public string SupportingDocumentsId { get; set; }
         public virtual FileUploadTableViewModel[] FileUploads { get; set; }
         public string StatusDesc
         {
