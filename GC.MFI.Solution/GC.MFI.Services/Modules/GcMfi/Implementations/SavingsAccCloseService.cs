@@ -16,12 +16,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
     public class SavingsAccCloseService : ServiceBase<SavingsAccCloseViewModel, SavingsAccClose>, ISavingsAccCloseService
     {
         private ISavingsAccCloseRepository _repository;
-        private IPortalSavingSummaryRepository _portalSavingSummaryRepository;
+        private ISavingSummaryRepository _savingSummaryRepository;
         private IMapper _mapper;
-        public SavingsAccCloseService(ISavingsAccCloseRepository repository, IPortalSavingSummaryRepository portalSavingSummaryRepository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
+        public SavingsAccCloseService(ISavingsAccCloseRepository repository, ISavingSummaryRepository savingSummaryRepository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             this._repository = repository;
-            this._portalSavingSummaryRepository = portalSavingSummaryRepository;
+            this._savingSummaryRepository = savingSummaryRepository;
             this._mapper = _mapper;
         }
 
@@ -35,7 +35,8 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             acc.Status = "P";
             acc.CreateDate = DateTime.UtcNow;
             acc.UpdateDate = DateTime.UtcNow;
-            var status = _portalSavingSummaryRepository.GetById(acc.SavingAccountID);
+            var status = _savingSummaryRepository.GetById(acc.SavingAccountID);
+            if (status == null) { return null; }
             status.SavingStatus = 4;
             return base.Create(acc);
         }
