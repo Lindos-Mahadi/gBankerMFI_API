@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace GC.MFI.Models.DbModels
+namespace GC.MFI.Models.ViewModels
 {
-    public class NomineeXSavingSummary
+    public class NomineeXSavingsSummaryViewModel
     {
         public long SavingSummaryID { get; set; }
         public string NomineeName { get; set; }
@@ -17,9 +15,8 @@ namespace GC.MFI.Models.DbModels
         public string NAddressName { get; set; }
         public int? NAlocation { get; set; }
         public long ImageId { get; set; }
+        public string Image { get; set; }
         public long NIDId { get; set; }
-        //[JsonIgnore]
-        //public SavingSummary SavingSummary { get; set; }
-
+        public string NID { get; set; }
     }
 }

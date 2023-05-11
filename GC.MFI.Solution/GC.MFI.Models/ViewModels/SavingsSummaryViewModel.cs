@@ -91,6 +91,7 @@ namespace GC.MFI.Models.ViewModels
 
         public decimal? MinLimit { get; set; }
         public decimal? MaxLimit { get; set; }
+        public string SupportingDocumentsId { get; set; }
 
         public string StatusDesc
         {
@@ -104,8 +105,7 @@ namespace GC.MFI.Models.ViewModels
                     SavingStatus == 5 ? "Closed" : "UnApproved";
             }
         }
-
-
-        public virtual List<NomineeXPortalSavingSummary> MemberNomines { get; set; }
+        public virtual FileUploadTableViewModel[] FileUploadTables { get; set; }
+        public virtual List<NomineeXSavingsSummaryViewModel> MemberNomines { get; set; }
     }
 }

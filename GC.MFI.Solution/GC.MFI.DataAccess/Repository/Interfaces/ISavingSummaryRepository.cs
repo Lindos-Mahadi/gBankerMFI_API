@@ -13,5 +13,7 @@ namespace GC.MFI.DataAccess.Repository.Interfaces
     public interface ISavingSummaryRepository : ILegacyRepository<SavingSummary>
     {
         PagedResponse<IQueryable<SavingsSummaryViewModel>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingsSummaryViewModel> filter, long Id);
+        IEnumerable<NomineeXSavingSummary> GetNominess(long Id);
+    
     }
 }

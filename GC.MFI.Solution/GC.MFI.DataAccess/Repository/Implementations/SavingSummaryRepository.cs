@@ -76,5 +76,11 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 TotalElement,
                 totalPages);
         }
+
+        public IEnumerable<NomineeXSavingSummary> GetNominess(long Id)
+        {
+            var nominee = DataContext.NomineeXSavingSummary.Where(t => t.SavingSummaryID == Id);
+            return nominee;
+        }
     }
 }

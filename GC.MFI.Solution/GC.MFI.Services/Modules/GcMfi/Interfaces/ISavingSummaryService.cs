@@ -12,5 +12,6 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
     public interface ISavingSummaryService : ILegacyServiceBase<SavingSummary>
     {
         PagedResponse<IQueryable<SavingsSummaryViewModel>> GetAllPortalSavingSummaryPaged(PaginationFilter<SavingsSummaryViewModel> filter, long Id);
+        SavingsSummaryViewModel SavingSummaryDetails(long Id);
     }
 }

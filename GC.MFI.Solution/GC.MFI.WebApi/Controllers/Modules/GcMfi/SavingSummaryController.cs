@@ -7,6 +7,7 @@ using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Data;
 using System.Net.Http.Headers;
 
@@ -60,6 +61,20 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 return await _storedProcedureService.GetSavingLedger(officeId,loanee1,loanee2,productId, qType);
             }
             catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        [Route("savingsummarydetails")]
+        public SavingsSummaryViewModel SavingSummaryDetails(long Id)
+        {
+            try
+            {
+                return _service.SavingSummaryDetails(Id);
+
+            }catch (Exception ex)
             {
                 throw ex;
             }

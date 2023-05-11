@@ -206,10 +206,10 @@ namespace GC.MFI.DataAccess
                 .WithMany(M => M.MemberNomines);
 
 
-          //  modelBuilder.Entity<NomineeXSavingSummary>().HasNoKey();
-            modelBuilder.Entity<NomineeXSavingSummary>()
-                .HasOne(O => O.SavingSummary)
-                .WithMany(O => O.MemberNomines);
+             modelBuilder.Entity<NomineeXSavingSummary>().HasNoKey();
+            //modelBuilder.Entity<NomineeXSavingSummary>()
+            //    .HasOne(O => O.SavingSummary)
+            //    .WithMany(O => O.MemberNomines);
 
 
             modelBuilder.Entity<Upozilla>()

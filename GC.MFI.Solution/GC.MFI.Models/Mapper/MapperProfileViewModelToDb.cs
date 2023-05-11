@@ -34,6 +34,8 @@ namespace GC.MFI.Models.Mapper
 
             CreateMap<NomineeXPortalSavingSummaryFile, NomineeXPortalSavingSummary>();
 
+            CreateMap<SavingsSummaryViewModel, SavingSummary>();
+
             CreateMap<FileUploadTableViewModel, FileUploadTable>();
 
             CreateMap<PortalLoanSummaryFileUpload, PortalLoanSummary>();
