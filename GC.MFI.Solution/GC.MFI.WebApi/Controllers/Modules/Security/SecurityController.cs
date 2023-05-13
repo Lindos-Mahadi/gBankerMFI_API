@@ -121,7 +121,11 @@ namespace GC.MFI.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> LogOut()
         {
-            
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+            JwtTokenModel token = JwtTokenDecode.GetDetailsFromToken(header);
+            var gettoken = memoryCache.Get(token.UserId);
+            if (gettoken == null) { return Unauthorized(); }
+            memoryCache.Remove(token.UserId);
             string message = "Log out successfully";
             return Ok(message);
         }

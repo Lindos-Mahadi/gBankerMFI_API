@@ -114,7 +114,7 @@ namespace GC.MFI.Security.Jwt
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
             SqlDependency.Start(_connectionString);
-
+            memoryCache.Set(userModel.Id, token);
             return new Tokens { AccessToken = tokenHandler.WriteToken(token) };
         }
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
