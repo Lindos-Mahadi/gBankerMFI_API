@@ -1,20 +1,23 @@
 ﻿using GC.MFI.Models.DbModels;
 using GC.MFI.Models.Models;
+using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Xml.Linq;
 using XenterSolution.Models.ViewModels;
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
-    [Route("api/GcMfi/Address")]
+    [Route("api/gcmfi/address")]
     [ApiController]
     public class AddressController : ControllerBase
     {
         private readonly ILogger<AddressController> _logger;
         private readonly IStoredProcedureService _storedProcedureService;
         private readonly IOfficeService _service;
-        public AddressController(ILogger<AddressController> logger, 
+        public AddressController(ILogger<AddressController> logger,
             IStoredProcedureService storedProcedureService,
             IOfficeService service)
         {
@@ -61,9 +64,50 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 throw ex;
             }
         }
+        [HttpGet]
+        [Route("getpostofficecodeList")]
+        public IActionResult GetPostOfficeCodeList(string postOffice, string postCode)
+        {
+            try
+            {
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "PostOffice.json");
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return NotFound();
+                }
+
+                string jsonData = System.IO.File.ReadAllText(filePath);
+                var locationDataList = JsonConvert.DeserializeObject<PostOfficeViewModel[]>(jsonData);
+
+                if (!String.IsNullOrEmpty(postOffice))
+                {
+                    locationDataList = locationDataList?.Where(d => postOffice.Contains(d.postOffice) || d.postOffice.Trim().Replace(" ", "").ToUpper()!.Contains(postOffice.Trim().Replace(" ", "").ToUpper())).ToArray();
+                }
+
+                if (!String.IsNullOrEmpty(postCode))
+                {
+
+                    locationDataList = locationDataList?.Where(d => postCode.Contains(d.postCode) || d.postCode.Trim().Replace(" ", "").ToUpper()!.Contains(postCode.Trim().Replace(" ", "").ToUpper())).ToArray();
+                }
+
+                var result = locationDataList?.Select(d => new PostOfficeViewModel
+                {
+                    postCode = d.postCode,
+                    postOffice = d.postOffice
+                }).Take(10).ToArray();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         [HttpGet]
-        [Route("GetByDistrictId")]
+        [Route("getbydistrictId")]
         public async Task<IEnumerable<UpozillaList>> GetByDistrictId(string Id)
         {
             try
@@ -78,8 +122,10 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
         }
 
+
+
         [HttpGet]
-        [Route("GetVillageListByUnion")]
+        [Route("getvillageListbyunion")]
         public async Task<IEnumerable<VillageList>> GetVillageListByUnion(string SearchByCode)
         {
             try
@@ -93,7 +139,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             }
         }
         [HttpGet]
-        [Route("GetUnionListByUpozilla")]
+        [Route("getunionListbyupozilla")]
         public async Task<IEnumerable<UnionList>> GetUnionListByUpozilla(string SearchByCode)
         {
             try
@@ -109,7 +155,7 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
         }
 
         [HttpGet]
-        [Route("getOfficeByUnionId")]
+        [Route("getofficebyunionId")]
         public async Task<IEnumerable<Office>> getOfficeByUnionId(int unionId)
         {
             var office = await _service.GetOfficeByUnionId(unionId);

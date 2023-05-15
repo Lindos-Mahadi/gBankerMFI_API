@@ -24,9 +24,9 @@ namespace GC.MFI.Models.Models
         public DateTime? DisburseDate{ get; set; }
         public string RepaymentDate{ get; set; }
         public Decimal PrincipalLoan{ get; set; }
-        public Decimal LoanInstallMent{ get; set; }
-        public Decimal InterestInst{ get; set; }
-        public Decimal LoanPaid { get; set; }
+        //public Decimal LoanInstallMent{ get; set; }
+        //public Decimal InterestInst{ get; set; }
+        //public Decimal LoanPaid { get; set; }
         public Decimal IntPAid { get; set; }
         public Decimal LoanBalnce { get; set; }
         public int InstallmentNo{ get; set; }
