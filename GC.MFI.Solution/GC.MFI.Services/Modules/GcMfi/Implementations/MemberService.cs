@@ -5,6 +5,7 @@ using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,13 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
     {
         private readonly IMemberRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IFileUploadRepository _uploadRepository;
 
-        public MemberService(IMemberRepository repository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
+        public MemberService(IMemberRepository repository, IFileUploadRepository uploadRepository, IUnitOfWork unitOfWork, IMapper _mapper) : base(repository, unitOfWork, _mapper)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
+            _uploadRepository = uploadRepository;
         }
 
         public async Task<IEnumerable<Member>> GetAllMember(string search)
@@ -72,6 +75,37 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         public async Task<string> GetImageByMemberID(long memberId)
         {
             return await _repository.GetImageByMemberID(memberId);
+        }
+
+        public async Task<string> UpdateMemberImage(string image, long memberId)
+        {
+            var getmember = _repository.GetById(memberId);
+            var imagedetails = ImageHelper.GetFileDetails(image);
+            if (getmember?.Image != null) 
+            {
+               var getimage = _uploadRepository.GetById((long)getmember.Image);
+                if(getimage != null)
+                {
+                    getimage.File = imagedetails.DataBytes;
+                    getimage.Type = imagedetails.MimeType;
+                    getimage.EntityId = memberId;
+                    getimage.PropertyName = "MemberImage";
+                    getimage.FileName = $"Image.{imagedetails.MimeType}";
+                    Save();
+                }
+                return image;
+            }
+            FileUploadTable fileUploadTable = new FileUploadTable();
+            fileUploadTable.File = imagedetails.DataBytes;
+            fileUploadTable.Type = imagedetails.MimeType;
+            fileUploadTable.EntityId = memberId;
+            fileUploadTable.PropertyName = "MemberImage";
+            fileUploadTable.FileName = $"Image.{imagedetails.MimeType}";
+            _uploadRepository.Add(fileUploadTable);
+            Save();
+            getmember.Image = fileUploadTable.FileUploadId;
+            Save();
+            return image;
         }
     }
 }
