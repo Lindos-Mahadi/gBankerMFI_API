@@ -3,12 +3,16 @@ using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
+using GC.MFI.Utility.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
 {
+    [Authorize]
     [Route("api/gcmfi/member")]
     [ApiController]
     public class MemberController : GCMcfinaLegacyBaseController<Member>
@@ -62,6 +66,24 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 return await _service.GetImageByMemberID(memberId);
 
             }catch (Exception ex)
+            {
+                LogError(ex, null);
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("updateimage")]
+        public async Task<string> UpdateMemberImage(string image)
+        {
+            try
+            {
+                var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+                var tokenInfo = JwtTokenDecode.GetDetailsFromToken(header);
+                return await _service.UpdateMemberImage(image,long.Parse(tokenInfo.MemberID));
+
+            }
+            catch (Exception ex)
             {
                 LogError(ex, null);
                 throw;
