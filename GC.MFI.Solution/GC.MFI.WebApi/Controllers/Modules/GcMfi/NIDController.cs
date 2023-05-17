@@ -40,41 +40,55 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 {
                     throw new Exception("Insert All Required Fields");
                 }
-
-                var UsePorichoyAPI = configuration["UsePorichoyAPI"];
-
-                if(UsePorichoyAPI == "True")
+                if (req.nidNumber.Length == 10 || req.nidNumber.Length == 13 || req.nidNumber.Length == 17)
                 {
-                    return await nIDService.GetNIDInfo(req);
-                }
-                return new NIDVerificationResponse
-                {
-                    data = new Data
+
+
+                    var UsePorichoyAPI = configuration["UsePorichoyAPI"];
+
+                    if (UsePorichoyAPI == "True")
                     {
-                        nid = new Nid
+                        return await nIDService.GetNIDInfo(req);
+                    }
+                    return new NIDVerificationResponse
+                    {
+                        data = new Data
                         {
-                            fullNameEN = "MD Ashiful Arefin",
-                            fathersNameEN = "Abu Arefin",
-                            mothersNameEN = "Umme Arefin",
-                            spouseNameEN = "Mrs Arefin",
-                            presentAddressEN = "Uttarkhan",
-                            permenantAddressEN = "Dhaka",
-                            fullNameBN = "মোঃ আসিফুল আরেফিন",
-                            fathersNameBN = "মোঃ আব্দুল হক",
-                            mothersNameBN = "",
-                            spouseNameBN = "",
-                            presentAddressBN = "",
-                            permanentAddressBN = "",
-                            gender = "male",
-                            profession = "service",
-                            //dateOfBirth = "1995-01-06T00:00:00",
-                            nationalIdNumber = "",
-                            oldNationalIdNumber = "",
-                            photoUrl = ""
-                        }
-                    },
-                    errors = new List<Error>()
-                };
+                            nid = new Nid
+                            {
+                                fullNameEN = "MD Ashiful Arefin",
+                                fathersNameEN = "Abu Arefin",
+                                mothersNameEN = "Umme Arefin",
+                                spouseNameEN = "Mrs Arefin",
+                                presentAddressEN = "Uttarkhan",
+                                permenantAddressEN = "Dhaka",
+                                fullNameBN = "মোঃ আসিফুল আরেফিন",
+                                fathersNameBN = "মোঃ আব্দুল হক",
+                                mothersNameBN = "",
+                                spouseNameBN = "",
+                                presentAddressBN = "",
+                                permanentAddressBN = "",
+                                gender = "male",
+                                profession = "service",
+                                //dateOfBirth = "1995-01-06T00:00:00",
+                                nationalIdNumber = "",
+                                oldNationalIdNumber = "",
+                                photoUrl = ""
+                            }
+                        },
+                        errors = new List<Error>()
+                    };
+                }else
+                {
+                    return new NIDVerificationResponse { data = null, errors = new List<Error>()
+                    {
+                       new Error
+                       {
+                           code = "400",
+                           message = "Invalid NID"
+                       } 
+                    } };
+                }
             }
             catch (Exception ex)
             {
