@@ -31,7 +31,7 @@ namespace GC.MFI.Models.ViewModels
 
         [StringLength(100)]
         public string LoanNo { get; set; }
-
+        [Required]
         [Column(TypeName = "numeric")]
         public decimal? PrincipalLoan { get; set; }
 
@@ -210,12 +210,15 @@ namespace GC.MFI.Models.ViewModels
         public int? TotalRepayment { get; set; }
         public DateTime? NextPaymentDate { get; set; }
 
+        [Required]
         public string GuarantorNID { get; set; }
+        [Required]
         public string GuarantorImg { get; set; }
 
         public long GuarantorNIDId { get; set; }
         public long GuarantorImgId { get; set; }
         public string SupportingDocumentsId { get; set; }
+        [Required]
         public List<PortalLoanFileUpload> PortalLoanFileUpload { get; set; }
     }
 }
