@@ -43,7 +43,7 @@ namespace GC.MFI.Controllers
                     throw new Exception("Please enter userid and password to authenticate.");
                 var token = await authenticationHelper.Authenticate(securityModel);
                 if(token == null)
-                    return Unauthorized("Invalid Credentials");
+                    return Unauthorized();
                 return Ok(token);
             }
             catch (Exception ex)
