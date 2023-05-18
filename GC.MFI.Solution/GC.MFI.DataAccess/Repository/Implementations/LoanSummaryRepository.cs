@@ -23,6 +23,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var portalList = (from pls in DataContext.LoanSummary
                               join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
                               join prpse in DataContext.Purpose on pls.PurposeID equals prpse.PurposeID
+                              where pls.MemberID == Id
                               select new LoanSummaryViewModel
                               {
                                   LoanSummaryID = pls.LoanSummaryID,
@@ -94,8 +95,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                   SecurityBankCheckNo = pls.SecurityBankCheckNo,
                                   Remarks = pls.Remarks,
                               }
-                              ).Where(x => x.MemberID == Id)
-                               .Where(filter.search)
+                              ).Where(filter.search)
                                .OrderByDescending(t => t.LoanSummaryID)
                                .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                .Take(filter.pageSize > 0 ? filter.pageSize : totalElems);

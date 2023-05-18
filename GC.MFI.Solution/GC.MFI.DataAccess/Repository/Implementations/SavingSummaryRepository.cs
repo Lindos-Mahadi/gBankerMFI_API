@@ -25,6 +25,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var savingSummary = (from pps in DataContext.SavingSummary
                                  join pl in DataContext.Product on pps.ProductID equals pl.ProductID
                                  join m in DataContext.Member on pps.MemberID equals m.MemberID
+                                 where pps.MemberID == Id
                                  select new SavingsSummaryViewModel
                                  {
                                      SavingSummaryID = pps.SavingSummaryID,
@@ -62,7 +63,6 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                      MinLimit = pl.MinLimit,
                                      MaxLimit = pl.MaxLimit
                                  })
-                                    .Where(x => x.MemberID == Id)
                                     .Where(filter.search)
                                     .OrderByDescending(t => t.SavingSummaryID)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)

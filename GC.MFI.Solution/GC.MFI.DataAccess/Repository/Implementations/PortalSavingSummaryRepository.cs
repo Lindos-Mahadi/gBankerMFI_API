@@ -30,6 +30,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             var savingSummary =(from pps in DataContext.PortalSavingSummary
                                 join pl in DataContext.Product on pps.ProductID equals pl.ProductID
                                 join m in DataContext.Member on pps.MemberID equals m.MemberID
+                                where pps.MemberID == Id
                                 select new SavingSummaryViewModel
                                 {
                                     PortalSavingSummaryID= pps.PortalSavingSummaryID,
@@ -68,9 +69,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                                     MemberNomines =pps.MemberNomines,
                                     MinLimit = pl.MinLimit,
                                     MaxLimit = pl.MaxLimit
-                                })
-                                    .Where(filter.search)
-                                    .Where(x => x.MemberID == Id)
+                                }).Where(filter.search)
                                     .OrderByDescending(t => t.PortalSavingSummaryID)
                                     .Skip(filter.pageNum > 0 ? (filter.pageNum - 1) * filter.pageSize : 0)
                                     .Take(filter.pageSize).ToList();
