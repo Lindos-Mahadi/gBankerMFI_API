@@ -93,6 +93,9 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                             Type = PNID.MimeType,
                         };
 
+                    }else
+                    {
+                        return new SignUpResponse { isSuccess = false, message = "NID image Must be Jpg,Jpeg or png" };
                     }
 
                     if (imageTypes.Contains(memImage.MimeType))
@@ -106,6 +109,9 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                             FileName = $"{portalMember.FirstName} - {portalMember.Id}",
                             Type = memImage.MimeType,
                         };
+                    }else
+                    {
+                        return new SignUpResponse { isSuccess = false, message = "Member image Must be Jpg,Jpeg or png" };
                     }
                     var InsertFiles = _fileService.BulkCreate(file);
 
