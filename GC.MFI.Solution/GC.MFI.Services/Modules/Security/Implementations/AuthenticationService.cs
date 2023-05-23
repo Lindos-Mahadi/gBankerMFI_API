@@ -78,7 +78,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     Base64File memImage = ImageHelper.GetFileDetails(model.Img);
                     if(PNID == null || memImage == null)
                     {
-                        return new SignUpResponse { isSuccess = false, message = "Image Must be convert to Base64" };
+                        return new SignUpResponse { isSuccess = false, message = "Image formate is invalid" };
                     }
                     FileUploadTable[] file = new FileUploadTable[2];
                     if (imageTypes.Contains(PNID.MimeType))
@@ -146,7 +146,6 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                 }
                 else
                 {
-
                     return new SignUpResponse { isSuccess = false, message = $"{identity.UserName} already exist" };
                 }
             }catch (Exception ex)

@@ -55,7 +55,7 @@ namespace GC.MFI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("signup")]
-        public async Task<Models.Modules.Security.SignUpResponse> SignUp(SignUpModel model)
+        public async Task<IActionResult> SignUp(SignUpModel model)
         {
             try
             {
@@ -65,7 +65,11 @@ namespace GC.MFI.Controllers
                         .Where(y => y.Count > 0)
                         .ToList();
                 }
-                return await authenticationService.Create(model);
+                var response = await authenticationService.Create(model);
+                if(response.isSuccess == true)
+                    return Ok(response);
+                return BadRequest(response);
+                
 
             }
             catch (Exception ex)
