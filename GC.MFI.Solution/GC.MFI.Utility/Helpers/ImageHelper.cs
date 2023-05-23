@@ -17,15 +17,20 @@ namespace GC.MFI.Utility.Helpers
         public static Base64File GetFileDetails(string url)
         {
             string[] file = url.Split(new Char[] { ':', ';', ',' });
-            string mimeType = file[1];
-            string data = file[3];
-            byte[] dataBytes = Convert.FromBase64String(data);
-            return new Base64File
+            if(file.Length >= 4)
             {
-                Data = data,
-                MimeType = mimeType,
-                DataBytes = dataBytes
-            };
+                string mimeType = file[1];
+                string data = file[3];
+                byte[] dataBytes = Convert.FromBase64String(data);
+                return new Base64File
+                {
+                    Data = data,
+                    MimeType = mimeType,
+                    DataBytes = dataBytes
+                };
+
+            }
+            return null;
         }
     }
 }

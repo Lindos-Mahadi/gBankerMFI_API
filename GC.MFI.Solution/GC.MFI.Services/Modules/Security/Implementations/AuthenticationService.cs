@@ -76,7 +76,10 @@ namespace GC.MFI.Services.Modules.Security.Implementations
 
                     Base64File PNID = ImageHelper.GetFileDetails(model.NidPic);
                     Base64File memImage = ImageHelper.GetFileDetails(model.Img);
-
+                    if(PNID == null || memImage == null)
+                    {
+                        return new SignUpResponse { isSuccess = false, message = "Image Must be convert to Base64" };
+                    }
                     FileUploadTable[] file = new FileUploadTable[2];
                     if (imageTypes.Contains(PNID.MimeType))
                     {
