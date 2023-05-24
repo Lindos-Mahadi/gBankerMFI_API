@@ -32,7 +32,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         {
             return base.Create(objectToCreate);
         }
-        public void CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity)
+        public PortalLoanSummary CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity)
         {
             try
             {
@@ -54,6 +54,11 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 {
                     var fileToUpload = fileUplods[i];
                     Base64File filesTypes = ImageHelper.GetFileDetails(fileToUpload.File);
+                    if(filesTypes == null) 
+                    {
+                        _repository.RollbackTransaction();
+                        return null; 
+                    }
                     file[i] = new FileUploadTable
                     {
                         EntityId = portal.PortalLoanSummaryID,
@@ -72,6 +77,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 portal.SupportingDocumentsId = supportingDocIds;
              
                 _repository.CommitTransaction();
+                return portal;
             }
             catch (Exception ex)
             {

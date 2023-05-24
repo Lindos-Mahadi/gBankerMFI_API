@@ -1,5 +1,6 @@
 ﻿using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Modules.Security;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
@@ -33,15 +34,23 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             try
             {
 
-
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
-                    var userName = JwtTokenDecode.GetDetailsFromToken(header).UserName;
-                    objectToSave.CreateUser = userName;
-                    objectToSave.CreateDate = DateTime.UtcNow;
-                    _service.CreatePortalLoanSummary(objectToSave);
-                    
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                        .Where(y => y.Count > 0)
+                        .ToList();
+                }
+               var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+               var userName = JwtTokenDecode.GetDetailsFromToken(header).UserName;
+               objectToSave.CreateUser = userName;
+               objectToSave.CreateDate = DateTime.UtcNow;
+                var response = _service.CreatePortalLoanSummary(objectToSave);
+                if(response == null)
+                {
+                    SignUpResponse signUpResponse = new SignUpResponse();
+                    signUpResponse.isSuccess = false;
+                    signUpResponse.message = "Invalid File";
+                    return BadRequest(signUpResponse);
                 }
                 return Ok(objectToSave);
             }

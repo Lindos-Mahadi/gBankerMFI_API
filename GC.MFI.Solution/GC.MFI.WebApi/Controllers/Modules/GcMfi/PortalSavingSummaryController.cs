@@ -1,5 +1,6 @@
 ﻿using GC.MFI.Models;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Modules.Security;
 using GC.MFI.Models.RequestModels;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
@@ -49,7 +50,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 objectToSave.CreateUser = JwtTokenDecode.GetDetailsFromToken(header).UserName;
                 objectToSave.CreateDate = DateTime.UtcNow;
                 var response = _service.CreatePortalSavingSummary(objectToSave);
-                if (response == null) return BadRequest("Invalid File");
+                if (response == null)
+                {
+                    SignUpResponse signUpResponse = new SignUpResponse();
+                    signUpResponse.isSuccess = false;
+                    signUpResponse.message = "Invalid File";
+                    return BadRequest(signUpResponse);
+                }
                 return Ok(objectToSave);
             }
             catch (Exception ex)

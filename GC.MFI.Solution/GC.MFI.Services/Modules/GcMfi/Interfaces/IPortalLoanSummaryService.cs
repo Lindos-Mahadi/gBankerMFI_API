@@ -11,7 +11,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 {
     public interface IPortalLoanSummaryService : ILegacyServiceBase<PortalLoanSummary>
     {
-        void CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity);
+        PortalLoanSummary CreatePortalLoanSummary(PortalLoanSummaryFileUpload entity);
         IEnumerable<PortalLoanSummary> GetAllPortalLoanSummary();
         Task<PagedResponse<IEnumerable<PortalLoanSummaryViewModel>>> GetAllPortalLoanSummaryPaged(PaginationFilter<PortalLoanSummaryViewModel> filter, long Id);
         Task<IEnumerable<PortalLoanSummaryViewModel>> getByLoanStatus(byte type, long memberId);
