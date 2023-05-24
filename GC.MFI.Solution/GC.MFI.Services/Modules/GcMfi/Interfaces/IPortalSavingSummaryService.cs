@@ -17,7 +17,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Interfaces
 
         Task<IEnumerable<SavingSummaryViewModel>> getBySavingStatus(byte type, long memberId);
 
-        void CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity);
+        PortalSavingSummary CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity);
         Task<PortalSavingSummaryViewModel> PortalSavingSummaryDetails(long Id);
     }
 }

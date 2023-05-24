@@ -36,7 +36,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
         //    return model;
         //}
 
-        public void CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity)
+        public PortalSavingSummary CreatePortalSavingSummary(PortalSavingSummaryFileUpload entity)
         {
             try
             {
@@ -56,6 +56,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                 for (int i = 0; i < entity.MemberNomines.Count; i++)
                 {
                     Base64File Nimg = ImageHelper.GetFileDetails(entity.MemberNomines[i].Image);
+                    if (Nimg == null) return null;
                     nomineeImage[i] = new FileUploadTable
                     {
                         EntityId = model.PortalSavingSummaryID,
@@ -69,6 +70,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     list[j] = nomineeImage[i];
                     j++;
                     Base64File NNID = ImageHelper.GetFileDetails(entity.MemberNomines[i].Nid);
+                    if (NNID == null) return null;
                     nomineeNID[i] = new FileUploadTable
                     {
                         EntityId = model.PortalSavingSummaryID,
@@ -106,6 +108,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     for (int i = 0; i < entity.PortalSavingFileUpload.Count(); i++)
                     {
                         Base64File filesType = ImageHelper.GetFileDetails(entity.PortalSavingFileUpload[i].File);
+                        if (filesType == null) return null;
                         file[i] = new FileUploadTable
                         {
 
@@ -122,6 +125,7 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
                     SupportingDocumentIdentity(model.PortalSavingSummaryID);
                 }
                _repository.CommitTransaction();
+                return model;
             }
             catch(Exception ex)
             {

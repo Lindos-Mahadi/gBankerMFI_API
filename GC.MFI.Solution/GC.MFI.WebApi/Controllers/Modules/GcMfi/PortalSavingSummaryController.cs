@@ -39,13 +39,17 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             try
             {
 
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
-                    objectToSave.CreateUser = JwtTokenDecode.GetDetailsFromToken(header).UserName;
-                    objectToSave.CreateDate = DateTime.UtcNow;
-                    _service.CreatePortalSavingSummary(objectToSave);
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                        .Where(y => y.Count > 0)
+                        .ToList();
                 }
+                var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
+                objectToSave.CreateUser = JwtTokenDecode.GetDetailsFromToken(header).UserName;
+                objectToSave.CreateDate = DateTime.UtcNow;
+                var response = _service.CreatePortalSavingSummary(objectToSave);
+                if (response == null) return BadRequest("Invalid File");
                 return Ok(objectToSave);
             }
             catch (Exception ex)
