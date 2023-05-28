@@ -136,7 +136,7 @@ namespace GC.MFI.Services.Modules.Security.Implementations
                     if (result.Succeeded)
                     {
                         await _userManager.AddToRoleAsync(user, "PortalMember");
-                        return new SignUpResponse { isSuccess = true, message = "Member Create Success" };
+                        return new SignUpResponse { isSuccess = true, message = "Member Created Successfully" };
                     }
                     else
                     {
