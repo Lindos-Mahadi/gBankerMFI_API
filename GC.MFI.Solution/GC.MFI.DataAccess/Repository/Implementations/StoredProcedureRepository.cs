@@ -30,7 +30,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 parameter.Add(new SqlParameter("@SearchType", "div"));
 
                 var result = await Task.Run(() => _context.Division
-               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+               .FromSqlRaw(@"exec Proc_GetLocationList2 @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
 
                 return result.ToList();
             }
@@ -66,7 +66,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 parameter.Add(new SqlParameter("@SearchType", "dis"));
 
                 var result = await Task.Run(() => _context.DistrictList
-               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+               .FromSqlRaw(@"exec Proc_GetLocationList2 @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
 
                 return result.ToList();
             }
@@ -86,7 +86,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 parameter.Add(new SqlParameter("@SearchType", "upo"));
 
                 var result = await Task.Run(() => _context.UpozillaList
-               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+               .FromSqlRaw(@"exec Proc_GetLocationList2 @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
 
                 return result.ToList();
             }
@@ -273,7 +273,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 parameter.Add(new SqlParameter("@SearchType", "vil"));
 
                 var result = await Task.Run(() => _context.VillageList
-               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+               .FromSqlRaw(@"exec Proc_GetLocationList2 @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
 
                 return result.ToList();
             }
@@ -293,7 +293,7 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                 parameter.Add(new SqlParameter("@SearchType", "uni"));
 
                 var result = await Task.Run(() => _context.UnionList
-               .FromSqlRaw(@"exec Proc_GetLocationList @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
+               .FromSqlRaw(@"exec Proc_GetLocationList2 @SearchByCode, @SearchBy, @SearchType", parameter.ToArray()));
 
                 return result.ToList();
             }

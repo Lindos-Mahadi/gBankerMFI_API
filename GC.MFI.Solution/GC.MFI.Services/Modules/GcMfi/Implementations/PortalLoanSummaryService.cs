@@ -104,6 +104,12 @@ namespace GC.MFI.Services.Modules.GcMfi.Implementations
             return getLoanStatus;
         }
 
+        public Task<IEnumerable<PortalLoanSummaryViewModel>> getByLoanStatus(long memberId)
+        {
+            var getLoanStatus = _repository.getByLoanStatus(memberId);
+            return getLoanStatus;
+        }
+
         public PortalLoanSummaryViewModel GetById(long id)
         {
             var GetLoan = _repository.GetById(id);

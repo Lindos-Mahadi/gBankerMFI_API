@@ -112,6 +112,37 @@ namespace GC.MFI.DataAccess.Repository.Implementations
                            
             return savingSummary;
         }
+
+        public async Task<IEnumerable<SavingSummaryViewModel>> getBySavingStatus(long memberId)
+        {
+            var savingSummary = (from pps in DataContext.PortalSavingSummary
+                                 join pl in DataContext.Product on pps.ProductID equals pl.ProductID
+                                 join m in DataContext.Member on pps.MemberID equals m.MemberID
+                                 where pps.MemberID == memberId
+                                 select new SavingSummaryViewModel
+                                 {
+                                     PortalSavingSummaryID = pps.PortalSavingSummaryID,
+                                     OfficeID = pps.OfficeID,
+                                     MemberID = pps.MemberID,
+                                     MemberName = m.FirstName,
+                                     ProductID = (short)pl.ProductID,
+                                     ProductName = pl.ProductName,
+                                     CenterID = pps.CenterID,
+                                     Balance = pps.Balance,
+                                     SavingInstallment = pps.SavingInstallment,
+                                     SavingStatus = pps.SavingStatus,
+                                     IsActive = pps.IsActive,
+                                     InActiveDate = pps.InActiveDate,
+                                     CreateDate = pps.CreateDate,
+                                     CreateUser = pps.CreateUser,
+                                     OrgID = pps.OrgID,
+                                     ApprovalStatus = pps.ApprovalStatus,
+                                     MinLimit = pl.MinLimit,
+                                     MaxLimit = pl.MaxLimit
+                                 });
+
+            return savingSummary;
+        }
         public override PortalSavingSummary GetById(long id)
         {
             var GetByid= DataContext.PortalSavingSummary.Where(t=> t.PortalSavingSummaryID == id).Include(t=> t.MemberNomines).FirstOrDefault();

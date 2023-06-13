@@ -120,6 +120,15 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var result = await _service.getBySavingStatus(type , memberId);
             return result;
         }
+
+        [HttpGet]
+        [Route("getSavingSummaryStatusbyMemberId")]
+        public async Task<IEnumerable<SavingSummaryViewModel>> getSavingSummaryStatus(long memberId)
+        {
+            var result = await _service.getBySavingStatus(memberId);
+            return result;
+        }
+
         [HttpGet]
         [Route("savingsummarydetails")]
         public async Task<PortalSavingSummaryViewModel> GetPortalSavingSummary(long Id)
