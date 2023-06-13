@@ -41,9 +41,12 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                         .ToList();
                 }
                var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter;
-               var userName = JwtTokenDecode.GetDetailsFromToken(header).UserName;
-               objectToSave.CreateUser = userName;
+               var tokenInfo = JwtTokenDecode.GetDetailsFromToken(header);
+               objectToSave.CreateUser = tokenInfo.UserName;
                objectToSave.CreateDate = DateTime.UtcNow;
+                objectToSave.MemberID = long.Parse(tokenInfo.MemberID);
+                objectToSave.CenterID = int.Parse(tokenInfo.CenterId);
+                objectToSave.OfficeID = int.Parse(tokenInfo.OfficeId);
                 var response = _service.CreatePortalLoanSummary(objectToSave);
                 if(response == null)
                 {

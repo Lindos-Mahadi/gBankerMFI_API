@@ -15,9 +15,9 @@ namespace GC.MFI.Models.ViewModels
         [Key]
         public long PortalSavingSummaryID { get; set; }
         public long SavingSummaryID { get; set; }
-        [Required]
+        
         public int OfficeID { get; set; }
-        [Required]
+        
         public long MemberID { get; set; }
         [Required]
         public short ProductID { get; set; }
@@ -54,7 +54,7 @@ namespace GC.MFI.Models.ViewModels
         public decimal? Penalty { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime OpeningDate { get; set; }
+        public DateTime? OpeningDate { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? MaturedDate { get; set; }
@@ -78,12 +78,12 @@ namespace GC.MFI.Models.ViewModels
         public DateTime? InActiveDate { get; set; }
         public int? Duration { get; set; }
         public int? InstallmentNo { get; set; }
-        [Required]
+   
         [StringLength(35)]
         public string CreateUser { get; set; }
 
         [Column(TypeName = "smalldatetime")]
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         //public int? OrgID { get; set; }
 
         public string SavingAccountNo { get; set; }

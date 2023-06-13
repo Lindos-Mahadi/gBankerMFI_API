@@ -21,8 +21,9 @@ namespace GC.MFI.Utility.Helpers
             var memberID = jwtSecurityToken.Claims.FirstOrDefault(t => t.Type == "memberId")?.Value ?? "0";
             var officeID = jwtSecurityToken.Claims.FirstOrDefault(t => t.Type == "officeId")?.Value ?? "0";
             var PortalMemberId = long.Parse(jwtSecurityToken.Claims.First(t => t.Type == "PortalMemberId")?.Value);
+            var centerID = jwtSecurityToken.Claims.First(t => t.Type == "centerId")?.Value;
             
-            return new JwtTokenModel { UserName = userName, UserId = userId, UserEmail = email, PortalMemberId = PortalMemberId, MemberID = memberID, OfficeId = officeID };
+            return new JwtTokenModel { UserName = userName, UserId = userId, UserEmail = email, PortalMemberId = PortalMemberId, MemberID = memberID, OfficeId = officeID, CenterId = centerID };
         }
     }
 }

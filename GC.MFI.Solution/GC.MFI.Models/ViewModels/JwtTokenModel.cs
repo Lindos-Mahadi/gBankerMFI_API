@@ -13,6 +13,7 @@ namespace GC.MFI.Models.ViewModels
         public string UserEmail { get; set; }
         public string MemberID { get; set; }
         public string OfficeId { get; set; }
+        public string CenterId { get; set; }
         public long PortalMemberId { get; set; }
 
     }
