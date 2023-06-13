@@ -263,3 +263,4 @@ __pycache__/
 # visual studio
 .vs/
 
+/GC.MFI.Solution/GC.MFI.WebApi/Properties/PublishProfiles

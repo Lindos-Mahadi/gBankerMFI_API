@@ -96,6 +96,15 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             var result = await _service.getByLoanStatus(type, memberId);
             return result;
         }
+
+        [HttpGet]
+        [Route("getLoanSummaryStatusByMemberId")]
+        public async Task<IEnumerable<PortalLoanSummaryViewModel>> getLoanSummaryStatusByMemberId(long memberId)
+        {
+            var result = await _service.getByLoanStatus(memberId);
+            return result;
+        }
+
         [HttpGet]
         [Route("getloansummary")]
         public virtual PortalLoanSummaryViewModel GetLoanSummary(long Id)

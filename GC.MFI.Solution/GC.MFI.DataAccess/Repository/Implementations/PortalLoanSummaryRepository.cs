@@ -172,6 +172,55 @@ namespace GC.MFI.DataAccess.Repository.Implementations
             return portalLoanList;
         }
 
-       
+        public async Task<IEnumerable<PortalLoanSummaryViewModel>> getByLoanStatus(long memberId)
+        {
+            var portalLoanList = from pls in DataContext.PortalLoanSummary
+                                 join prdct in DataContext.Product on pls.ProductID equals prdct.ProductID
+                                 where pls.MemberID == memberId
+                                 select new PortalLoanSummaryViewModel
+                                 {
+                                     PortalLoanSummaryID = pls.PortalLoanSummaryID,
+                                     OfficeID = pls.OfficeID,
+                                     MemberID = pls.MemberID,
+                                     ProductID = pls.ProductID,
+                                     ProductName = prdct.ProductName,
+                                     CenterID = pls.CenterID,
+                                     MemberCategoryID = pls.MemberCategoryID,
+                                     PrincipalLoan = pls.PrincipalLoan,
+                                     ApproveDate = pls.ApproveDate,
+                                     DisburseDate = pls.DisburseDate,
+                                     Duration = pls.Duration,
+
+                                     LoanInstallment = pls.LoanInstallment,
+                                     IntInstallment = pls.IntInstallment,
+                                     InterestRate = pls.InterestRate,
+                                     InstallmentStartDate = pls.InstallmentStartDate,
+                                     InstallmentNo = pls.InstallmentNo,
+                                     DropInstallment = pls.DropInstallment,
+                                     Holidays = pls.Holidays,
+                                     InstallmentDate = pls.InstallmentDate,
+                                     TransType = pls.TransType,
+                                     ContinuousDrop = pls.ContinuousDrop,
+                                     LoanStatus = pls.LoanStatus,
+                                     Balance = pls.Balance,
+                                     Advance = pls.Advance,
+                                     DueRecovery = pls.DueRecovery,
+
+                                     Posted = pls.Posted,
+                                     OrgID = pls.OrgID,
+                                     IsActive = pls.IsActive,
+                                     InActiveDate = pls.InActiveDate,
+                                     CreateUser = pls.CreateUser,
+                                     CreateDate = pls.CreateDate,
+
+                                     IsApproved = pls.IsApproved,
+
+                                     ApprovalStatus = pls.ApprovalStatus
+                                 };
+
+            return portalLoanList;
+        }
+
+
     }
 }
