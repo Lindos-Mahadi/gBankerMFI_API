@@ -13,6 +13,7 @@ public class PdfController : Controller
         _storedProcedureService = storedProcedureService;
     }
     // GET
+    [HttpGet]
     public async Task<IActionResult> Index(string officeId, string loanee1, string loanee2, string productId, string qType)
     {
         var result= await _storedProcedureService.GetSavingLedger(officeId, loanee1, loanee2, productId, qType);
