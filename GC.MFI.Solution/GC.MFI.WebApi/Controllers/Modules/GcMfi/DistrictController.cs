@@ -23,7 +23,13 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
             this._service = service;
             _storedProcedureService = storedProcedureService;
         }
-
+        [HttpGet]
+        [Route("getall")]
+        public override IEnumerable<District> GetAll()
+        {
+            var district = _service.GetAll().OrderBy(t=> t.DistrictName);
+            return district;
+        }
         [HttpGet]
         [Route("getdistrictbydivisionid")]
         public async Task<IEnumerable<DistrictList>> GetDistrictByDivisionId(string divisionId)
