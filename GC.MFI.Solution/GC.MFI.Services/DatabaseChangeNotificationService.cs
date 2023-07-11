@@ -61,7 +61,44 @@ namespace GC.MFI.Services
                  using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    
+
+                    //Fire base notification sql start
+                    using (var fireBase = new SqlCommand(@"SELECT N.[Id],  N.[Message],  N.[SenderType], N.[SenderID], N.[ReceiverType],  N.[ReceiverID], N.[Email], N.[SMS], N.[Push],
+                                                         N.[Status], N.[CreateDate], N.[CreateUser], N.[UpdateDate], N.[UpdateUser]  FROM [dbo].[NotificationTable] N
+                                                         WHERE N.[Status] = 'P'", connection))
+                    {
+                        fireBase.Notification = null;
+                        SqlDependency dependency = new SqlDependency(fireBase);
+
+                        dependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
+                        var Notification = new List<NotificationTable>(); // after change you can see the notification list
+
+                        using (var reader = fireBase.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var notify = new NotificationTable
+                                {
+                                    Id = reader.GetInt64(0),
+                                    Message = reader.GetString(1),
+                                    SenderType = reader.GetString(2),
+                                    SenderID = reader.IsDBNull(3) ? null : (long?)reader.GetInt64(3),
+                                    ReceiverType = reader.GetString(4),
+                                    ReceiverID = reader.IsDBNull(5) ? null : (long?)reader.GetInt64(5),
+                                    Email = reader.GetBoolean(6),
+                                    Sms = reader.GetBoolean(7),
+                                    Push = reader.GetBoolean(8),
+                                    Status = reader.GetString(9),
+                                };
+
+                                Notification.Add(notify);
+                            }
+
+                        }
+                    }
+
+                    // fire base sql end
+
                     using (var command = new SqlCommand(@"SELECT N.[Id],  N.[Message],  N.[SenderType], N.[SenderID], N.[ReceiverType],  N.[ReceiverID], N.[Email], N.[SMS], N.[Push],
                                                          N.[Status], S.[ConnID], N.[CreateDate], N.[CreateUser], N.[UpdateDate], N.[UpdateUser]  FROM [dbo].[NotificationTable] N
 	                                                    INNER JOIN [dbo].[SignalRConnectionTable] S
