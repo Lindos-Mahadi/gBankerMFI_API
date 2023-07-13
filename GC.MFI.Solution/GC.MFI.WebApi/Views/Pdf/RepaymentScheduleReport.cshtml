@@ -1,0 +1,95 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using RepaymentScheduleReportF = GC.MFI.Models.Models.RepaymentScheduleReportF
+@model IList<RepaymentScheduleReportF>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Savings Ledger</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="OfficeInfo">
+        <div class='row'>
+            <div class='col-md-12 text-center'>
+                <h6>
+                    Office:
+                    @Model[0].OfficeCode
+                    ,
+                    @Model[0].OfficeName
+                </h6>
+                <p>Loan Ledger</p>
+            </div>
+        </div>
+        <hr />
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='row'>
+                    Samity Code: @Model[0].CenterCode
+                </div>
+                <div class='row'>
+                    Samity Name:@Model[0].CenterName
+                </div>
+                <div class='row'>
+                    Product Code: @Model[0].ProductCode
+                </div>
+                <div class='row'>
+                    Product Name: @Model[0].ProductName
+                </div>
+            </div>
+            <div class='col-md-6'>
+                <div class='row'>
+                    Member Name: @Model[0].MemberName
+                </div>
+                <div class='row'>
+                    Member Code: @Model[0].MemberCode
+                </div>
+                <div class='row'>
+                    Member ID: @Model[0].MemberID
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <br />
+        <br />
+
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ins. No</th>
+                        <th>Repayment Date</th>
+                        <th>Total Ins.</th>
+                        <th>Ser charge</th>
+                        <th>Ser paid</th>
+                        <th>Ser balance</th>
+                    </tr>
+                </thead>
+                <tbody id="reportBody">
+                    @foreach (var loan in Model)
+                    {
+                        <tr>
+                            <td>@loan.InstallmentNo</td>
+                            <td>@loan.RepaymentDate</td>
+                            <td>@loan.TotalInstallment</td>
+                            <td>@loan.IntCharge</td>
+                            <td>@loan.IntPAid</td>
+                            <td>@loan.LoanBalnce</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
