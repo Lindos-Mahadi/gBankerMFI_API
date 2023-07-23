@@ -27,6 +27,8 @@ using Microsoft.IdentityModel.Tokens;
 using Polly;
 using Polly.Extensions.Http;
 using System.Text;
+using GC.MFI.Services.Modules.Firebase.Implementations;
+using GC.MFI.Services.Modules.Firebase.Interfaces;
 using Twilio.Clients;
 
 namespace GC.MFI.WebApi
@@ -226,6 +228,10 @@ namespace GC.MFI.WebApi
             services.AddScoped<ISignalRConnectionTableRepository, SignalRConnectionTableRepository>();
             services.AddScoped<ISignalRConnectionTableService, SignalRConnectionTableService>();
 
+            // Firebase dependency
+            services.AddScoped<IFcmTokenRepository, FcmTokenRepository>();
+            services.AddScoped<IFcmTokenService, FcmTokenService>();
+            
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddScoped<IMailService, MailService>();

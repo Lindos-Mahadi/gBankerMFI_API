@@ -57,6 +57,8 @@ namespace GC.MFI.Models.Mapper
             CreateMap<NotificationTable, NotificationTableViewModel>();
 
             CreateMap<PortalMember, MemberProfile>();
+            
+            CreateMap<FcmToken, FcmTokenViewModel>();
         }
     }
 }

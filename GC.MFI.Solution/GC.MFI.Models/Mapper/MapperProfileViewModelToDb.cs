@@ -7,12 +7,12 @@ namespace GC.MFI.Models.Mapper
     public class MapperProfileViewModelToDb : Profile
     {
         public MapperProfileViewModelToDb()
-        {                 
+        {
             CreateMap<OrderViewModel, Order>();
             CreateMap<OderDetailsViewModel, OrderDetail>();
 
             // Portal Member ViewModel
-            CreateMap< PortalMemberViewModel, PortalMember>();
+            CreateMap<PortalMemberViewModel, PortalMember>();
 
             // Member ViewModel
             CreateMap<MemberViewModel, Member>();
@@ -47,6 +47,7 @@ namespace GC.MFI.Models.Mapper
             CreateMap<SignUpModel, PortalMember>();
             CreateMap<NotificationTableViewModel, NotificationTable>();
 
+            CreateMap<FcmTokenViewModel, FcmToken>();
         }
     }
 }

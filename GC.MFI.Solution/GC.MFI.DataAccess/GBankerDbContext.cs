@@ -8,14 +8,14 @@ using System.Linq;
 namespace GC.MFI.DataAccess
 {
     public partial class GBankerDbContext : DbContext
-    {       
+    {
         public GBankerDbContext(DbContextOptions<GBankerDbContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-       
+
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
         // Portal Member
@@ -67,6 +67,9 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<EmailLogTable> EmailLogTable { get; set; }
         public virtual DbSet<NotificationTable> NotificationTable { get; set; }
         public virtual DbSet<SignalRConnectionTable> SignalRConnectionTable { get; set; }
+
+        public virtual DbSet<FcmToken> FcmToken { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -79,7 +82,7 @@ namespace GC.MFI.DataAccess
 
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
             });
- 
+
 
             modelBuilder.Entity<AspNetUser>(entity =>
             {
@@ -113,7 +116,7 @@ namespace GC.MFI.DataAccess
                         });
             });
 
-            
+
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("Order");
@@ -206,7 +209,7 @@ namespace GC.MFI.DataAccess
                 .WithMany(M => M.MemberNomines);
 
 
-             modelBuilder.Entity<NomineeXSavingSummary>().HasNoKey();
+            modelBuilder.Entity<NomineeXSavingSummary>().HasNoKey();
             //modelBuilder.Entity<NomineeXSavingSummary>()
             //    .HasOne(O => O.SavingSummary)
             //    .WithMany(O => O.MemberNomines);
@@ -234,7 +237,7 @@ namespace GC.MFI.DataAccess
             modelBuilder.Entity<ProductListForSavingSummary>().HasNoKey();
             modelBuilder.Entity<LoanLedger>().HasNoKey();
             modelBuilder.Entity<SavingLedger>().HasNoKey();
-          // modelBuilder.Entity<NIDLogging>().0();
+            // modelBuilder.Entity<NIDLogging>().0();
 
             OnModelCreatingPartial(modelBuilder);
         }
@@ -247,6 +250,5 @@ namespace GC.MFI.DataAccess
         //{
         //    return context?.Division?.FromSqlRaw($"Proc_GetLocationList {searchFor}").ToList();
         //}
-
     }
 }
