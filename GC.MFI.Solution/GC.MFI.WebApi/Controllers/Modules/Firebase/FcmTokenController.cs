@@ -22,45 +22,50 @@ public class FcmTokenController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public Task<IActionResult> Save(FcmTokenViewModel model)
+    public async Task<ActionResult<FcmTokenViewModel>> Save(FcmTokenInputModel input)
     {
-        var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        if (model.UserId != userId)
+        var userId = User.FindFirstValue("id");
+
+        var model = new FcmTokenViewModel
         {
-            return Task.FromResult<IActionResult>(Forbid("You are not authorized to perform this action"));
-        }
+            UserId = userId,
+            DeviceId = input.DeviceId,
+            IsMobile = input.IsMobile
+        };
 
         try
         {
-            var result = _service.CreateOrUpdate(model);
+            var result = await _service.CreateOrUpdate(model);
 
             return result != null
-                ? Task.FromResult<IActionResult>(Ok(result))
-                : Task.FromResult<IActionResult>(NotFound());
+                ? Ok(result)
+                : BadRequest();
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error Occurred");
-            return Task.FromResult<IActionResult>(BadRequest(e.Message));
+            return BadRequest(e.Message);
         }
     }
 
     [HttpGet]
     [Authorize]
-    public Task<IActionResult> Get()
+    public async Task<ActionResult<FcmTokenViewModel>> Get()
     {
         try
         {
-            var result = _service.GetByUserId(long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            var userId = User.FindFirstValue("id");
+
+            var result = await _service.GetByUserId(userId);
 
             return result != null
-                ? Task.FromResult<IActionResult>(Ok(result))
-                : Task.FromResult<IActionResult>(NotFound());
+                ? Ok(result)
+                : NotFound();
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error Occurred");
-            return Task.FromResult<IActionResult>(BadRequest(e.Message));
+            return BadRequest(e.Message);
         }
     }
 }

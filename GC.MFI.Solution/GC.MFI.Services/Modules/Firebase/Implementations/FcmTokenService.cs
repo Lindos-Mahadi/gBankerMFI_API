@@ -41,7 +41,7 @@ public class FcmTokenService : IFcmTokenService
         }
     }
 
-    public Task<FcmTokenViewModel> GetByUserId(long userId)
+    public Task<FcmTokenViewModel> GetByUserId(string userId)
     {
         var result = _repository.Get(token => token.UserId == userId);
 

@@ -7,5 +7,5 @@ namespace GC.MFI.Services.Modules.Firebase.Interfaces;
 public interface IFcmTokenService
 {
     Task<FcmTokenViewModel> CreateOrUpdate(FcmTokenViewModel input);
-    Task<FcmTokenViewModel> GetByUserId(long userId);
+    Task<FcmTokenViewModel> GetByUserId(string userId);
 }
