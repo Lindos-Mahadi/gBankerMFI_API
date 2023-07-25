@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
-using GC.MFI.DataAccess.InfrastructureBase;
 using GC.MFI.DataAccess.Repository.Interfaces;
 using GC.MFI.Models.DbModels;
 using GC.MFI.Models.ViewModels;
@@ -30,15 +26,15 @@ public class FcmTokenService : IFcmTokenService
         {
             _mapper.Map(input, result);
             _repository.Update(result);
+            _repository.CommitTransaction();
             return await Task.FromResult(_mapper.Map<FcmTokenViewModel>(result));
         }
-        else
-        {
-            var token = _mapper.Map<FcmToken>(input);
-            _repository.Add(token);
 
-            return await Task.FromResult(_mapper.Map<FcmTokenViewModel>(token));
-        }
+        var token = _mapper.Map<FcmToken>(input);
+        _repository.Add(token);
+        _repository.CommitTransaction();
+
+        return await Task.FromResult(_mapper.Map<FcmTokenViewModel>(token));
     }
 
     public Task<FcmTokenViewModel> GetByUserId(string userId)
