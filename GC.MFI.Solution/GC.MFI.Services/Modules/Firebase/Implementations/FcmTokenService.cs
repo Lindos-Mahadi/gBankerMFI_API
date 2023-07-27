@@ -22,6 +22,8 @@ public class FcmTokenService : IFcmTokenService
     {
         var result = _repository.Get(token => token.UserId == input.UserId);
 
+        _repository.BeginTransaction();
+
         if (result != null)
         {
             _mapper.Map(input, result);
