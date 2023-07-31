@@ -24,11 +24,11 @@ public class FcmTokenController : ControllerBase
     [Authorize]
     public async Task<ActionResult<FcmTokenViewModel>> Save(FcmTokenInputModel input)
     {
-        var userId = User.FindFirstValue("id");
+       // var userId = User.FindFirstValue("id");
 
         var model = new FcmTokenViewModel
         {
-            UserId = userId,
+           
             DeviceId = input.DeviceId,
             IsMobile = input.IsMobile
         };

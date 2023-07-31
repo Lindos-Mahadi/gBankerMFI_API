@@ -10,6 +10,10 @@ using GC.MFI.Models.Mapper;
 using GC.MFI.WebApi.Filters;
 using GC.MFI.WebApi.Middleware;
 using Microsoft.AspNetCore;
+using GC.MFI.Services.Modules.Firebase.Interfaces;
+using GC.MFI.Services.Modules.Firebase.Implementations;
+using System.Configuration;
+using GC.MFI.Models.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "CorsPolicy";
@@ -45,6 +49,19 @@ builder.Services.AddSingleton<IJWT>(serviceProvider =>
 
 // Added for model validation
 builder.Services.AddScoped<ValidationFilterAttribute>();
+
+// Firebase Notifcation service
+// Configure strongly typed settings objects
+var appSettingsSection = builder.Configuration.GetSection("FcmNotification");
+builder.Services.Configure<FcmNotificationSetting>(appSettingsSection);
+
+// Add FirebaseApp Singleton
+var webroot = builder.Environment.ContentRootPath;
+builder.Services.AddFirebaseAppSingleton($"{webroot}/Firebase_key/key.json");
+
+
+
+builder.Services.AddSingleton<IFirebaseNotificationService, FirebaseNotificationService>();
 
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme

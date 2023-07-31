@@ -1,6 +1,9 @@
 ﻿
+using FirebaseAdmin.Messaging;
 using GC.MFI.Models.DbModels;
+using GC.MFI.Models.Models;
 using GC.MFI.Models.ViewModels;
+using GC.MFI.Services.Modules.Firebase.Interfaces;
 using GC.MFI.Services.Modules.GcMfi.Interfaces;
 using GC.MFI.Utility.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -23,10 +26,13 @@ namespace GC.MFI.Services
     {
         private readonly string _connectionString;
         private readonly IHubContext<ChatHub> _hubContext;
-        public DatabaseChangeNotificationService(IConfiguration configuration, IHubContext<ChatHub> hubContext)
+        private readonly IFirebaseNotificationService firebaseNotificationService;
+
+        public DatabaseChangeNotificationService(IConfiguration configuration, IHubContext<ChatHub> hubContext, IFirebaseNotificationService firebaseNotificationService)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
             _hubContext = hubContext;
+            this.firebaseNotificationService = firebaseNotificationService;
         }
         
         public Task StartAsync(CancellationToken cancellationToken)
@@ -53,7 +59,7 @@ namespace GC.MFI.Services
 
             return Task.CompletedTask;
         }
-        private  void OnDependencyChange(object sender, SqlNotificationEventArgs e)
+        private  async void OnDependencyChange(object sender, SqlNotificationEventArgs e)
         {
             if (e.Type == SqlNotificationType.Change)
             {
@@ -71,7 +77,7 @@ namespace GC.MFI.Services
                         SqlDependency dependency = new SqlDependency(fireBase);
 
                         dependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
-                        var Notification = new List<NotificationTable>(); // after change you can see the notification list
+                        var notificationList = new List<NotificationTable>(); // after change you can see the notification list
 
                         using (var reader = fireBase.ExecuteReader())
                         {
@@ -91,9 +97,31 @@ namespace GC.MFI.Services
                                     Status = reader.GetString(9),
                                 };
 
-                                Notification.Add(notify);
+                                notificationList.Add(notify);
                             }
 
+                        }
+
+                        if(notificationList.Count > 0)
+                        {
+                            foreach(var noti in notificationList)
+                            {
+                                Console.WriteLine("RECIEVER ID====================== "+ noti.ReceiverID);
+                                // Construct the message payload
+                                var message = new Message()
+                                {
+                                    Notification = new Notification
+                                    {
+                                        Title = noti.ReceiverType,
+                                        Body = noti.Message
+
+                                    },
+                                    Token = $"/topics/{noti.ReceiverID}" //"/topics/all"
+
+                                };
+
+                               var result= await firebaseNotificationService.SendAsync(message);
+                            }
                         }
                     }
 
