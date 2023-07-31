@@ -67,6 +67,7 @@ namespace GC.MFI.DataAccess
         public virtual DbSet<EmailLogTable> EmailLogTable { get; set; }
         public virtual DbSet<NotificationTable> NotificationTable { get; set; }
         public virtual DbSet<SignalRConnectionTable> SignalRConnectionTable { get; set; }
+        public virtual DbSet<FcmConnectionTable> FcmConnectionTable { get; set; }
 
         public virtual DbSet<FcmToken> FcmToken { get; set; }
 

@@ -231,6 +231,10 @@ namespace GC.MFI.WebApi
             // Firebase dependency
             services.AddScoped<IFcmTokenRepository, FcmTokenRepository>();
             services.AddScoped<IFcmTokenService, FcmTokenService>();
+
+            // Firebase connection table
+            services.AddScoped<IFcmConnectionTableRepository, FcmConnectionTableRepository>();
+            services.AddScoped<IFcmConnectionTableService, FcmConnectionTableService>();
             
             // Email Notification dependancy
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
