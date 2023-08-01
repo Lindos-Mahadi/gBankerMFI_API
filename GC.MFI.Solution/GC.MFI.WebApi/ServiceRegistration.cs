@@ -228,10 +228,6 @@ namespace GC.MFI.WebApi
             services.AddScoped<ISignalRConnectionTableRepository, SignalRConnectionTableRepository>();
             services.AddScoped<ISignalRConnectionTableService, SignalRConnectionTableService>();
 
-            // Firebase dependency
-            services.AddScoped<IFcmTokenRepository, FcmTokenRepository>();
-            services.AddScoped<IFcmTokenService, FcmTokenService>();
-
             // Firebase connection table
             services.AddScoped<IFcmConnectionTableRepository, FcmConnectionTableRepository>();
             services.AddScoped<IFcmConnectionTableService, FcmConnectionTableService>();

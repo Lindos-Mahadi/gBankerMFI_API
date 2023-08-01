@@ -11,7 +11,6 @@ namespace GC.MFI.Models.DbModels
     {
         public long Id { get; set; }
         public long? MemberId { get; set; }
-        public string FcmToken { get; set; }
-        public string DeviceId { get; set; }
+        public string Token { get; set; }
     }
 }

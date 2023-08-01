@@ -1,24 +1,19 @@
 ﻿
 using FirebaseAdmin.Messaging;
 using GC.MFI.Models.DbModels;
-using GC.MFI.Models.Models;
 using GC.MFI.Models.ViewModels;
 using GC.MFI.Services.Modules.Firebase.Interfaces;
-using GC.MFI.Services.Modules.GcMfi.Interfaces;
-using GC.MFI.Utility.Helpers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Twilio.Jwt.AccessToken;
 
 namespace GC.MFI.Services
 {
@@ -27,14 +22,16 @@ namespace GC.MFI.Services
         private readonly string _connectionString;
         private readonly IHubContext<ChatHub> _hubContext;
         private readonly IFirebaseNotificationService firebaseNotificationService;
+  
 
         public DatabaseChangeNotificationService(IConfiguration configuration, IHubContext<ChatHub> hubContext, IFirebaseNotificationService firebaseNotificationService)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
             _hubContext = hubContext;
             this.firebaseNotificationService = firebaseNotificationService;
+
         }
-        
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             SqlDependency.Start(_connectionString);
@@ -106,21 +103,47 @@ namespace GC.MFI.Services
                         {
                             foreach(var noti in notificationList)
                             {
-                                Console.WriteLine("RECIEVER ID====================== "+ noti.ReceiverID);
-                                // Construct the message payload
-                                var message = new Message()
+
+                               
+
+
+                                using (var fcmToken = new SqlCommand(@"SELECT N.[Token]  FROM [dbo].[FCMConnectionTable] N
+                                                         WHERE N.[MemberId] = " + noti.ReceiverID, connection)) 
+                                
                                 {
-                                    Notification = new Notification
+
+                                    using (var readerFCM = fcmToken.ExecuteReader())
                                     {
-                                        Title = noti.ReceiverType,
-                                        Body = noti.Message
+                                        while (readerFCM.Read())
+                                        {
+                                            var token = readerFCM.GetString(0);
 
-                                    },
-                                    Token = $"/topics/{noti.ReceiverID}" //"/topics/all"
 
-                                };
+                                            // Construct the message payload
+                                            var message = new Message()
+                                            {
+                                                Notification = new Notification
+                                                {
+                                                    Title = noti.ReceiverType,
+                                                    Body = noti.Message
 
-                               var result= await firebaseNotificationService.SendAsync(message);
+                                                },
+                                                //Token = $"/topics/{noti.ReceiverID}" //"/topics/all"
+                                                Token = token
+
+                                            };
+
+                                            var result = await firebaseNotificationService.SendAsync(message);
+
+                                        }
+
+                                    }
+
+
+                                }
+
+
+                         
                             }
                         }
                     }
