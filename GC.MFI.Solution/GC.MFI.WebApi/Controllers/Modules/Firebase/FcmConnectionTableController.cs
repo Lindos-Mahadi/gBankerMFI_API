@@ -35,8 +35,15 @@ namespace GC.MFI.WebApi.Controllers.Modules.GcMfi
                 var create = _service.Create(table);
                 return Ok(create);
             }
+            else {
+                fcm.MemberId = table.MemberId;
+                fcm.Token = table.Token;
 
-            return BadRequest("You already have an active token! Please delete it first!");
+                _service.Update(fcm);
+                return Ok(fcm);
+            }
+
+            //return BadRequest("You already have an active token! Please delete it first!");
 
         }
 
