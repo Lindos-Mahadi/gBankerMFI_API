@@ -128,8 +128,10 @@ namespace GC.MFI.Services
                                                     Body = noti.Message
 
                                                 },
-                                               //Token = $"/topics/{noti.ReceiverID}" //"/topics/all"
-                                                Token = "covBsxz_S2yQILcXlGEKV_:APA91bEXCLHaQlTlRROa1lFEiXfjUys-ywC6KDlw2TTWIOvdsH85IO33xjJnYFVeys0sQnWV1rl4iUKZSn5iddi8RaVV_vUm2UFDiAcXSj76qO17vnmiU-GiKN3sJGtCavTOQ5uWG-W7"
+                                                //Token = $"/topics/{noti.ReceiverID}" //"/topics/all"
+                                                Token = token
+
+                                                // Token = "covBsxz_S2yQILcXlGEKV_:APA91bEXCLHaQlTlRROa1lFEiXfjUys-ywC6KDlw2TTWIOvdsH85IO33xjJnYFVeys0sQnWV1rl4iUKZSn5iddi8RaVV_vUm2UFDiAcXSj76qO17vnmiU-GiKN3sJGtCavTOQ5uWG-W7"
 
                                             };
 
